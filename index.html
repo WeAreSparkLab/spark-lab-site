@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spark Lab — Daily quotes you’ll actually feel</title>
+  <meta name="description" content="Spark Lab creates small, kind apps that brighten your day. Try Spark Quotes—curated daily inspiration with zero noise.">
+  <link rel="canonical" href="https://wearesparklab.com/">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Spark Lab — Daily quotes you’ll actually feel">
+  <meta property="og:description" content="Try Spark Quotes—curated daily inspiration with zero noise.">
+  <meta property="og:url" content="https://wearesparklab.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://quotes.wearesparklab.com/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="container">
+    <nav class="nav">
+      <div class="brand">⚡ Spark Lab</div>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/#apps">Apps</a>
+        <a href="/privacy">Privacy</a>
+        <a href="mailto:support@wearesparklab.com">Support</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container hero">
+    <h1>Daily quotes you’ll actually feel.</h1>
+    <p class="subtitle">No noise, just spark. Spark Lab makes small, kind apps that brighten your day.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://quotes.wearesparklab.com">Open Spark Quotes</a>
+      <a class="btn ghost" href="https://quotes.wearesparklab.com/submitQuote">Submit a quote</a>
+    </div>
+  </main>
+
+  <section id="apps" class="container apps">
+    <h2>Our apps</h2>
+    <div class="card">
+      <h3>Spark Quotes</h3>
+      <p>Curated daily inspiration, favorites, topics, and gentle notifications.</p>
+      <div class="card-cta">
+        <a class="btn small" href="https://quotes.wearesparklab.com">Launch Web App</a>
+        <a class="btn small ghost" href="https://quotes.wearesparklab.com/submitQuote">Submit a Quote</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="container footer">
+    <p>© <span id="year"></span> Spark Lab · <a href="/privacy">Privacy</a> · <a href="mailto:support@wearesparklab.com">support@wearesparklab.com</a></p>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

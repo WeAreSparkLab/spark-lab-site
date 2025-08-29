@@ -1,0 +1,3 @@
+Sitemap: https://wearesparklab.com/sitemap.txt
+User-agent: *
+Allow: /
