@@ -15,13 +15,24 @@
   <meta property="og:image" content="https://quotes.wearesparklab.com/og.png">
   <meta name="twitter:card" content="summary_large_image">
 
+  <!-- Futuristic fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+  <!-- animated background layers -->
+  <div class="bg">
+    <div class="bg__noise"></div>
+    <div class="bg__gradient"></div>
+    <div class="bg__grid"></div>
+    <div class="bg__orbs"></div>
+  </div>
+
   <header class="container">
-    <nav class="nav">
-      <div class="brand">⚡ Spark Lab</div>
+    <nav class="nav glass">
+      <div class="brand"><span>⚡</span><span class="brand-text">Spark Lab</span></div>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/#apps">Apps</a>
@@ -32,30 +43,68 @@
   </header>
 
   <main class="container hero">
-    <h1>Daily quotes you’ll actually feel.</h1>
-    <p class="subtitle">No noise, just spark. Spark Lab makes small, kind apps that brighten your day.</p>
+    <h1 class="glow-text">Daily quotes you’ll <em>actually</em> feel.</h1>
+    <p class="subtitle">
+      No noise, just spark. Small, kind apps that brighten your day—with a little neon magic.
+    </p>
+    <div class="chips">
+      <span class="chip">⚡ Zero clutter</span>
+      <span class="chip">💫 Gentle reminders</span>
+      <span class="chip">🌙 Dark by default</span>
+    </div>
     <div class="cta">
-      <a class="btn primary" href="https://quotes.wearesparklab.com">Open Spark Quotes</a>
-      <a class="btn ghost" href="https://quotes.wearesparklab.com/submitQuote">Submit a quote</a>
+      <a class="btn btn-primary" href="https://quotes.wearesparklab.com">
+        <span class="btn-glow"></span>Open Spark Quotes
+      </a>
+      <a class="btn btn-ghost" href="https://quotes.wearesparklab.com/submitQuote">
+        Submit a quote
+      </a>
     </div>
   </main>
 
   <section id="apps" class="container apps">
-    <h2>Our apps</h2>
-    <div class="card">
+    <h2 class="section-title">Our apps</h2>
+
+    <div class="card tilt glass">
+      <div class="card-header">
+        <div class="dot dot--cyan"></div>
+        <div class="dot dot--pink"></div>
+        <div class="dot dot--violet"></div>
+      </div>
       <h3>Spark Quotes</h3>
       <p>Curated daily inspiration, favorites, topics, and gentle notifications.</p>
       <div class="card-cta">
-        <a class="btn small" href="https://quotes.wearesparklab.com">Launch Web App</a>
-        <a class="btn small ghost" href="https://quotes.wearesparklab.com/submitQuote">Submit a Quote</a>
+        <a class="btn small btn-primary" href="https://quotes.wearesparklab.com">
+          <span class="btn-glow"></span>Launch Web App
+        </a>
+        <a class="btn small btn-ghost" href="https://quotes.wearesparklab.com/submitQuote">
+          Submit a Quote
+        </a>
       </div>
     </div>
   </section>
 
-  <footer class="container footer">
+  <footer class="container footer glass">
     <p>© <span id="year"></span> Spark Lab · <a href="/privacy">Privacy</a> · <a href="mailto:support@wearesparklab.com">support@wearesparklab.com</a></p>
   </footer>
 
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // tiny tilt effect on hover (no libs)
+    const tilt = document.querySelector('.tilt');
+    if (tilt) {
+      const damp = 35;
+      tilt.addEventListener('mousemove', (e) => {
+        const r = tilt.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        tilt.style.transform = `rotateX(${(-y)*damp}deg) rotateY(${x*damp}deg) translateZ(0)`;
+      });
+      tilt.addEventListener('mouseleave', () => {
+        tilt.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+  </script>
 </body>
 </html>
