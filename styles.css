@@ -254,3 +254,12 @@ footer.footer p{ margin:6px 0; }
 /* optional: make single-button rows tighter */
 .merch .card .cta-row { gap: 0; }
 .merch .card .cta-row .btn.small { margin: 0 auto; }
+/* Support: squared tip buttons (same colors as chips) */
+#support .btn-tip{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:10px 14px; border-radius:10px;          /* square like .btn */
+  background:rgba(255,255,255,0.06);
+  border:1px solid var(--line);
+  color:#cfd6ff; font-weight:800; font-size:14px; text-decoration:none;
+}
+#support .btn-tip:hover{ background:rgba(255,255,255,0.10); color:#eaf0ff; }
