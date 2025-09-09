@@ -263,3 +263,78 @@ footer.footer p{ margin:6px 0; }
   color:#cfd6ff; font-weight:800; font-size:14px; text-decoration:none;
 }
 #support .btn-tip:hover{ background:rgba(255,255,255,0.10); color:#eaf0ff; }
+/* Merch: QR explainer */
+.merch .qr-note{
+  color:#cfd6ff; opacity:.92; margin:8px 0 4px; max-width:720px;
+}
+.merch .perks{
+  list-style:none; padding:0; margin:10px 0 6px;
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.merch .perks li{
+  font-size:13px; color:#cfd6ff;
+  padding:6px 10px; border-radius:999px;
+  background:rgba(255,255,255,0.06); border:1px solid var(--line);
+}
+/* Merch: keep the QR sentence on one line on desktop */
+@media (min-width: 900px){
+  .merch .qr-note{
+    max-width: none;     /* remove the 720px cap */
+    white-space: nowrap; /* prevent wrapping */
+  }
+}
+
+
+
+/* ===== Mobile polish (phones) ===== */
+@media (max-width: 480px){
+  html,body{ font-size:15px; }
+
+  .container{ padding:16px; }
+
+  /* Nav */
+  .nav{ padding:10px 12px; }
+  .brand{ gap:8px; }
+  .brand-text{ font-size:18px; }
+  .nav-links a{ margin-left:12px; font-size:14px; }
+
+  /* Hero */
+  .hero{ padding:54px 16px 12px; }
+  .glow-text{ font-size:28px; line-height:1.15; }
+  .subtitle{ font-size:14px; }
+  .chips{ gap:8px; margin-top:12px; }
+  .chip{ padding:6px 10px; font-size:12px; }
+
+  /* Buttons */
+  .btn{ font-size:15px; padding:10px 14px; border-radius:12px; }
+  .btn.small{ font-size:14px; padding:8px 12px; }
+
+  /* “Our apps” card */
+  .apps{ padding:16px 0; }
+  .apps .card{ padding:16px; }
+  .apps .card h3{ font-size:22px; }
+  .apps .card p{ font-size:15px; }
+  .card-cta{ gap:10px; }
+
+  /* Support block (overrides inline sizes) */
+  #support{ padding:20px !important; }
+  #support h2{ font-size:22px !important; }
+  #support p{ font-size:15px !important; }
+  #support a[style]{ padding:10px 14px !important; font-size:15px !important; border-radius:10px !important; }
+  #support .btn-tip{ padding:8px 12px; font-size:13px; }
+
+  /* Merch header/explainer */
+  .section-title{ font-size:20px; }
+  .merch .head{ margin-bottom:12px; }
+  .merch .qr-note{ white-space:normal; font-size:14px; }
+  .merch .perks{ gap:6px; }
+  .merch .perks li{ font-size:12px; padding:6px 9px; }
+  .merch .merch-grid{ gap:10px; }
+  .merch .card-body{ padding:10px 12px; }
+}
+
+/* Extra-small phones */
+@media (max-width: 360px){
+  .glow-text{ font-size:24px; }
+  .btn{ font-size:14px; }
+}
