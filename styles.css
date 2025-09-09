@@ -9,7 +9,10 @@
   --brand2:#00e5ff;
   --pink:#ff4fd8;
   --cyan:#00f6d2;
-  --violet:#8a63ff;
+  --violet:#8a63ff;--accent: #8B5CF6;      /* primary (purple) */
+  --accent-hover: #7C3AED;/* a bit deeper */
+  --muted: #334155;       /* secondary button */
+  --text-on-accent: #ffffff;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
@@ -79,8 +82,12 @@ h1,h2,h3{font-weight:800;margin:0 0 10px}
 }
 
 /* Buttons */
-.btn{position:relative;display:inline-block;padding:12px 16px;border-radius:12px;border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,0.06)}
-.btn.small{padding:8px 12px;font-size:14px}
+.btn{
+  display:inline-block; padding:10px 14px; border-radius:10px;
+  background: var(--accent); color: var(--text-on-accent);
+  text-decoration:none; font-weight:600;
+}
+.btn:hover{ background: var(--accent-hover); }.btn.small{padding:8px 12px;font-size:14px}
 .btn-ghost:hover{background:rgba(255,255,255,0.1)}
 .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));border:0;box-shadow:0 6px 28px rgba(0,229,255,.15)}
 .btn-primary .btn-glow{position:absolute;inset:-2px;border-radius:14px; background:radial-gradient(60% 80% at 30% 20%, rgba(0,229,255,.45), transparent 60%), radial-gradient(50% 60% at 80% 80%, rgba(123,124,246,.4), transparent 60%); filter:blur(14px); opacity:.6; pointer-events:none}
@@ -107,22 +114,143 @@ h1,h2,h3{font-weight:800;margin:0 0 10px}
   .hero{padding-top:60px}
 }
 .muted{color:var(--muted)}
+/* === Merch (scoped; doesn't touch global styles) === */
+.merch{ padding:56px 0; }
+.merch .wrap{ max-width:1080px; margin:0 auto; padding:0 20px; }
+.merch .head{ margin-bottom:16px; }
+.merch .head .section-title{ color:#eaf0ff; }
+.merch .lead{ color:var(--muted); max-width:720px; }
 
-.merch { padding:64px 0; background:#0b1020; color:#e5e7eb; }
-.merch .wrap { max-width:1100px; margin:0 auto; padding:0 20px; }
-.merch-head h2 { margin:0 0 6px; font-size:clamp(24px,3vw,36px); }
-.merch-head p { margin:0 0 12px; opacity:.9; }
-.fineprint { font-size:13px; opacity:.8; margin-top:8px; }
-.merch-grid { list-style:none; margin:24px 0 0; padding:0;
-  display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
-.card { background:#11162a; border-radius:16px; overflow:hidden;
-  box-shadow:0 6px 24px rgba(0,0,0,.25); }
-.card img { display:block; width:100%; height:auto; aspect-ratio:1/1; object-fit:cover; }
-.card-body { padding:12px 14px 16px; }
-.card h3 { font-size:16px; margin:0 0 8px; }
+.merch .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; }
 
-.btn { display:inline-block; padding:10px 14px; border-radius:10px;
-  background:#f97316; color:#fff; text-decoration:none; font-weight:600; }
-.btn:hover { filter:brightness(1.05); }
-.btn-secondary { background:#334155; }
-.mini { font-size:12px; opacity:.75; margin-top:12px; }
+.merch-grid{
+  list-style:none; padding:0; margin:22px 0 0;
+  display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+}
+.merch .card{
+  background:var(--card); border:1px solid var(--line);
+  border-radius:16px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,.25);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.merch .card:hover{ transform:translateY(-2px); box-shadow:0 12px 38px rgba(0,0,0,.32); }
+
+.merch .thumb{ display:block; width:100%; aspect-ratio:1/1; object-fit:cover;
+  background: radial-gradient(60% 80% at 50% 40%, rgba(255,255,255,.06), transparent 70%);
+}
+.merch .card-body{ padding:12px 14px 16px; }
+.merch .title{ font-size:16px; margin:0 0 6px; }
+.merch .meta{ font-size:13px; color:var(--muted); }
+
+.merch .mini{ font-size:12px; color:var(--muted); margin-top:12px; }
+
+/* === Merch: compact layout (more items side-by-side) === */
+.merch .merch-grid{
+  display:grid;
+  gap:12px;
+  grid-template-columns:repeat(2, minmax(0,1fr)); /* phones: 2-up */
+}
+
+/* tablet: 3-up */
+@media (min-width:640px){
+  .merch .merch-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+}
+
+/* desktop: 4-up */
+@media (min-width:1024px){
+  .merch .merch-grid{ grid-template-columns:repeat(4, minmax(0,1fr)); }
+}
+
+/* slightly smaller cards/buttons/text to match the tighter grid */
+.merch .card-body{ padding:10px 12px; }
+.merch .title{ font-size:14px; margin:0 0 6px; }
+.merch .meta{ font-size:12px; }
+.merch .btn.small{ padding:6px 10px; font-size:13px; }
+
+/* keep thumbnails square but visually lighter */
+.merch .thumb{
+  aspect-ratio:1/1; object-fit:cover; width:100%;
+  background:radial-gradient(60% 80% at 50% 40%, rgba(255,255,255,.05), transparent 70%);
+}
+
+/* === Merch: force multi-column layout + kill bullets === */
+.merch ul,
+.merch li { list-style: none; margin: 0; padding: 0; }
+
+/* Use flex as a bullet-proof fallback (works everywhere) */
+.merch .merch-grid{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 22px 0 0;
+}
+
+/* phones: 2-up */
+.merch .merch-grid > li{
+  flex: 1 1 calc(50% - 12px);
+  max-width: calc(50% - 12px);
+}
+
+/* tablet: 3-up */
+@media (min-width: 640px){
+  .merch .merch-grid > li{
+    flex-basis: calc(33.333% - 12px);
+    max-width: calc(33.333% - 12px);
+  }
+}
+
+/* desktop: 4-up */
+@media (min-width: 1024px){
+  .merch .merch-grid > li{
+    flex-basis: calc(25% - 12px);
+    max-width: calc(25% - 12px);
+  }
+}
+
+/* tidy up the internals so cards feel lighter in the tighter grid */
+.merch .card-body{ padding:10px 12px; }
+.merch .title{ font-size:14px; margin:0 0 6px; }
+.merch .meta{ font-size:12px; }
+.merch .btn.small{ padding:6px 10px; font-size:13px; }
+
+/* keep images neatly square */
+.merch .thumb{
+  display:block;
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  background: radial-gradient(60% 80% at 50% 40%, rgba(255,255,255,.05), transparent 70%);
+}
+/* Footer: centered card, aligned to container width */
+footer.footer{
+  max-width:1080px;        /* lock to same width as .container */
+  margin:48px auto 64px;   /* center it */
+  padding:18px 22px;
+  text-align:center;
+  border-radius:16px;
+}
+footer.footer.glass{
+  background:var(--card);
+  border:1px solid var(--line);
+  box-shadow:0 8px 32px rgba(0,0,0,.25);  /* subtle lift to match cards */
+}
+footer.footer p{ margin:6px 0; }
+/* Full-bleed bar with centered inner container */
+.site-footer{
+  margin-top:48px;
+  padding:24px 0;
+  border-top:1px solid rgba(255,255,255,0.06);
+  background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+}
+.site-footer .footer{
+  margin:0 auto;           /* keep inner box centered */
+  box-shadow:none;         /* optional: flatter */
+}
+/* Center the CTA button on each merch card (without touching header CTAs) */
+.merch .card .cta-row{
+  justify-content: center;   /* center horizontally */
+  width: 100%;
+}
+
+/* optional: make single-button rows tighter */
+.merch .card .cta-row { gap: 0; }
+.merch .card .cta-row .btn.small { margin: 0 auto; }
