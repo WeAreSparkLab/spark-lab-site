@@ -338,3 +338,81 @@ footer.footer p{ margin:6px 0; }
   .glow-text{ font-size:24px; }
   .btn{ font-size:14px; }
 }
+/* ===== Extra mobile polish ===== */
+
+/* phones */
+@media (max-width: 480px){
+
+  html,body{ font-size:14.5px; }
+  .container{ padding:14px; }
+
+  /* Nav */
+  .nav{ padding:8px 10px; border-radius:12px; }
+  .brand-text{ font-size:16px; letter-spacing:.2px; }
+  .nav-links a{ font-size:13px; margin-left:10px; }
+
+  /* Hero */
+  .hero{ padding:46px 14px 10px; }
+  .glow-text{ font-size:26px; line-height:1.15; margin:0 0 8px; }
+  .subtitle{ font-size:14px; }
+
+  /* Chips: 2-up grid, smaller */
+  .chips{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .chip{ width:100%; padding:6px 9px; font-size:12px; }
+
+  /* Hero CTAs: tidy spacing, can be full-width */
+  .cta{ gap:10px; }
+  .hero .cta .btn{ width:100%; max-width:320px; }
+
+  /* “Our apps” section */
+  .section-title{ font-size:18px; }
+  .apps{ padding:12px 0; }
+  .apps .card{ padding:14px; border-radius:14px; }
+  .apps .card h3{ font-size:20px; }
+  .apps .card p{ font-size:14px; }
+
+  /* Support block */
+  #support{ padding:18px !important; border-radius:14px !important; }
+  #support h2{ font-size:20px !important; }
+  #support p{ font-size:14px !important; }
+  #support a[style]{ padding:10px 14px !important; font-size:15px !important; border-radius:10px !important; }
+  #support .btn-tip{ padding:8px 12px; font-size:13px; }
+
+  /* Merch header/explainer */
+  .merch .head{ margin-bottom:10px; }
+  .merch .qr-note{ white-space:normal; font-size:14px; }
+  .merch .perks{ gap:6px; }
+  .merch .perks li{ font-size:12px; padding:6px 8px; }
+
+  /* Merch grid/cards smaller */
+  .merch .merch-grid{ gap:10px; }
+  .merch .card{ border-radius:14px; }
+  .merch .card-body{ padding:10px 12px; }
+  .merch .title{ font-size:15px; }
+  .merch .meta{ font-size:12px; }
+  .merch .btn.small{ padding:8px 10px; font-size:13px; }
+
+  /* Merch header CTA not oversized */
+  .merch .head .btn{ width:100%; max-width:300px; }
+}
+
+/* very small phones: make merch 1-up so nothing feels cramped */
+@media (max-width: 360px){
+  .glow-text{ font-size:22px; }
+  .merch .merch-grid > li{
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+  .btn{ font-size:14px; }
+}
+
+/* Footer trim on mobile */
+@media (max-width: 480px){
+  footer.footer,
+  .site-footer .footer{
+    padding:12px 14px;
+    border-radius:12px;
+  }
+  footer.footer p,
+  .site-footer .footer p{ font-size:13px; line-height:1.5; }
+}
