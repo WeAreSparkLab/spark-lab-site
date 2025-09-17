@@ -1,0 +1,27 @@
+{
+  "name": "Spark Lab",
+  "short_name": "SparkLab",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0B1020",
+  "theme_color": "#0B1020",
+  "icons": [
+    {
+      "src": "/assets/brand/spark-apple-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/brand/spark-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/brand/spark-16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ]
+}

@@ -8,43 +8,43 @@
     <meta name="description"
         content="Spark Lab creates small, kind apps that brighten your day. Try Spark Quotes—curated daily inspiration with zero noise.">
     <link rel="canonical" href="https://wearesparklab.com/">
-
-    <!-- Open Graph / Twitter -->
     <meta property="og:title" content="Spark Lab — Daily quotes you’ll actually feel">
     <meta property="og:description" content="Try Spark Quotes—curated daily inspiration with zero noise.">
     <meta property="og:url" content="https://wearesparklab.com/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://quotes.wearesparklab.com/og.png">
     <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Futuristic fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@600;800&display=swap"
         rel="stylesheet">
-
-    <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/assets/brand/spark-bolt.svg?v=3">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/spark-32.png?v=3">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/spark-16.png?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/spark-apple-180.png?v=3">
     <link rel="mask-icon" href="/assets/brand/spark-bolt.svg?v=3" color="#FF6A00"> <!-- Safari pinned -->
-    <!-- Optional old-school fallback if you add one -->
     <link rel="shortcut icon" href="/favicon.ico?v=3">
-    <!-- PNG fallbacks -->
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/spark-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/spark-apple-180.png">
-
-    <!-- Optional Safari pinned-tab (monochrome SVG recommended) -->
     <link rel="mask-icon" href="/assets/brand/spark-bolt.svg" color="#FF6A00">
-
-    <!-- Optional theme color for mobile UI chrome -->
     <meta name="theme-color" content="#0B1020">
 
-    <link rel="stylesheet" href="/styles.css?v=16">
+    <link rel="stylesheet" href="/styles.css?v=18">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0B1020">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 </head>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+    }
+</script>
 
 <body>
-    <!-- animated background layers -->
     <div class="bg">
         <div class="bg__noise"></div>
         <div class="bg__gradient"></div>
@@ -59,6 +59,7 @@
                 <a href="/">Home</a>
                 <a href="/#apps">Apps</a>
                 <a href="#merch" class="nav-link">Merch</a>
+                <a href="/socials" aria-current="page">Socials</a>
                 <a href="/privacy">Privacy</a>
             </div>
         </nav>
@@ -295,6 +296,7 @@
             });
         }
     </script>
+    <script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js')); }</script>
 </body>
 
 </html>

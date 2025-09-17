@@ -450,3 +450,8 @@ footer.footer p{ margin:6px 0; }
   /* hide duplicate Privacy link in footer on phones */
   footer.footer a[href="/privacy"]{ display:none; }
 }
+/* --- NAV FIX OVERRIDES (keep at end of file) --- */
+.nav { display:flex; align-items:center; justify-content:space-between; }
+.nav .nav-links { display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.nav .nav-links a { display:inline-flex; margin-left:0 !important; white-space:nowrap; }
+@media (max-width: 640px){ .nav .nav-links { gap:14px; } }
