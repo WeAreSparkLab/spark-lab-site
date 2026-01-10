@@ -94,7 +94,7 @@ h1,h2,h3{font-weight:800;margin:0 0 10px}
 .cta{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
 
 /* Apps/Card */
-.apps{padding:26px 20px}
+.apps{padding:26px 20px;display:grid;gap:24px}
 .card{padding:18px;border-radius:16px;border:1px solid var(--line);transform-style:preserve-3d;transition:transform .2s ease}
 .card-header{display:flex;gap:8px;margin-bottom:6px;opacity:.8}
 .dot{width:10px;height:10px;border-radius:50%}
