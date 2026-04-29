@@ -23,6 +23,21 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- Blog -->
+  <url>
+    <loc>https://www.wearesparklab.com/blog</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wearesparklab.com/blog/why-daily-walk-changes-everything</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- App subdomains -->
   <url>
     <loc>https://quotes.wearesparklab.com/</loc>
