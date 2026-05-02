@@ -159,21 +159,16 @@
     }
 
     .featured-img {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
       min-height: 320px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 5rem;
       position: relative;
       overflow: hidden;
     }
 
-    .featured-img::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 30% 50%, rgba(245,200,66,0.15) 0%, transparent 60%);
+    .featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .featured-content {
@@ -263,21 +258,14 @@
 
     .post-card-img {
       height: 160px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      position: relative;
+      overflow: hidden;
     }
 
-    .post-card-img.green {
-      background: linear-gradient(135deg, #0d1f0d, #1a3a1a);
-    }
-    .post-card-img.purple {
-      background: linear-gradient(135deg, #1a0d2e, #2d1a4a);
-    }
-    .post-card-img.coral {
-      background: linear-gradient(135deg, #2e0d0d, #4a1a1a);
+    .post-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .post-card-body {
@@ -408,6 +396,7 @@
       .nav-links { display: none; }
     }
   </style>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
@@ -432,7 +421,7 @@
   <section class="featured-section">
     <p class="section-label">Featured</p>
     <a href="/blog/why-daily-walk-changes-everything" class="featured-card">
-      <div class="featured-img">🚶‍♀️</div>
+      <div class="featured-img"><img src="/assets/walk-hero.jpg" alt="Woman walking outdoors in natural light"></div>
       <div class="featured-content">
         <p class="post-category">✦ Movement</p>
         <h2>Why a 10-Minute Walk Changes More Than You Think</h2>
@@ -453,7 +442,7 @@
     <div class="posts-grid">
 
       <a href="/blog/5-quotes-that-actually-help" class="post-card">
-        <div class="post-card-img purple">💬</div>
+        <div class="post-card-img"><img src="/assets/card-quotes.jpg" alt="5 motivational quotes that actually help on hard days"></div>
         <div class="post-card-body">
           <p class="post-category">✦ Mindset</p>
           <h3>5 Motivational Quotes That Actually Help on Hard Days</h3>
@@ -465,7 +454,7 @@
       </a>
 
       <a href="/blog/morning-routine-without-the-pressure" class="post-card">
-        <div class="post-card-img green">🌅</div>
+        <div class="post-card-img"><img src="/assets/card-morning.jpg" alt="A morning routine that doesn't need to be perfect"></div>
         <div class="post-card-body">
           <p class="post-category">✦ Habits</p>
           <h3>A Morning Routine That Doesn't Need to Be Perfect</h3>
@@ -477,7 +466,7 @@
       </a>
 
       <a href="/blog/free-apps-for-mental-wellness" class="post-card">
-        <div class="post-card-img coral">📱</div>
+        <div class="post-card-img"><img src="/assets/card-apps.jpg" alt="Free apps that actually support your mental wellness"></div>
         <div class="post-card-body">
           <p class="post-category">✦ Tools</p>
           <h3>Free Apps That Actually Support Your Mental Wellness</h3>
