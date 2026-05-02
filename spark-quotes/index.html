@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spark Quotes — Free Daily Motivational Quotes App | Spark Lab</title>
+  <meta name="description" content="Spark Quotes is a free daily motivational quotes app. Choose your topics, set your frequency, save favourites, and submit your own quotes. No login needed to start.">
+  <meta name="keywords" content="free daily motivational quotes app, inspirational quotes app, daily affirmations app, positive quotes app, free quotes app no subscription, mental wellness app, daily quote notification, motivational quotes by topic">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.wearesparklab.com/spark-quotes">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Spark Quotes — Free Daily Motivational Quotes App">
+  <meta property="og:description" content="One uplifting quote every time you open it. Choose your topics, save favourites, and submit your own. Free, no login needed.">
+  <meta property="og:url" content="https://www.wearesparklab.com/spark-quotes">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.wearesparklab.com/assets/og-image.jpg">
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Spark Quotes",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "Web, iOS, Android",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+    "url": "https://quotes.wearesparklab.com",
+    "description": "A free daily motivational quotes app. Choose your topics, set your frequency, save favourites, and submit your own quotes.",
+    "publisher": { "@type": "Organization", "name": "Spark Lab", "url": "https://www.wearesparklab.com" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --border: #1e1e2e;
+      --accent: #f5c842;
+      --accent2: #6672E7;
+      --text: #e8e8f0;
+      --muted: #7070a0;
+      --card: #0f0f18;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-logo { font-family: 'Fraunces', serif; font-size: 1.4rem; color: var(--accent); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 7rem 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(245,200,66,0.1);
+      border: 1px solid rgba(245,200,66,0.2);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      line-height: 1.75;
+    }
+
+    .cta-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #0a0a0f;
+      padding: 0.9rem 2rem;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--text);
+      padding: 0.9rem 2rem;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    /* PHONE MOCKUP */
+    .phone-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .phone {
+      width: 260px;
+      height: 520px;
+      background: var(--surface);
+      border-radius: 2.5rem;
+      border: 2px solid var(--border);
+      padding: 1.5rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+    }
+
+    .phone::before {
+      content: '';
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 5px;
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .phone-category {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(245,200,66,0.1);
+      padding: 0.25rem 0.7rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .phone-quote {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 300;
+      text-align: center;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .phone-author {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .phone-actions {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .phone-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .phone-glow {
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(circle at 50% 60%, rgba(245,200,66,0.08) 0%, transparent 65%);
+      pointer-events: none;
+      border-radius: 3rem;
+    }
+
+    /* FEATURES */
+    .features {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .features h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+    .features h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.2rem;
+      padding: 1.8rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .feature-card:hover { border-color: rgba(245,200,66,0.3); transform: translateY(-3px); }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+
+    /* CATEGORIES */
+    .categories {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .categories h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+    .categories h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .tag {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.5rem 1.1rem;
+      border-radius: 2rem;
+      font-size: 0.88rem;
+      transition: all 0.2s;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* CTA BANNER */
+    .cta-banner {
+      max-width: 1000px;
+      margin: 0 auto 6rem;
+      padding: 0 2rem;
+    }
+
+    .cta-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(245,200,66,0.06) 0%, transparent 60%);
+    }
+
+    .cta-inner h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .cta-inner h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
+    .cta-inner p { color: var(--muted); font-size: 1.05rem; margin-bottom: 2.5rem; position: relative; }
+
+    .cta-badges {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .badge {
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content { animation: fadeUp 0.6s ease both; }
+    .phone-wrap { animation: fadeUp 0.6s ease 0.15s both; }
+    .features { animation: fadeUp 0.6s ease 0.2s both; }
+
+    @media (max-width: 700px) {
+      .hero { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem 3rem; }
+      .phone-wrap { order: -1; }
+      .phone { width: 220px; height: 440px; }
+      .nav-links { display: none; }
+      .cta-inner { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">✦ Spark Lab</a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/spark-quotes" style="color:#e8e8f0">Spark Quotes</a></li>
+      <li><a href="/spark-walk">Spark Walk</a></li>
+      <li><a href="/blog">Blog</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">✦ Free App · No Login Needed</span>
+      <h1>Your daily <em>spark</em> of good</h1>
+      <p>One uplifting quote every time you open it. Choose the topics that matter to you, set how often you want them, save your favourites, and even submit your own. A tiny daily habit with a big quiet impact.</p>
+      <div class="cta-group">
+        <a href="https://quotes.wearesparklab.com" class="btn-primary">Open Spark Quotes ✦</a>
+        <a href="/" class="btn-outline">← Back to Spark Lab</a>
+      </div>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-glow"></div>
+        <span class="phone-category">✦ Resilience</span>
+        <p class="phone-quote">"Fall seven times, stand up eight."</p>
+        <p class="phone-author">— Japanese Proverb</p>
+        <div class="phone-actions">
+          <div class="phone-btn">♡</div>
+          <div class="phone-btn">↻</div>
+          <div class="phone-btn">✦</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <p class="section-label">What it does</p>
+    <h2>Everything you need.<br><em>Nothing you don't.</em></h2>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Daily motivational quotes</h3>
+        <p>A fresh quote every time you open the app — carefully chosen from hundreds across 16 categories. Never the same thing twice in a row.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Choose your topics</h3>
+        <p>Only want quotes about resilience, mindfulness, and humour? Done. Filter by any combination of 16 categories and the app learns your preferences.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">♡</div>
+        <h3>Save your favourites</h3>
+        <p>Found one that really lands? Save it. Your favourites are stored to your account so you can revisit the words that mean the most.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">✍️</div>
+        <h3>Submit your own</h3>
+        <p>Have a quote that helps you? Submit it. If it's approved, your username appears when it shows up for other users. A tiny moment of being seen.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3>Daily notifications</h3>
+        <p>Set a reminder and get your daily spark delivered at the time that works for you — morning, lunch, or whenever you need a quiet moment of perspective.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Add to your home screen</h3>
+        <p>Spark Quotes works like a native app. Add it to your phone's home screen and it opens instantly — no app store, no download, no friction.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <p class="section-label">Topics</p>
+    <h2>16 categories.<br><em>Something for every day.</em></h2>
+    <div class="tags">
+      <span class="tag">Funny</span>
+      <span class="tag">Good Vibes</span>
+      <span class="tag">Motivation</span>
+      <span class="tag">Dreams</span>
+      <span class="tag">Resilience</span>
+      <span class="tag">Creativity</span>
+      <span class="tag">Mindfulness</span>
+      <span class="tag">Success</span>
+      <span class="tag">Friendship</span>
+      <span class="tag">Wisdom</span>
+      <span class="tag">Advice</span>
+      <span class="tag">Health & Wellbeing</span>
+      <span class="tag">Love</span>
+      <span class="tag">Family</span>
+      <span class="tag">Growth</span>
+      <span class="tag">Happiness</span>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="cta-inner">
+      <h2>Ready for your daily <em>spark?</em></h2>
+      <p>Free to use. No account needed to start. Works on any device, anywhere in the world.</p>
+      <div class="cta-badges">
+        <span class="badge">✦ Completely free</span>
+        <span class="badge">✦ No subscription</span>
+        <span class="badge">✦ Works worldwide</span>
+        <span class="badge">✦ 488+ quotes</span>
+        <span class="badge">✦ 16 categories</span>
+      </div>
+      <a href="https://quotes.wearesparklab.com" class="btn-primary" style="font-size:1.1rem; padding: 1rem 2.5rem;">Open Spark Quotes — it's free ✦</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© Spark Lab · <a href="/">Home</a> · <a href="/spark-walk">Spark Walk</a> · <a href="/blog">Blog</a> · <a href="/privacy">Privacy</a> · Free daily motivational quotes app</p>
+  </footer>
+
+</body>
+</html>

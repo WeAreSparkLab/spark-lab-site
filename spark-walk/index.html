@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spark Walk — Free Tempo Walking App | Beat 10,000 Steps in 20 Minutes</title>
+  <meta name="description" content="Spark Walk is a free paced walking app using the scientifically proven tempo walk method. Beat the benefits of 10,000 daily steps in just 20 minutes. Walk alone or with friends anywhere in the world.">
+  <meta name="keywords" content="free walking app, tempo walk app, interval walking app, mindful walking app, 10000 steps alternative, paced walking, group walking app, free fitness app, walking for mental health, social walking app, walk with friends app">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.wearesparklab.com/spark-walk">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Spark Walk — Beat 10,000 Steps in 20 Minutes. Free.">
+  <meta property="og:description" content="The tempo walk app. Science-backed interval walking that delivers more benefit than 10,000 steps — in 20 minutes. Walk solo or with friends anywhere in the world.">
+  <meta property="og:url" content="https://www.wearesparklab.com/spark-walk">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.wearesparklab.com/assets/og-image.jpg">
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Spark Walk",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web, iOS, Android",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+    "url": "https://walks.wearesparklab.com",
+    "description": "A free paced walking app using the scientifically proven tempo walk method — alternating fast and easy intervals that deliver more benefit than 10,000 daily steps in just 20 minutes.",
+    "publisher": { "@type": "Organization", "name": "Spark Lab", "url": "https://www.wearesparklab.com" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --border: #1e1e2e;
+      --accent: #f5c842;
+      --accent2: #6672E7;
+      --text: #e8e8f0;
+      --muted: #7070a0;
+      --card: #0f0f18;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    nav {
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-logo { font-family: 'Fraunces', serif; font-size: 1.4rem; color: var(--accent); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 7rem 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(245,200,66,0.1);
+      border: 1px solid rgba(245,200,66,0.2);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+
+    .hero p { color: var(--muted); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.75; }
+
+    .cta-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #0a0a0f;
+      padding: 0.9rem 2rem;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--text);
+      padding: 0.9rem 2rem;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    /* WALK VISUALISER */
+    .walk-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .walk-card {
+      width: 280px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    }
+
+    .walk-card-glow {
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(circle at 50% 60%, rgba(245,200,66,0.07) 0%, transparent 65%);
+      pointer-events: none;
+      border-radius: 3rem;
+    }
+
+    .walk-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .walk-status {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+
+    .walk-time {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+      line-height: 1;
+    }
+
+    .walk-bar {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .walk-bar-fill {
+      height: 100%;
+      width: 65%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 3px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .walk-intervals {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .interval {
+      flex: 1;
+      height: 32px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .interval.fast { background: rgba(245,200,66,0.15); color: var(--accent); border: 1px solid rgba(245,200,66,0.3); }
+    .interval.easy { background: rgba(102,114,231,0.1); color: var(--accent2); border: 1px solid rgba(102,114,231,0.2); }
+    .interval.active { background: var(--accent); color: #0a0a0f; }
+
+    .walk-next {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .walk-next strong { color: var(--accent); }
+
+    /* SCIENCE CALLOUT */
+    .science {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .science-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 1rem 1rem 0;
+      padding: 2rem 2.5rem;
+    }
+
+    .science-inner p {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .science-inner small { font-size: 0.82rem; color: var(--muted); }
+
+    /* FEATURES */
+    .features {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .features h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+    .features h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.2rem;
+      padding: 1.8rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .feature-card:hover { border-color: rgba(245,200,66,0.3); transform: translateY(-3px); }
+
+    .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+    .feature-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+
+    /* HOW IT WORKS */
+    .how {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .how h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+    .how h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.2rem;
+      padding: 1.8rem;
+      position: relative;
+    }
+
+    .step-num {
+      font-family: 'Fraunces', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: rgba(245,200,66,0.15);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .step h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .step p { color: var(--muted); font-size: 0.92rem; line-height: 1.65; }
+
+    /* CTA BANNER */
+    .cta-banner {
+      max-width: 1000px;
+      margin: 0 auto 6rem;
+      padding: 0 2rem;
+    }
+
+    .cta-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(245,200,66,0.05) 0%, transparent 60%);
+    }
+
+    .cta-inner h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .cta-inner h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
+    .cta-inner p { color: var(--muted); font-size: 1.05rem; margin-bottom: 2.5rem; position: relative; }
+
+    .cta-badges {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .badge {
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content { animation: fadeUp 0.6s ease both; }
+    .walk-wrap { animation: fadeUp 0.6s ease 0.15s both; }
+
+    @media (max-width: 700px) {
+      .hero { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem 3rem; }
+      .walk-wrap { order: -1; }
+      .steps { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .cta-inner { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">✦ Spark Lab</a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/spark-quotes">Spark Quotes</a></li>
+      <li><a href="/spark-walk" style="color:#e8f0e8">Spark Walk</a></li>
+      <li><a href="/blog">Blog</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">✦ Free · Science-backed · Works anywhere</span>
+      <h1>10,000 steps in <em>20 minutes.</em></h1>
+      <p>Spark Walk uses the tempo walk method — alternating fast and easy intervals that are scientifically proven to deliver more cardiovascular benefit than 10,000 daily steps. A sound tells you when to change pace. You just walk.</p>
+      <div class="cta-group">
+        <a href="https://walks.wearesparklab.com" class="btn-primary">Start Walking Free 🚶</a>
+        <a href="/" class="btn-outline">← Back to Spark Lab</a>
+      </div>
+    </div>
+    <div class="walk-wrap">
+      <div class="walk-card">
+        <div class="walk-card-glow"></div>
+        <p class="walk-label">Current pace</p>
+        <p class="walk-status">Brisk Walk</p>
+        <p class="walk-time">02:14</p>
+        <div class="walk-bar"><div class="walk-bar-fill"></div></div>
+        <div class="walk-intervals">
+          <div class="interval fast">FAST</div>
+          <div class="interval easy">EASY</div>
+          <div class="interval active">FAST</div>
+          <div class="interval easy">EASY</div>
+          <div class="interval fast">FAST</div>
+          <div class="interval easy">EASY</div>
+        </div>
+        <p class="walk-next">Next: <strong>Easy walk</strong> in 0:46</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCIENCE CALLOUT -->
+  <section class="science">
+    <div class="science-inner">
+      <p>"Tempo interval walking — alternating 3 minutes brisk with 3 minutes easy — delivers equivalent cardiovascular and metabolic benefit to 10,000 daily steps, in approximately 20 minutes."</p>
+      <small>✦ Based on peer-reviewed research into interval walking protocols and cardiovascular health outcomes</small>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <p class="section-label">How it works</p>
+    <h2>Simpler than you think.<br><em>More effective than you expect.</em></h2>
+    <div class="steps">
+      <div class="step">
+        <p class="step-num">01</p>
+        <h3>Open the app</h3>
+        <p>No login needed to start. Open Spark Walk on any device — phone, tablet, or browser. Add it to your home screen and it works like a native app.</p>
+      </div>
+      <div class="step">
+        <p class="step-num">02</p>
+        <h3>Press start and walk</h3>
+        <p>A sound cue tells you when to speed up and when to ease off. No counting, no watching the screen, no thinking. Just walk and follow the rhythm.</p>
+      </div>
+      <div class="step">
+        <p class="step-num">03</p>
+        <h3>20 minutes later</h3>
+        <p>You're done. You've matched — or beaten — the benefit of 10,000 steps. Your heart, metabolism, and mood all got the signal they needed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <p class="section-label">Features</p>
+    <h2>Built for real life.<br><em>Not Instagram life.</em></h2>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">🎵</div>
+        <h3>Sound-guided intervals</h3>
+        <p>A gentle audio cue tells you when to change pace. Phone stays in your pocket. Eyes stay on the world around you. No counting required.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">👟</div>
+        <h3>Default or custom walks</h3>
+        <p>Follow the default 20-minute tempo walk or build your own — adjust interval lengths, total duration, and pace levels to suit your fitness.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>Group walks with anyone</h3>
+        <p>Invite friends or other users to walk together — even if you're miles apart. Stay in sync, build accountability, and make moving social.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Works anywhere in the world</h3>
+        <p>Spark Walk uses your device's location to work wherever you are — park, street, beach, or treadmill. No region restrictions.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Add to your home screen</h3>
+        <p>Works like a native app. Add to your phone's home screen for instant one-tap access — no app store required, no storage used.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🆓</div>
+        <h3>Completely free</h3>
+        <p>No subscription, no premium tier, no catch. Spark Walk is free for everyone because good health shouldn't cost money to access.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="cta-inner">
+      <h2>Ready for your <em>first tempo walk?</em></h2>
+      <p>Free. No login. No download. Works on any device, anywhere in the world. Just open and walk.</p>
+      <div class="cta-badges">
+        <span class="badge">✦ Completely free</span>
+        <span class="badge">✦ No subscription</span>
+        <span class="badge">✦ Science-backed</span>
+        <span class="badge">✦ Works worldwide</span>
+        <span class="badge">✦ Sound-guided</span>
+      </div>
+      <a href="https://walks.wearesparklab.com" class="btn-primary" style="font-size:1.1rem; padding: 1rem 2.5rem;">Open Spark Walk — it's free 🚶</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© Spark Lab · <a href="/">Home</a> · <a href="/spark-quotes">Spark Quotes</a> · <a href="/blog">Blog</a> · <a href="/privacy">Privacy</a> · Free tempo walking app</p>
+  </footer>
+
+</body>
+</html>
