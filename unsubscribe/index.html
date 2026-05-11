@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unsubscribe | Spark Lab</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg: #0a0a0f; --surface: #12121a; --border: #1e1e2e; --accent: #f5c842; --text: #e8e8f0; --muted: #7070a0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+    nav { position: fixed; top: 0; left: 0; right: 0; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,10,15,0.92); backdrop-filter: blur(12px); }
+    .nav-logo { font-family: 'Fraunces', serif; font-size: 1.4rem; color: var(--accent); text-decoration: none; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 1.5rem; padding: 3rem; max-width: 480px; width: 100%; text-align: center; }
+    .icon { font-size: 3rem; margin-bottom: 1.5rem; }
+    h1 { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+    .subtitle { color: var(--muted); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.75rem; }
+    input[type="email"] { background: var(--bg); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.9rem 1.2rem; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; text-align: center; }
+    input[type="email"]:focus { border-color: var(--accent); }
+    input[type="email"]::placeholder { color: var(--muted); }
+    button { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.9rem 1.2rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }
+    button:hover { border-color: var(--accent); color: var(--text); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .message { margin-top: 1rem; font-size: 0.9rem; padding: 0.75rem 1rem; border-radius: 0.75rem; display: none; }
+    .message.success { background: rgba(245,200,66,0.08); border: 1px solid rgba(245,200,66,0.2); color: var(--accent); }
+    .message.error { background: rgba(255,100,100,0.08); border: 1px solid rgba(255,100,100,0.2); color: #ff8080; }
+    .back { margin-top: 2rem; font-size: 0.85rem; }
+    .back a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .back a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">✦ Spark Lab</a>
+  </nav>
+
+  <div class="card">
+    <div class="icon">💛</div>
+    <h1>Sorry to see you <em>go</em></h1>
+    <p class="subtitle">Enter your email below and we'll remove you from the Spark Lab newsletter immediately. No hard feelings.</p>
+
+    <div class="form-group">
+      <input type="email" id="unsub-email" placeholder="your@email.com">
+      <button id="unsub-btn" onclick="handleUnsubscribe()">Unsubscribe me</button>
+      <div class="message" id="unsub-msg"></div>
+    </div>
+
+    <div class="back">
+      <a href="/">← Back to Spark Lab</a>
+    </div>
+  </div>
+
+  <script>
+    async function handleUnsubscribe() {
+      const emailInput = document.getElementById('unsub-email');
+      const btn = document.getElementById('unsub-btn');
+      const msg = document.getElementById('unsub-msg');
+      const email = emailInput.value.trim();
+
+      if (!email) return;
+
+      btn.textContent = 'Removing...';
+      btn.disabled = true;
+      msg.style.display = 'none';
+
+      try {
+        const res = await fetch(
+          'https://misscaetano.app.n8n.cloud/webhook/sparklab-unsubscribe',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          }
+        );
+
+        const data = await res.json();
+
+        msg.style.display = 'block';
+        if (data.success) {
+          msg.className = 'message success';
+          msg.textContent = data.message;
+          emailInput.value = '';
+        } else {
+          msg.className = 'message error';
+          msg.textContent = data.message || 'Something went wrong. Please try again.';
+        }
+      } catch (e) {
+        msg.style.display = 'block';
+        msg.className = 'message error';
+        msg.textContent = 'Could not connect. Please try again shortly.';
+      }
+
+      btn.textContent = 'Unsubscribe me';
+      btn.disabled = false;
+    }
+
+    document.getElementById('unsub-email')
+      .addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleUnsubscribe();
+      });
+  </script>
+
+</body>
+</html>

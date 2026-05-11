@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Wellness Habits That Don't Require Willpower | Spark Lab Blog</title>
+  <meta name="description" content="Willpower is overrated. These simple digital wellness habits work because they remove the need to decide — and they actually stick.">
+  <meta name="keywords" content="digital wellness habits, screen time tips, wellness without willpower, digital detox, mindful phone use, wellbeing habits, digital wellbeing, spark quotes app">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.wearesparklab.com/blog/digital-wellness-habits-without-willpower">
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/blog-star.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --border: #1e1e2e;
+      --accent: #f5c842;
+      --text: #e8e8f0;
+      --muted: #7070a0;
+      --card-bg: #0f0f18;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.8; }
+    nav { padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(10,10,15,0.92); backdrop-filter: blur(12px); z-index: 100; }
+    .nav-logo { font-family: 'Fraunces', serif; font-size: 1.4rem; color: var(--accent); text-decoration: none; }
+    .nav-back { color: var(--muted); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+    .nav-back:hover { color: var(--text); }
+    .article-hero { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 3rem; }
+    .breadcrumb { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .article-category { display: inline-block; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); background: rgba(245,200,66,0.1); padding: 0.3rem 0.8rem; border-radius: 2rem; margin-bottom: 1.2rem; }
+    .article-hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
+    .article-hero h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+    .article-intro { font-size: 1.15rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
+    .article-meta { display: flex; gap: 1.5rem; font-size: 0.82rem; color: var(--muted); padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .article-hero-img { max-width: 720px; margin: 0 auto; padding: 0 2rem 3rem; }
+    .hero-visual { background: linear-gradient(135deg, #0d1a1a 0%, #1a2d2a 50%, #0d1a20 100%); border-radius: 1.5rem; height: 320px; display: flex; align-items: center; justify-content: center; font-size: 6rem; position: relative; overflow: hidden; border: 1px solid var(--border); }
+    .hero-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 80%, rgba(245,200,66,0.08) 0%, transparent 60%); }
+    .article-body { max-width: 680px; margin: 0 auto; padding: 0 2rem 6rem; }
+    .article-body h2 { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 700; letter-spacing: -0.02em; margin: 2.5rem 0 1rem; color: var(--text); }
+    .article-body h3 { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; margin: 2rem 0 0.75rem; color: var(--accent); }
+    .article-body p { margin-bottom: 1.4rem; font-size: 1.05rem; color: #c8c8d8; line-height: 1.85; }
+    .article-body strong { color: var(--text); font-weight: 500; }
+    .habit-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 1.2rem; padding: 2rem 2rem 1.5rem; margin: 2.5rem 0; position: relative; }
+    .habit-number { position: absolute; top: -1rem; left: 1.5rem; background: var(--accent); color: #0a0a0f; font-family: 'Fraunces', serif; font-size: 0.85rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 2rem; }
+    .habit-card h3 { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; line-height: 1.3; }
+    .habit-card p { font-size: 0.98rem; color: #c8c8d8; margin: 0; }
+    .pullquote { border-left: 3px solid var(--accent); padding: 1rem 1.5rem; margin: 2rem 0; background: rgba(245,200,66,0.04); border-radius: 0 1rem 1rem 0; }
+    .pullquote p { font-family: 'Fraunces', serif; font-size: 1.2rem; font-style: italic; font-weight: 300; color: var(--text); margin: 0; }
+    .article-cta { background: linear-gradient(135deg, var(--surface), var(--card-bg)); border: 1px solid var(--border); border-radius: 1.5rem; padding: 2.5rem; margin: 3rem 0; text-align: center; }
+    .article-cta h3 { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text); }
+    .article-cta p { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.95rem; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--accent); color: #0a0a0f; padding: 0.85rem 1.8rem; border-radius: 0.75rem; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: opacity 0.2s, transform 0.2s; }
+    .cta-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+    .related { border-top: 1px solid var(--border); padding-top: 3rem; margin-top: 4rem; }
+    .related h2 { font-family: 'Fraunces', serif; font-size: 1.4rem; margin-bottom: 1.5rem; }
+    .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .related-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; text-decoration: none; transition: border-color 0.2s; }
+    .related-card:hover { border-color: rgba(245,200,66,0.4); }
+    .related-card .post-category { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .related-card h3 { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; color: var(--text); }
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--muted); font-size: 0.85rem; }
+    footer a { color: var(--muted); text-decoration: none; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    .article-hero, .article-body { animation: fadeUp 0.5s ease both; }
+    .article-body { animation-delay: 0.1s; }
+    @media (max-width: 600px) { .related-grid { grid-template-columns: 1fr; } }
+  </style>
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">✦ Spark Lab</a>
+    <a href="/blog" class="nav-back">← Back to blog</a>
+  </nav>
+
+  <article>
+    <header class="article-hero">
+      <div class="breadcrumb">
+        <a href="/">Home</a> / <a href="/blog">Blog</a> / Digital Wellness Habits That Don't Require Willpower
+      </div>
+      <span class="article-category">✦ Habits</span>
+      <h1>Digital Wellness Habits That <em>Don't Require Willpower</em></h1>
+      <p class="article-intro">Willpower is overrated. These simple digital wellness habits work because they remove the need to decide — and they actually stick.</p>
+      <div class="article-meta">
+        <span>📅 May 2026</span>
+        <span>⏱ 5 min read</span>
+        <span>✦ Habits & Wellbeing</span>
+      </div>
+    </header>
+
+    <div class="article-hero-img">
+      <img src="/assets/card-digital-wellness.jpg" alt="Digital wellness habits that don't require willpower" style="width:100%;height:320px;object-fit:cover;border-radius:1.5rem;border:1px solid #1e1e2e;">
+    </div>
+
+    <div class="article-body">
+
+      <p>Here's the problem with most digital wellness advice: it assumes you have an endless reserve of self-discipline, a perfectly structured day, and approximately zero responsibilities.</p>
+
+      <p>Switch off your phone at 9pm. Do a 30-minute digital detox every morning. Delete social media for a month.</p>
+
+      <p>Great. Very helpful. Thanks.</p>
+
+      <p>The truth is, lasting digital wellness habits don't come from gritting your teeth — they come from <strong>designing your environment so the good choice is the easy choice</strong>. No heroics required.</p>
+
+      <p>These are the habits that actually work. The ones that run quietly in the background, take almost no effort to maintain, and still make a noticeable difference to how you feel.</p>
+
+      <div class="habit-card">
+        <span class="habit-number">01</span>
+        <h3>Make the Bad Habit Harder, Not the Good One Easier</h3>
+        <p>There's a reason you reach for your phone the second you wake up. It's <em>right there</em>. It's easy. It's automatic. You don't need more willpower to stop — you need more distance. Charge your phone in another room. Put social media apps on the second or third page of your home screen. Log out of the apps you mindlessly open, so there's one extra step between you and the scroll. None of these things feel dramatic. That's the point. Friction is invisible willpower — and it works even when you're tired, stressed, or just not in the mood to be virtuous.</p>
+      </div>
+
+      <div class="habit-card">
+        <span class="habit-number">02</span>
+        <h3>Do a Five-Minute Notification Audit</h3>
+        <p>You don't need fewer apps. You need fewer interruptions. Most notifications are not urgent. Most of them aren't even useful. They're just noise — and every ping pulls a small thread of your attention, even when you don't consciously register it. Spend five minutes going through your notification settings and turning off everything that doesn't genuinely need your immediate attention. Emails. Social updates. News alerts. Shopping apps reminding you they miss you. Keep the ones that matter. Mute the rest. You'll be surprised how much quieter your brain feels after this single, boring, five-minute task.</p>
+      </div>
+
+      <div class="habit-card">
+        <span class="habit-number">03</span>
+        <h3>Protect Your Anchor Moments</h3>
+        <p>You don't need to go phone-free all day. You just need a few moments that are reliably yours. Pick two. That's it. Two small windows where your phone stays face-down or out of reach. Good options: the first ten minutes after you wake up. Meals. The last fifteen minutes before you sleep. A walk. Time with your kids. These anchor moments aren't about punishment or restriction — they're about giving your nervous system a regular chance to just <em>be</em>, without input, without stimulation, without the low-level hum of being always available. Most people who try this report that they don't miss it. They mostly just feel calmer.</p>
+      </div>
+
+      <div class="habit-card">
+        <span class="habit-number">04</span>
+        <h3>Use Your Devices on Purpose, Not by Default</h3>
+        <p>There's a difference between opening your phone because you decided to, and opening it because it's what you do when you sit down, or wait for something, or feel vaguely bored. One is intentional. One is just filling space. Before you open an app, try a one-second pause: <em>am I choosing this, or am I just on autopilot?</em> That pause is surprisingly powerful. It doesn't stop you from scrolling when you actually want to — it just interrupts the automatic loop. And if you want to make it easier, swap one mindless open for something that actually gives you something. A quote that lands. A voice note you've been meaning to send. One small thing that leaves you better than it found you.</p>
+      </div>
+
+      <div class="habit-card">
+        <span class="habit-number">05</span>
+        <h3>Walk Away (Literally)</h3>
+        <p>If you only take one thing from this post, make it this: walking is the most underrated digital reset tool in existence. Not because of the steps. Not because of the calories. Because it's genuinely hard to doomscroll while you're moving, looking at things, and existing in a body. Even ten minutes. Even around the block. Even on a treadmill. Movement shifts your mental state in a way that sitting and <em>trying to feel better</em> rarely does. It's not a cure for everything — but it is a reliable reset, and it costs nothing.</p>
+      </div>
+
+      <div class="habit-card">
+        <span class="habit-number">06</span>
+        <h3>The "Good Enough" Rule</h3>
+        <p>The biggest enemy of sustainable digital wellness habits is perfectionism. You missed your anchor moment this morning. You scrolled for an hour last night. You've had your phone in your hand basically all day. So what. Tomorrow is not cancelled. The goal isn't a perfect relationship with technology. The goal is a slightly more intentional one — and that doesn't require a streak, a score, or a clean slate. It just requires picking back up. Good enough, done consistently, beats perfect, done never.</p>
+      </div>
+
+      <h2>Why these work when other habits don't</h2>
+
+      <p>The common thread through all six of these is that <strong>none of them demand anything dramatic from you</strong>. They don't require energy you don't have or a version of yourself that only exists on a good day. They work with your current state rather than against it.</p>
+
+      <p>Most digital wellness advice is designed for someone who already has everything together. These habits are designed for everyone else — which is most of us, most of the time.</p>
+
+      <div class="pullquote">
+        <p>"Lasting habits don't come from gritting your teeth. They come from making the good choice the easier one."</p>
+      </div>
+
+      <p>There's also something worth saying about momentum. One small change makes the next one slightly easier. Charging your phone outside the bedroom leads to a calmer morning, which makes you less likely to reach for it the moment you sit down. The habits compound — quietly, without you having to try very hard.</p>
+
+      <h2>A simpler way to start</h2>
+
+      <p>If all of this feels like a lot, start with one thing. Just one.</p>
+
+      <p>Turn off notifications from one app you don't actually need updates from. Charge your phone outside the bedroom for one week. Open something that gives you something — a quote, a thought, a moment of perspective — instead of something that just takes.</p>
+
+      <p>Small. Consistent. No willpower required. That's what actually sticks.</p>
+
+      <div class="article-cta">
+        <h3>One good thing, every day ✦</h3>
+        <p>Spark Quotes delivers a carefully chosen quote each day — a moment of perspective instead of a mindless scroll. Free, no login needed, no noise.</p>
+        <a href="https://quotes.wearesparklab.com" class="cta-btn">Try Spark Quotes free →</a>
+      </div>
+
+      <section class="related">
+        <h2>More from the blog</h2>
+        <div class="related-grid">
+          <a href="/blog/why-daily-walk-changes-everything" class="related-card">
+            <p class="post-category">✦ Movement</p>
+            <h3>Why a 10-Minute Walk Changes More Than You Think</h3>
+          </a>
+          <a href="/blog/morning-routine-without-the-pressure" class="related-card">
+            <p class="post-category">✦ Habits</p>
+            <h3>A Morning Routine That Doesn't Need to Be Perfect</h3>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </article>
+
+  <footer>
+    <p>© Spark Lab · <a href="/blog">Blog</a> · <a href="/">Home</a> · <a href="/privacy">Privacy</a> · Free motivational quotes app & mindful walking app</p>
+  </footer>
+
+</body>
+</html>
