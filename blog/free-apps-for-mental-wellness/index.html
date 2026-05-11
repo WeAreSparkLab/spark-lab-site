@@ -8,6 +8,7 @@
   <meta name="keywords" content="free mental wellness apps, free mindfulness apps, free daily quotes app, free walking app, mental health apps no subscription, wellness apps UK, best free wellbeing apps 2025">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.wearesparklab.com/blog/free-apps-for-mental-wellness">
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/blog-star.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -205,9 +206,59 @@
     </div>
   </article>
 
+  <section style="max-width:680px;margin:0 auto 4rem;padding:0 2rem;">
+    <div style="background:#12121a;border:1px solid #1e1e2e;border-radius:1.5rem;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
+      <div>
+        <h2 style="font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.75rem;">Get your weekly<br><em style="font-style:italic;font-weight:300;color:#f5c842;">spark of good</em></h2>
+        <p style="color:#7070a0;font-size:0.95rem;">One short email, every week. A quote, a habit tip, and something to make your day a little lighter.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.75rem;">
+        <input type="email" id="newsletter-email" placeholder="your@email.com" style="background:#0a0a0f;border:1px solid #1e1e2e;border-radius:0.75rem;padding:0.9rem 1.2rem;color:#e8e8f0;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;">
+        <button type="button" id="newsletter-btn" onclick="handleSignup()" style="background:#f5c842;color:#0a0a0f;border:none;border-radius:0.75rem;padding:0.9rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;">Send me the spark ✦</button>
+        <p id="newsletter-msg" style="display:none;font-size:0.85rem;margin-top:0.5rem;"></p>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <p>© Spark Lab · <a href="/blog">Blog</a> · <a href="/">Home</a> · <a href="/privacy">Privacy</a> · Free motivational quotes app & mindful walking app</p>
   </footer>
 
+<script>
+async function handleSignup() {
+  const emailInput = document.getElementById('newsletter-email');
+  const btn = document.getElementById('newsletter-btn');
+  const msg = document.getElementById('newsletter-msg');
+  const email = emailInput.value.trim();
+  if (!email) return;
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  msg.style.display = 'none';
+  try {
+    const res = await fetch(
+      'https://misscaetano.app.n8n.cloud/webhook/sparklab-subscribe',
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) }
+    );
+    const data = await res.json();
+    msg.style.display = 'block';
+    if (data.success) {
+      msg.style.color = '#f5c842';
+      msg.textContent = data.message || "You're in! Check your inbox.";
+      emailInput.value = '';
+    } else {
+      msg.style.color = '#ff6b6b';
+      msg.textContent = data.message || 'Something went wrong. Please try again.';
+    }
+  } catch (e) {
+    msg.style.display = 'block';
+    msg.style.color = '#ff6b6b';
+    msg.textContent = 'Could not connect. Please try again shortly.';
+  }
+  btn.textContent = 'Send me the spark ✦';
+  btn.disabled = false;
+}
+document.getElementById('newsletter-email')
+  .addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSignup(); });
+</script>
 </body>
 </html>
