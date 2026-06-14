@@ -45,6 +45,48 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://www.wearesparklab.com/blog/how-to-stop-waiting-until-you-feel-ready</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wearesparklab.com/blog/the-5-minute-reset</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wearesparklab.com/blog/5-things-that-happen-when-you-walk-every-day</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wearesparklab.com/blog/5-quotes-that-actually-help</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wearesparklab.com/blog/morning-routine-without-the-pressure</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wearesparklab.com/blog/free-apps-for-mental-wellness</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- App subdomains -->
   <url>
     <loc>https://quotes.wearesparklab.com/</loc>
