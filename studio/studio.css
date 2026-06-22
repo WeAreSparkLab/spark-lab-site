@@ -54,7 +54,7 @@
   max-width: 16ch;
 }
 .st-hero .st-lead {
-  color: var(--st-muted);
+  color: #d3dbf2; /* brighter than muted — this is the prominent hero intro */
   font-size: clamp(16px, 2.2vw, 19px);
   max-width: 60ch;
   margin: 16px 0 24px;
