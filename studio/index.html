@@ -32,7 +32,7 @@
   <meta name="theme-color" content="#0B1020">
 
   <link rel="stylesheet" href="/styles.css?v=19">
-  <link rel="stylesheet" href="/studio/studio.css?v=2">
+  <link rel="stylesheet" href="/studio/studio.css?v=3">
   <script defer src="/_vercel/insights/script.js"></script>
 
   <!-- Local business / service schema -->
@@ -249,6 +249,28 @@
     <section class="container st-section">
       <h2>Recent work</h2>
       <p class="st-sub">Real practitioners, real sites. More coming soon.</p>
+
+      <!-- ===================================================================
+           TESTIMONIAL — built to hold ONE real quote.
+           It is HIDDEN by default (note the `hidden` attribute on <figure>).
+
+           TO TURN IT ON:
+             1. Replace the four [bracketed] placeholders below with real words.
+             2. Delete the word  hidden  from the <figure ...> opening tag.
+
+           NO LIVE-SITE LINK YET?
+             Delete the whole <a class="st-attr-link"> ... </a> line — the
+             link is optional.
+           =================================================================== -->
+      <figure class="st-testimonial glass" hidden>
+        <div class="st-quote-mark" aria-hidden="true">“</div>
+        <blockquote class="st-quote">[Client quote goes here]</blockquote>
+        <figcaption class="st-attr">
+          <cite class="st-attr-name">[Client name]</cite>
+          <span class="st-attr-biz">[Business name]</span>
+          <a class="st-attr-link" href="[live site URL]" target="_blank" rel="noopener noreferrer">View their site →</a>
+        </figcaption>
+      </figure>
 
       <div class="st-portfolio">
         <!--
