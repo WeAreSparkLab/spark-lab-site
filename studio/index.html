@@ -93,7 +93,7 @@
     <!-- HERO -->
     <section class="container st-hero">
       <span class="st-eyebrow">Spark Lab Studio · for practitioners</span>
-      <h1>Websites and booking assistants for independent wellness practitioners in Norwich.</h1>
+      <h1>Websites and booking assistants for independent wellness practitioners.</h1>
       <p class="st-lead">
         If you're a massage therapist, reflexologist or beauty therapist working for yourself,
         I build you a simple, beautiful website wired to your booking — and an optional assistant
@@ -103,6 +103,46 @@
         <a class="btn btn-primary" href="#whatyouget">See what's included</a>
         <a class="btn btn-ghost" href="#contact">Get in touch</a>
       </div>
+    </section>
+
+    <!-- EMBEDDED LIVE ASSISTANT (same widget + /api/assistant function as /studio/assistant) -->
+    <section class="container st-section" style="padding-top:6px" aria-label="Try the booking assistant">
+      <h2>See it in action</h2>
+      <p class="st-sub">
+        This is the real booking assistant, set up here for a made-up studio so you can try it
+        freely. On your site it answers in your words — your services, prices and policies.
+      </p>
+      <p class="st-demo-note">
+        ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
+      </p>
+
+      <div class="chat glass" role="region" aria-label="Booking assistant demo">
+        <div class="chat-head">
+          <div class="chat-avatar" aria-hidden="true">W</div>
+          <div>
+            <div class="chat-title">Willow Lane Massage</div>
+            <div class="chat-status">Booking assistant · usually replies instantly</div>
+          </div>
+        </div>
+
+        <div class="chat-log" id="chatLog" aria-live="polite" aria-atomic="false"></div>
+
+        <div class="chat-chips" id="chatChips" aria-label="Example questions">
+          <button type="button" class="chat-chip" data-q="Do you do pregnancy massage?">Do you do pregnancy massage?</button>
+          <button type="button" class="chat-chip" data-q="How much is a 60-minute massage?">How much is a 60-minute massage?</button>
+          <button type="button" class="chat-chip" data-q="Where are you and is there parking?">Where are you and is there parking?</button>
+          <button type="button" class="chat-chip" data-q="I'd like to book a deep tissue session">I'd like to book a deep tissue session</button>
+        </div>
+
+        <form class="chat-form" id="chatForm" autocomplete="off">
+          <label for="chatInput" style="position:absolute;left:-9999px">Your message</label>
+          <input type="text" id="chatInput" name="message" placeholder="Type your question…" maxlength="1000" />
+          <button type="submit" class="chat-send" id="chatSend">Send</button>
+        </form>
+      </div>
+      <p style="margin:12px 0 0;font-size:14px;color:var(--st-muted)">
+        Prefer a full-page version to share? <a href="/studio/assistant">Open the standalone demo →</a>
+      </p>
     </section>
 
     <hr class="st-divider">
@@ -124,12 +164,8 @@
             <li>Ongoing updates, hosting and small changes handled for you</li>
           </ul>
           <div class="st-offer-foot">
-            <!-- PRICING PLACEHOLDER: replace with the real figures when confirmed -->
             <p class="st-price">
-              <span class="st-from">from</span>
-              <span class="st-placeholder">£___</span>
-              &nbsp;+&nbsp;
-              <span class="st-placeholder">£___/mo</span>
+              <span class="st-from">from</span> £450 &nbsp;+&nbsp; £20/mo
             </p>
           </div>
         </article>
@@ -229,7 +265,7 @@
 
         <article class="st-portfolio-card glass is-placeholder">
           <h3>Your studio here?</h3>
-          <p>Be one of the first Norwich practitioners featured. Get in touch and let's build your demo.</p>
+          <p>Be one of the first practitioners featured here. Get in touch and let's build your demo.</p>
         </article>
       </div>
     </section>
@@ -270,11 +306,11 @@
       <h2>Let's build your demo</h2>
       <p>
         Tell me a little about your practice and I'll put together a working demo of your
-        site — free to look at, no obligation. Based in Norwich, working with practitioners
-        across Norfolk.
+        site — free to look at, no obligation. I'm based in Norwich and work with practitioners
+        wherever you are.
       </p>
       <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
-        href="https://mail.google.com/mail/?view=cm&fs=1&to=support@wearesparklab.com&su=Spark%20Lab%20Studio%20enquiry&body=Hi%20Spark%20Lab%2C%0A%0AI'm%20a%20wellness%20practitioner%20in%20the%20Norwich%20area%20and%20I'd%20like%20to%20hear%20more%20about%20a%20website%20and%20booking%20assistant.%0A%0AMy%20practice%3A%20%0AWhat%20I%20offer%3A%20%0A%0AThanks!">
+        href="https://mail.google.com/mail/?view=cm&fs=1&to=support@wearesparklab.com&su=Spark%20Lab%20Studio%20enquiry&body=Hi%20Spark%20Lab%2C%0A%0AI'm%20a%20wellness%20practitioner%20and%20I'd%20like%20to%20hear%20more%20about%20a%20website%20and%20booking%20assistant.%0A%0AMy%20practice%3A%20%0AWhat%20I%20offer%3A%20%0A%0AThanks!">
         Email us in Gmail
       </a>
       <p style="margin:14px 0 0;font-size:14px;color:var(--st-muted)">
@@ -315,6 +351,7 @@
       });
     })();
   </script>
+  <script src="/studio/assistant.js?v=1" defer></script>
 </body>
 
 </html>
