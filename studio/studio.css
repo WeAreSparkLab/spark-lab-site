@@ -273,6 +273,74 @@
   margin: 6px 0 0;
 }
 
+/* --- Testimonial (built to hold ONE quote well) --------------------------- */
+.st-testimonial {
+  position: relative;
+  margin: 0 0 18px; /* sits directly above the portfolio grid */
+  padding: 32px 30px 26px;
+  border: 1px solid var(--st-line);
+  border-radius: 18px;
+  overflow: hidden;
+}
+/* Belt-and-braces: keep the `hidden` toggle working even though the rules
+   above style the element. Remove `hidden` from the <figure> to reveal it. */
+.st-testimonial[hidden] {
+  display: none;
+}
+/* subtle accent edge instead of a thin grey box */
+.st-testimonial::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--st-accent), var(--st-accent-2));
+}
+.st-quote-mark {
+  font-family: Orbitron, Inter, sans-serif;
+  font-size: 60px;
+  line-height: 0.8;
+  color: var(--st-accent-2);
+  opacity: 0.4;
+}
+.st-quote {
+  margin: 6px 0 0;
+  font-size: clamp(20px, 3vw, 27px);
+  line-height: 1.45;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--st-ink);
+  max-width: 36ch;
+}
+.st-attr {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--st-line);
+}
+.st-attr-name {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--st-ink);
+  font-size: 15px;
+}
+.st-attr-biz {
+  color: var(--st-muted);
+  font-size: 14px;
+}
+.st-attr-link {
+  font-size: 14px;
+  margin-top: 4px;
+}
+@media (min-width: 680px) {
+  .st-testimonial {
+    padding: 40px 38px 30px;
+  }
+}
+
 /* --- FAQ ------------------------------------------------------------------- */
 .st-faq {
   display: grid;
