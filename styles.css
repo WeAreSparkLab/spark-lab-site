@@ -11,7 +11,7 @@
   --cyan:#00f6d2;
   --violet:#8a63ff;--accent: #8B5CF6;      /* primary (purple) */
   --accent-hover: #7C3AED;/* a bit deeper */
-  --muted: #334155;       /* secondary button */
+  --btn-secondary: #334155; /* secondary button colour (was mistakenly redefining --muted, which made all muted text nearly invisible) */
   --text-on-accent: #ffffff;
 }
 *{box-sizing:border-box}
@@ -455,3 +455,47 @@ footer.footer p{ margin:6px 0; }
 .nav .nav-links { display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
 .nav .nav-links a { display:inline-flex; margin-left:0 !important; white-space:nowrap; }
 @media (max-width: 640px){ .nav .nav-links { gap:14px; } }
+
+/* --- Mobile hamburger dropdown menu ---------------------------------------
+   Only navs that include a .nav-burger button collapse on small screens
+   (scoped via :has so other pages' navs are unaffected).                    */
+.nav { position: relative; }
+.nav-burger { display: none; }
+
+@media (max-width: 640px){
+  .nav-burger{
+    display:inline-flex; flex-direction:column; justify-content:center; gap:5px;
+    width:42px; height:42px; padding:9px;
+    border:1px solid var(--line); border-radius:10px;
+    background:rgba(255,255,255,0.05); cursor:pointer; flex:0 0 auto;
+  }
+  .nav-burger span{
+    display:block; height:2px; width:100%;
+    background:#e6e9ff; border-radius:2px;
+    transition:transform .2s ease, opacity .2s ease;
+  }
+  .nav-burger[aria-expanded="true"] span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .nav-burger[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+  .nav-burger[aria-expanded="true"] span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+  /* Collapse the links into a dropdown panel — only where a burger exists */
+  .nav:has(.nav-burger) .nav-links{
+    display:none;
+    position:absolute; top:calc(100% + 8px); right:0; left:0;
+    flex-direction:column; align-items:stretch; gap:6px;
+    padding:8px; z-index:120;
+    background:#0c0e24f2; border:1px solid var(--line); border-radius:14px;
+    box-shadow:0 12px 32px rgba(0,0,0,.45);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  }
+  .nav:has(.nav-burger) .nav-links.open{ display:flex; }
+  .nav:has(.nav-burger) .nav-links a{
+    width:100%; padding:12px 14px; border-radius:10px;
+    color:#e6e9ff; white-space:nowrap;
+  }
+  .nav:has(.nav-burger) .nav-links a:hover{ background:rgba(255,255,255,0.08); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .nav-burger span{ transition:none; }
+}

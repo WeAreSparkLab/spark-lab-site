@@ -33,7 +33,7 @@
     <link rel="mask-icon" href="/assets/brand/spark-bolt.svg" color="#FF6A00">
     <meta name="theme-color" content="#0B1020">
 
-    <link rel="stylesheet" href="/styles.css?v=18">
+    <link rel="stylesheet" href="/styles.css?v=19">
     <link rel="manifest" href="/manifest.webmanifest">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -60,7 +60,11 @@
     <header class="container">
         <nav class="nav glass">
             <div class="brand"><span>⚡</span><span class="brand-text">Spark Lab</span></div>
-            <div class="nav-links">
+            <button class="nav-burger" type="button" aria-label="Open menu" aria-expanded="false"
+                aria-controls="navlinks">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links" id="navlinks">
                 <a href="/">Home</a>
                 <a href="/#apps">Apps</a>
                 <a href="#merch" class="nav-link">Merch</a>
@@ -299,6 +303,23 @@
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile dropdown menu toggle
+        (function () {
+            const burger = document.querySelector('.nav-burger');
+            const links = document.getElementById('navlinks');
+            if (!burger || !links) return;
+            burger.addEventListener('click', function () {
+                const open = links.classList.toggle('open');
+                burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            links.addEventListener('click', function (e) {
+                if (e.target.closest('a')) {
+                    links.classList.remove('open');
+                    burger.setAttribute('aria-expanded', 'false');
+                }
+            });
+        })();
 
         // tiny tilt effect on hover (no libs)
         const tilt = document.querySelector('.tilt');
