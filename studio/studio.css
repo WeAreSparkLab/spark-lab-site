@@ -1,0 +1,524 @@
+/* =============================================================================
+   Spark Lab Studio (B2B) — scoped styles
+   -----------------------------------------------------------------------------
+   Reuses the site-wide design tokens from /styles.css (:root vars, .glass,
+   .btn, .container, fonts) but adopts a calmer, more professional register for
+   a business audience: less neon glow, more whitespace, solid headings.
+   All rules are scoped under .studio so nothing here affects the consumer site.
+   (Precedent: spark-walk/ already ships its own scoped page styles.)
+   ========================================================================== */
+
+.studio {
+  --st-accent: var(--brand);      /* #7b7cf6 */
+  --st-accent-2: var(--brand2);   /* #00e5ff */
+  --st-ink: #f3f6ff;
+  --st-muted: var(--muted);
+  --st-line: rgba(255, 255, 255, 0.1);
+  --st-panel: rgba(255, 255, 255, 0.04);
+}
+
+/* Visible keyboard focus everywhere on the Studio pages */
+.studio a:focus-visible,
+.studio button:focus-visible,
+.studio input:focus-visible,
+.studio textarea:focus-visible {
+  outline: 2px solid var(--st-accent-2);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.studio .container {
+  max-width: 980px;
+}
+
+/* --- Eyebrow / kicker ------------------------------------------------------ */
+.st-eyebrow {
+  display: inline-block;
+  font-family: Orbitron, Inter, sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--st-accent-2);
+  margin: 0 0 14px;
+}
+
+/* --- Hero ------------------------------------------------------------------ */
+.st-hero {
+  padding: 64px 20px 28px;
+}
+.st-hero h1 {
+  font-size: clamp(30px, 5.2vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.5px;
+  color: var(--st-ink);
+  max-width: 16ch;
+}
+.st-hero .st-lead {
+  color: var(--st-muted);
+  font-size: clamp(16px, 2.2vw, 19px);
+  max-width: 60ch;
+  margin: 16px 0 24px;
+}
+.st-cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Buttons — lean on the shared .btn, add a quieter secondary */
+.studio .btn-ghost {
+  background: transparent;
+  border: 1px solid var(--st-line);
+  color: var(--st-ink);
+}
+.studio .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* --- Section scaffolding --------------------------------------------------- */
+.st-section {
+  padding: 40px 20px;
+}
+.st-section > h2 {
+  font-size: clamp(22px, 3.4vw, 30px);
+  letter-spacing: -0.3px;
+  color: var(--st-ink);
+}
+.st-section > .st-sub {
+  color: var(--st-muted);
+  max-width: 62ch;
+  margin: 8px 0 26px;
+}
+.st-divider {
+  border: 0;
+  border-top: 1px solid var(--st-line);
+  max-width: 980px;
+  margin: 8px auto;
+}
+
+/* --- Two offers ------------------------------------------------------------ */
+.st-offers {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) {
+  .st-offers {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.st-offer {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.st-offer h3 {
+  font-size: 20px;
+  color: var(--st-ink);
+  margin-bottom: 6px;
+}
+.st-offer .st-offer-tag {
+  font-size: 13px;
+  color: var(--st-accent-2);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.st-offer ul {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 18px;
+  display: grid;
+  gap: 10px;
+}
+.st-offer li {
+  position: relative;
+  padding-left: 26px;
+  color: #d8def5;
+  font-size: 15px;
+}
+.st-offer li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--st-accent-2);
+  font-weight: 700;
+}
+.st-price {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--st-ink);
+  margin: 0 0 4px;
+}
+.st-price .st-from {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--st-muted);
+}
+/* Clearly-marked placeholder for prices not yet supplied */
+.st-placeholder {
+  display: inline-block;
+  padding: 1px 8px;
+  border: 1px dashed var(--st-accent);
+  border-radius: 6px;
+  color: #c9cffb;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.st-offer-foot {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+/* --- How it works (steps) -------------------------------------------------- */
+.st-steps {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+  counter-reset: step;
+}
+@media (min-width: 760px) {
+  .st-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.st-step {
+  padding: 22px;
+}
+.st-step .st-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+  color: #0a0c1a;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.st-step h3 {
+  font-size: 17px;
+  color: var(--st-ink);
+  margin-bottom: 6px;
+}
+.st-step p {
+  color: var(--st-muted);
+  font-size: 15px;
+  margin: 0;
+}
+
+/* --- Why it's worth it (outcomes) ----------------------------------------- */
+.st-outcomes {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 680px) {
+  .st-outcomes {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.st-outcome {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 18px 20px;
+}
+.st-outcome .st-dot {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: var(--st-accent-2);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
+.st-outcome p {
+  margin: 0;
+  color: #d8def5;
+  font-size: 15px;
+}
+.st-outcome strong {
+  color: var(--st-ink);
+}
+
+/* --- Portfolio ------------------------------------------------------------- */
+.st-portfolio {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 680px) {
+  .st-portfolio {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.st-portfolio-card {
+  padding: 22px;
+}
+.st-portfolio-card.is-placeholder {
+  border-style: dashed;
+  border-color: var(--st-line);
+  background: var(--st-panel);
+}
+.st-portfolio-card h3 {
+  font-size: 17px;
+  color: var(--st-ink);
+}
+.st-portfolio-card p {
+  color: var(--st-muted);
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+
+/* --- FAQ ------------------------------------------------------------------- */
+.st-faq {
+  display: grid;
+  gap: 12px;
+}
+.st-faq details {
+  padding: 16px 20px;
+  border: 1px solid var(--st-line);
+  border-radius: 14px;
+  background: var(--st-panel);
+}
+.st-faq summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--st-ink);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.st-faq summary::-webkit-details-marker {
+  display: none;
+}
+.st-faq summary::after {
+  content: "+";
+  color: var(--st-accent-2);
+  font-weight: 700;
+}
+.st-faq details[open] summary::after {
+  content: "–";
+}
+.st-faq details p {
+  color: var(--st-muted);
+  margin: 12px 0 0;
+  font-size: 15px;
+}
+
+/* --- Contact CTA ----------------------------------------------------------- */
+.st-contact {
+  text-align: center;
+  padding: 40px 24px;
+  margin: 16px 20px 0;
+}
+.st-contact h2 {
+  color: var(--st-ink);
+  font-size: clamp(22px, 3.4vw, 28px);
+}
+.st-contact p {
+  color: var(--st-muted);
+  max-width: 52ch;
+  margin: 10px auto 22px;
+}
+
+/* =============================================================================
+   Assistant demo page + chat widget
+   ========================================================================== */
+.st-demo-note {
+  font-size: 13px;
+  color: var(--st-muted);
+  border: 1px solid var(--st-line);
+  background: var(--st-panel);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 0 0 20px;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: min(70vh, 560px);
+  padding: 0;
+  overflow: hidden;
+}
+.chat-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--st-line);
+}
+.chat-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+  color: #0a0c1a;
+  font-weight: 800;
+}
+.chat-head .chat-title {
+  font-weight: 700;
+  color: var(--st-ink);
+  font-size: 15px;
+}
+.chat-head .chat-status {
+  font-size: 12px;
+  color: var(--st-muted);
+}
+
+.chat-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.msg {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.msg.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+  color: #0a0c1a;
+  border-bottom-right-radius: 4px;
+}
+.msg.bot {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--st-line);
+  color: #e7ecff;
+  border-bottom-left-radius: 4px;
+}
+.msg.error {
+  align-self: flex-start;
+  background: rgba(255, 90, 90, 0.1);
+  border: 1px solid rgba(255, 120, 120, 0.4);
+  color: #ffd9d9;
+}
+
+/* typing indicator */
+.typing {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+.typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--st-muted);
+  animation: st-bounce 1.2s infinite ease-in-out;
+}
+.typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes st-bounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* example-question chips */
+.chat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 18px 14px;
+}
+.chat-chip {
+  border: 1px solid var(--st-line);
+  background: rgba(255, 255, 255, 0.05);
+  color: #cfd6ff;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.chat-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* composer */
+.chat-form {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  border-top: 1px solid var(--st-line);
+}
+.chat-form input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--st-line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--st-ink);
+  font-size: 15px;
+  font-family: inherit;
+}
+.chat-form input::placeholder {
+  color: #8089a8;
+}
+.chat-send {
+  border: 0;
+  border-radius: 12px;
+  padding: 0 18px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+  color: #0a0c1a;
+  font-family: inherit;
+}
+.chat-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- Reduced motion -------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .studio *,
+  .studio *::before,
+  .studio *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- Small screens --------------------------------------------------------- */
+@media (max-width: 480px) {
+  .st-hero {
+    padding: 44px 16px 20px;
+  }
+  .st-section {
+    padding: 32px 16px;
+  }
+  .msg {
+    max-width: 92%;
+  }
+}
