@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Demo: AI Booking Assistant for Wellness Practitioners | Spark Lab Studio</title>
+  <meta name="description"
+    content="Try a live AI booking assistant for a wellness practice. It answers questions about treatments, prices and parking, and turns enquiries into bookings — built by Spark Lab Studio in Norwich.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Spark Lab">
+  <link rel="canonical" href="https://www.wearesparklab.com/studio/assistant">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Live Demo: AI Booking Assistant for Wellness Practitioners">
+  <meta property="og:description"
+    content="A booking assistant that turns questions into bookings. Try it live — built by Spark Lab Studio for practitioners in Norwich.">
+  <meta property="og:url" content="https://www.wearesparklab.com/studio/assistant">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.wearesparklab.com/assets/card-digital-wellness.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Live Demo: AI Booking Assistant for Wellness Practitioners">
+  <meta name="twitter:description"
+    content="A booking assistant that turns questions into bookings. Try it live — built by Spark Lab Studio in Norwich.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@600;800&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/spark-bolt.svg?v=3">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/spark-32.png?v=3">
+  <meta name="theme-color" content="#0B1020">
+
+  <link rel="stylesheet" href="/styles.css?v=18">
+  <link rel="stylesheet" href="/studio/studio.css?v=1">
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+
+<body class="studio">
+  <div class="bg">
+    <div class="bg__noise"></div>
+    <div class="bg__gradient"></div>
+    <div class="bg__grid"></div>
+    <div class="bg__orbs"></div>
+  </div>
+
+  <header class="container">
+    <nav class="nav glass">
+      <a class="brand" href="/" style="text-decoration:none;color:inherit">
+        <span>⚡</span><span class="brand-text">Spark Lab</span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/studio">Studio</a>
+        <a href="/studio#whatyouget">What's included</a>
+        <a href="/studio#contact">Get in touch</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container st-hero" style="padding-bottom:18px">
+      <span class="st-eyebrow">Live demo</span>
+      <h1 style="max-width:20ch">A booking assistant that turns questions into bookings.</h1>
+      <p class="st-lead">
+        This is a working assistant set up for a made-up massage studio, so you can
+        try it freely. On a real client's site it answers in their words, with their
+        services, prices and policies — day or night.
+      </p>
+    </section>
+
+    <section class="container st-section" style="padding-top:0">
+      <p class="st-demo-note">
+        ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
+        A real assistant is set up with the practitioner's own details.
+      </p>
+
+      <!-- Chat widget -->
+      <div class="chat glass" role="region" aria-label="Booking assistant demo">
+        <div class="chat-head">
+          <div class="chat-avatar" aria-hidden="true">W</div>
+          <div>
+            <div class="chat-title">Willow Lane Massage</div>
+            <div class="chat-status">Booking assistant · usually replies instantly</div>
+          </div>
+        </div>
+
+        <div class="chat-log" id="chatLog" aria-live="polite" aria-atomic="false"></div>
+
+        <!-- Example questions for a cold visitor -->
+        <div class="chat-chips" id="chatChips" aria-label="Example questions">
+          <button type="button" class="chat-chip" data-q="Do you do pregnancy massage?">Do you do pregnancy massage?</button>
+          <button type="button" class="chat-chip" data-q="How much is a 60-minute massage?">How much is a 60-minute massage?</button>
+          <button type="button" class="chat-chip" data-q="Where are you and is there parking?">Where are you and is there parking?</button>
+          <button type="button" class="chat-chip" data-q="I'd like to book a deep tissue session">I'd like to book a deep tissue session</button>
+        </div>
+
+        <form class="chat-form" id="chatForm" autocomplete="off">
+          <label for="chatInput" class="visually-hidden" style="position:absolute;left:-9999px">Your message</label>
+          <input type="text" id="chatInput" name="message" placeholder="Type your question…" maxlength="1000" />
+          <button type="submit" class="chat-send" id="chatSend">Send</button>
+        </form>
+      </div>
+
+      <!-- Soft CTA -->
+      <div class="st-contact glass" style="margin-top:26px">
+        <h2>Want one of these on your site?</h2>
+        <p>I'll set up an assistant with your services, prices and policies — and a one-page
+          site to go with it if you need one. Based in Norwich.</p>
+        <a class="btn btn-primary"
+          href="mailto:support@wearesparklab.com?subject=Booking%20assistant%20enquiry&body=Hi%20Spark%20Lab%2C%0A%0AI%20saw%20the%20booking%20assistant%20demo%20and%20I'd%20like%20one%20for%20my%20practice.%0A%0AMy%20practice%3A%20%0AWhat%20I%20offer%3A%20%0A%0AThanks!">
+          Enquire →
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer glass">
+      <p>© <span id="year"></span> Spark Lab · Spark Lab Studio ·
+        <a href="mailto:support@wearesparklab.com">support@wearesparklab.com</a>
+      </p>
+      <p class="muted">Demo business is fictional · Real assistants use the practitioner's own details ·
+        <a href="/studio">Back to Studio</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="/studio/assistant.js?v=1" defer></script>
+</body>
+
+</html>

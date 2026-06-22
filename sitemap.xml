@@ -23,6 +23,21 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- Spark Lab Studio (business) -->
+  <url>
+    <loc>https://www.wearesparklab.com/studio</loc>
+    <lastmod>2026-06-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.wearesparklab.com/studio/assistant</loc>
+    <lastmod>2026-06-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Blog -->
   <url>
     <loc>https://www.wearesparklab.com/blog</loc>
