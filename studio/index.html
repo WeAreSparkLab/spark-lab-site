@@ -32,7 +32,7 @@
   <meta name="theme-color" content="#0B1020">
 
   <link rel="stylesheet" href="/styles.css?v=19">
-  <link rel="stylesheet" href="/studio/studio.css?v=3">
+  <link rel="stylesheet" href="/studio/studio.css?v=4">
   <script defer src="/_vercel/insights/script.js"></script>
 
   <!-- Local business / service schema -->
@@ -83,7 +83,7 @@
       <div class="nav-links" id="navlinks">
         <a href="/">Home</a>
         <a href="#whatyouget">What's included</a>
-        <a href="/studio/assistant">Live demo</a>
+        <a href="#assistants">Live demo</a>
         <a href="#contact">Get in touch</a>
       </div>
     </nav>
@@ -105,44 +105,91 @@
       </div>
     </section>
 
-    <!-- EMBEDDED LIVE ASSISTANT (same widget + /api/assistant function as /studio/assistant) -->
-    <section class="container st-section" style="padding-top:6px" aria-label="Try the booking assistant">
-      <h2>See it in action</h2>
+    <!-- AI ASSISTANTS SHOWCASE — scalable: add an assistant = add one pill + one panel.
+         The live "Booking assistant" panel reuses the existing widget + /api/assistant function. -->
+    <section id="assistants" class="container st-section" style="padding-top:6px" aria-label="Meet your AI assistants">
+      <h2>Meet your AI assistants</h2>
       <p class="st-sub">
-        This is the real booking assistant, set up here for a made-up studio so you can try it
-        freely. On your site it answers in your words — your services, prices and policies.
-      </p>
-      <p class="st-demo-note">
-        ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
+        A growing line of assistants for your practice. Try the live one below — more are on the way.
       </p>
 
-      <div class="chat glass" role="region" aria-label="Booking assistant demo">
-        <div class="chat-head">
-          <div class="chat-avatar" aria-hidden="true">W</div>
-          <div>
-            <div class="chat-title">Willow Lane Massage</div>
-            <div class="chat-status">Booking assistant · usually replies instantly</div>
+      <div class="st-asst">
+        <!-- Selector -->
+        <div class="st-asst-pills" role="tablist" aria-label="Choose an assistant">
+          <button class="st-pill is-active" id="tab-booking" type="button" role="tab" aria-selected="true"
+            aria-controls="panel-booking" tabindex="0">
+            Booking assistant <span class="st-pill-badge st-pill-badge--live">Live</span>
+          </button>
+          <button class="st-pill" id="tab-reviews" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-reviews" tabindex="-1">
+            Review collector <span class="st-pill-badge">Coming soon</span>
+          </button>
+          <button class="st-pill" id="tab-content" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-content" tabindex="-1">
+            Content helper <span class="st-pill-badge">Coming soon</span>
+          </button>
+        </div>
+
+        <!-- Panel: Booking assistant (LIVE — existing widget) -->
+        <div class="st-asst-frame" id="panel-booking" role="tabpanel" aria-labelledby="tab-booking" tabindex="0">
+          <p class="st-demo-note">
+            ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
+          </p>
+
+          <div class="chat glass" role="region" aria-label="Booking assistant demo">
+            <div class="chat-head">
+              <div class="chat-avatar" aria-hidden="true">W</div>
+              <div>
+                <div class="chat-title">Willow Lane Massage</div>
+                <div class="chat-status">Booking assistant · usually replies instantly</div>
+              </div>
+            </div>
+
+            <div class="chat-log" id="chatLog" aria-live="polite" aria-atomic="false"></div>
+
+            <div class="chat-chips" id="chatChips" aria-label="Example questions">
+              <button type="button" class="chat-chip" data-q="Do you do pregnancy massage?">Do you do pregnancy massage?</button>
+              <button type="button" class="chat-chip" data-q="How much is a 60-minute massage?">How much is a 60-minute massage?</button>
+              <button type="button" class="chat-chip" data-q="Where are you and is there parking?">Where are you and is there parking?</button>
+              <button type="button" class="chat-chip" data-q="I'd like to book a deep tissue session">I'd like to book a deep tissue session</button>
+            </div>
+
+            <form class="chat-form" id="chatForm" autocomplete="off">
+              <label for="chatInput" style="position:absolute;left:-9999px">Your message</label>
+              <input type="text" id="chatInput" name="message" placeholder="Type your question…" maxlength="1000" />
+              <button type="submit" class="chat-send" id="chatSend">Send</button>
+            </form>
+          </div>
+
+          <!-- Standalone page is now a SHARE action, not a "try it" action -->
+          <p class="st-asst-share">
+            Like it? <a href="/studio/assistant">Share this demo →</a>
+            <span class="st-asst-share-note">a full-page version you can send to a prospect</span>
+          </p>
+        </div>
+
+        <!-- Panel: Review collector (COMING SOON) -->
+        <div class="st-asst-frame" id="panel-reviews" role="tabpanel" aria-labelledby="tab-reviews" tabindex="0" hidden>
+          <div class="st-soon glass">
+            <span class="st-soon-badge">Coming soon</span>
+            <h3>Review collector</h3>
+            <p>Asks happy clients for a review at just the right moment and gathers them in one place — so your
+              good reputation builds itself.</p>
+            <a class="st-soon-link" href="#contact">Get early access →</a>
           </div>
         </div>
 
-        <div class="chat-log" id="chatLog" aria-live="polite" aria-atomic="false"></div>
-
-        <div class="chat-chips" id="chatChips" aria-label="Example questions">
-          <button type="button" class="chat-chip" data-q="Do you do pregnancy massage?">Do you do pregnancy massage?</button>
-          <button type="button" class="chat-chip" data-q="How much is a 60-minute massage?">How much is a 60-minute massage?</button>
-          <button type="button" class="chat-chip" data-q="Where are you and is there parking?">Where are you and is there parking?</button>
-          <button type="button" class="chat-chip" data-q="I'd like to book a deep tissue session">I'd like to book a deep tissue session</button>
+        <!-- Panel: Content helper (COMING SOON) -->
+        <div class="st-asst-frame" id="panel-content" role="tabpanel" aria-labelledby="tab-content" tabindex="0" hidden>
+          <div class="st-soon glass">
+            <span class="st-soon-badge">Coming soon</span>
+            <h3>Content helper</h3>
+            <p>Drafts posts, newsletters and replies in your voice, so staying visible online takes minutes
+              instead of hours.</p>
+            <a class="st-soon-link" href="#contact">Get early access →</a>
+          </div>
         </div>
-
-        <form class="chat-form" id="chatForm" autocomplete="off">
-          <label for="chatInput" style="position:absolute;left:-9999px">Your message</label>
-          <input type="text" id="chatInput" name="message" placeholder="Type your question…" maxlength="1000" />
-          <button type="submit" class="chat-send" id="chatSend">Send</button>
-        </form>
       </div>
-      <p style="margin:12px 0 0;font-size:14px;color:var(--st-muted)">
-        Prefer a full-page version to share? <a href="/studio/assistant">Open the standalone demo →</a>
-      </p>
     </section>
 
     <hr class="st-divider">
@@ -183,7 +230,7 @@
           <div class="st-offer-foot">
             <p class="st-price">£99 setup &nbsp;+&nbsp; £25/mo</p>
             <p style="margin:10px 0 0;">
-              <a class="btn btn-ghost" href="/studio/assistant">Try the live demo →</a>
+              <a class="btn btn-ghost" href="#contact">Enquire about assistants →</a>
             </p>
           </div>
         </article>
@@ -370,6 +417,38 @@
           links.classList.remove('open');
           burger.setAttribute('aria-expanded', 'false');
         }
+      });
+    })();
+
+    // AI assistants selector (ARIA tabs: roving tabindex + arrow-key nav)
+    (function () {
+      var tablist = document.querySelector('.st-asst-pills');
+      if (!tablist) return;
+      var tabs = Array.prototype.slice.call(tablist.querySelectorAll('[role="tab"]'));
+      function select(tab, focusIt) {
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.classList.toggle('is-active', on);
+          t.tabIndex = on ? 0 : -1;
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) panel.hidden = !on;
+        });
+        if (focusIt) tab.focus();
+      }
+      tablist.addEventListener('click', function (e) {
+        var tab = e.target.closest('[role="tab"]');
+        if (tab) select(tab);
+      });
+      tablist.addEventListener('keydown', function (e) {
+        var i = tabs.indexOf(document.activeElement);
+        if (i < 0) return;
+        var next = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = tabs[(i + 1) % tabs.length];
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = tabs[(i - 1 + tabs.length) % tabs.length];
+        else if (e.key === 'Home') next = tabs[0];
+        else if (e.key === 'End') next = tabs[tabs.length - 1];
+        if (next) { e.preventDefault(); select(next, true); }
       });
     })();
   </script>

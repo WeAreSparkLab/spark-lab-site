@@ -566,6 +566,120 @@
   cursor: not-allowed;
 }
 
+/* =============================================================================
+   AI assistants showcase (pill selector + one demo frame)
+   Add an assistant later = one more .st-pill + one more .st-asst-frame panel.
+   ========================================================================== */
+.st-asst-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.st-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--st-line);
+  background: rgba(255, 255, 255, 0.04);
+  color: #cfd6ff;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.st-pill:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+.st-pill.is-active {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+  color: #0a0c1a;
+}
+.st-pill-badge {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #aab3d1;
+}
+.st-pill-badge--live {
+  background: rgba(0, 246, 210, 0.16);
+  color: var(--cyan);
+}
+.st-pill.is-active .st-pill-badge,
+.st-pill.is-active .st-pill-badge--live {
+  background: rgba(0, 0, 0, 0.22);
+  color: #0a0c1a;
+}
+
+/* The single demo frame — keeps a stable footprint as you switch assistants */
+.st-asst-frame:focus-visible {
+  outline: 2px solid var(--st-accent-2);
+  outline-offset: 4px;
+  border-radius: 16px;
+}
+
+/* Standalone-page link is now a share action */
+.st-asst-share {
+  margin: 14px 0 0;
+  font-size: 14px;
+  color: var(--st-muted);
+}
+.st-asst-share a {
+  font-weight: 600;
+}
+.st-asst-share-note {
+  display: block;
+  font-size: 13px;
+  color: var(--st-muted);
+  margin-top: 2px;
+}
+
+/* Coming-soon panel — reads as a deliberate "next in the line", not broken */
+.st-soon {
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 32px;
+  border: 1px dashed var(--st-line);
+  border-radius: 16px;
+  background: var(--st-panel);
+}
+.st-soon-badge {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--st-line);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--st-accent-2);
+  margin-bottom: 14px;
+}
+.st-soon h3 {
+  font-size: 20px;
+  color: var(--st-ink);
+  margin-bottom: 8px;
+}
+.st-soon p {
+  color: var(--st-muted);
+  margin: 0 0 16px;
+  max-width: 52ch;
+}
+.st-soon-link {
+  font-weight: 600;
+}
+
 /* --- Reduced motion -------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .studio *,
