@@ -895,3 +895,162 @@
     height: min(70vh, calc(100vh - 100px));
   }
 }
+
+/* =============================================================================
+   "Find your treatment" matcher — guided flow (studio showcase + client sites)
+   Lives under body.studio, so it inherits :focus-visible + reduced-motion.
+   ========================================================================== */
+.tm {
+  min-height: 360px;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+}
+.tm-progress {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--st-accent-2);
+}
+.tm-q {
+  margin: 0 0 4px;
+  font-size: clamp(19px, 2.6vw, 23px);
+  color: var(--st-ink);
+}
+.tm-hint {
+  margin: 0 0 14px;
+  font-size: 14px;
+  color: var(--st-muted);
+}
+.tm-opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 8px 0 4px;
+}
+.tm-opt {
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--st-line);
+  background: rgba(255, 255, 255, 0.04);
+  color: #e7ecff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .16s ease, border-color .16s ease, transform .16s ease;
+}
+.tm-opt:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+@media (max-width: 420px) {
+  .tm-opts { grid-template-columns: 1fr; }
+}
+
+.tm-textarea {
+  width: 100%;
+  resize: vertical;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--st-line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--st-ink);
+  font-size: 15px;
+  font-family: inherit;
+  margin-bottom: 14px;
+}
+.tm-textarea::placeholder { color: #8089a8; }
+
+.tm-go {
+  align-self: flex-start;
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 20px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: #0a0c1a;
+  font-family: inherit;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+}
+
+.tm-back,
+.tm-restart {
+  align-self: flex-start;
+  margin-top: 14px;
+  border: 0;
+  background: transparent;
+  color: var(--st-muted);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.tm-back:hover,
+.tm-restart:hover { color: var(--st-ink); }
+
+.tm-loading {
+  margin-top: 8px;
+}
+
+/* Recommendation card */
+.tm-result {
+  position: relative;
+  padding: 24px 24px 26px;
+  border: 1px solid var(--st-line);
+  border-radius: 16px;
+  background: var(--st-panel);
+  overflow: hidden;
+}
+.tm-result::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--st-accent), var(--st-accent-2));
+}
+.tm-result.is-caution::before {
+  background: #f5c842; /* amber edge for the "check first" case */
+}
+.tm-result-kicker {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--st-accent-2);
+}
+.tm-result-name {
+  margin: 0 0 8px;
+  font-size: clamp(21px, 3vw, 26px);
+  color: var(--st-ink);
+}
+.tm-result-reason {
+  margin: 0;
+  color: #d8def5;
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+.tm-caution {
+  margin: 14px 0 0;
+  font-size: 14px;
+  color: var(--st-muted);
+  line-height: 1.5;
+}
+.tm-book {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  color: #0a0c1a;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+}
+.tm-book:hover { text-decoration: none; filter: brightness(1.05); }
