@@ -20,6 +20,11 @@
   var chips = document.getElementById("chatChips");
   if (!log || !form || !input || !sendBtn) return;
 
+  // Which client this widget is for (set via data-client on the .chat element;
+  // defaults to the studio demo business server-side if absent).
+  var chatEl = log.closest(".chat");
+  var client = (chatEl && chatEl.getAttribute("data-client")) || "";
+
   // Conversation history sent to the API ({role, content} pairs).
   var history = [];
   var busy = false;
@@ -71,7 +76,7 @@
     fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: history }),
+      body: JSON.stringify({ client: client, messages: history }),
     })
       .then(function (res) {
         return res.json().then(function (data) {

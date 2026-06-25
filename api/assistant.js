@@ -19,7 +19,7 @@
 // =============================================================================
 
 const Anthropic = require("@anthropic-ai/sdk");
-const business = require("./_knowledge/willow-lane-massage.js");
+const { resolveClient } = require("./_knowledge");
 const { makeIpLimiter, realIp } = require("./_lib/ratelimit.js");
 
 const MODEL = "claude-sonnet-4-6";
@@ -97,6 +97,12 @@ module.exports = async (req, res) => {
     } catch {
       return res.status(400).json({ error: "Invalid request." });
     }
+  }
+
+  // Which client is this widget for? (blank → studio demo; unknown id → error)
+  const business = resolveClient(body && body.client);
+  if (!business) {
+    return res.status(400).json({ error: "Unknown business." });
   }
 
   const incoming = body && Array.isArray(body.messages) ? body.messages : null;
