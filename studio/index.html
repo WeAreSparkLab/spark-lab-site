@@ -32,7 +32,7 @@
   <meta name="theme-color" content="#0B1020">
 
   <link rel="stylesheet" href="/styles.css?v=19">
-  <link rel="stylesheet" href="/studio/studio.css?v=6">
+  <link rel="stylesheet" href="/studio/studio.css?v=7">
   <script defer src="/_vercel/insights/script.js"></script>
 
   <!-- Local business / service schema -->
@@ -130,7 +130,7 @@
           </button>
           <button class="st-pill" id="tab-content" type="button" role="tab" aria-selected="false"
             aria-controls="panel-content" tabindex="-1">
-            Content helper <span class="st-pill-badge">Coming soon</span>
+            Content helper <span class="st-pill-badge st-pill-badge--live">Live</span>
           </button>
         </div>
 
@@ -194,14 +194,35 @@
           </div>
         </div>
 
-        <!-- Panel: Content helper (COMING SOON) -->
+        <!-- Panel: Content helper (LIVE — taster for the PRIVATE content tool) -->
         <div class="st-asst-frame" id="panel-content" role="tabpanel" aria-labelledby="tab-content" tabindex="0" hidden>
-          <div class="st-soon glass">
-            <span class="st-soon-badge">Coming soon</span>
-            <h3>Content helper</h3>
-            <p>Drafts posts, newsletters and replies in your voice, so staying visible online takes minutes
-              instead of hours.</p>
-            <a class="st-soon-link" href="#contact">Get early access →</a>
+          <p class="st-demo-note">
+            ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
+          </p>
+          <div class="cg glass" id="cgRoot" data-mode="taster" data-count="3">
+            <span class="cg-private-flag">🔒 A private back-office tool — you’d use this to plan posts, not on your public site</span>
+            <p class="cg-intro">Pick a topic and platform, and generate 3 sample captions in the business’s voice.</p>
+            <div class="cg-form">
+              <label class="cg-field" for="cgTopic"><span>Topic</span>
+                <select id="cgTopic">
+                  <option>Relaxation massage</option>
+                  <option>Deep tissue massage</option>
+                  <option>Pregnancy massage</option>
+                  <option>Back, neck &amp; shoulders</option>
+                  <option>Self-care &amp; wellbeing</option>
+                  <option>New clients (not sure what to book)</option>
+                </select>
+              </label>
+              <label class="cg-field" for="cgPlatform"><span>Platform</span>
+                <select id="cgPlatform">
+                  <option>Instagram</option>
+                  <option>Facebook</option>
+                </select>
+              </label>
+              <button class="cg-go" id="cgGo" type="button">Generate 3 captions</button>
+            </div>
+            <div class="cg-status" id="cgStatus" aria-live="polite"></div>
+            <div class="cg-results" id="cgResults"></div>
           </div>
         </div>
       </div>
@@ -469,6 +490,7 @@
   </script>
   <script src="/studio/assistant.js?v=1" defer></script>
   <script src="/studio/treatment-matcher.js?v=1" defer></script>
+  <script src="/studio/content-generator.js?v=1" defer></script>
   <script src="/studio/studio-assistant-widget.js?v=1" defer></script>
 </body>
 

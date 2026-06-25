@@ -1,3 +1,5 @@
 Sitemap: https://wearesparklab.com/sitemap.txt
 User-agent: *
 Allow: /
+# Private back-office tools — keep out of search (also noindex on the pages).
+Disallow: /studio/tools/

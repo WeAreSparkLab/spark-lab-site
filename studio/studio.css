@@ -1054,3 +1054,142 @@
   background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
 }
 .tm-book:hover { text-decoration: none; filter: brightness(1.05); }
+
+/* =============================================================================
+   Social content generator (private back-office tool: taster + /studio/tools/content)
+   Lives under body.studio, so it inherits :focus-visible + reduced-motion.
+   ========================================================================== */
+.cg {
+  padding: 24px;
+}
+.cg-intro {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--st-muted);
+  line-height: 1.5;
+}
+.cg-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+.cg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--st-muted);
+  font-weight: 600;
+}
+.cg-field select {
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--st-ink);
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--st-line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 150px;
+}
+.cg-go {
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 18px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: #0a0c1a;
+  font-family: inherit;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+}
+.cg-go:disabled { opacity: .55; cursor: not-allowed; }
+
+.cg-status {
+  margin: 14px 0 0;
+  font-size: 14px;
+  color: var(--st-muted);
+  min-height: 1.2em;
+}
+.cg-status.is-error { color: #ffd9d9; }
+
+.cg-results {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+@media (min-width: 760px) {
+  .cg-results { grid-template-columns: 1fr 1fr; }
+}
+.cg-card {
+  padding: 18px;
+  border: 1px solid var(--st-line);
+  border-radius: 14px;
+  background: var(--st-panel);
+}
+.cg-card-num {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--st-accent-2);
+  margin-bottom: 8px;
+}
+.cg-caption {
+  margin: 0;
+  color: var(--st-ink);
+  font-size: 15px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.cg-hashtags {
+  margin: 10px 0 0;
+  color: #9fc7ff;
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.cg-photo {
+  margin: 10px 0 0;
+  color: var(--st-muted);
+  font-size: 13.5px;
+}
+.cg-photo strong { color: #d8def5; }
+.cg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.cg-copy {
+  border: 1px solid var(--st-line);
+  background: rgba(255, 255, 255, 0.05);
+  color: #cfd6ff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 7px 13px;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.cg-copy:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.cg-copy.is-copied {
+  background: rgba(0, 246, 210, 0.16);
+  color: var(--cyan);
+  border-color: transparent;
+}
+
+/* "private tool" flag inside the studio taster */
+.cg-private-flag {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(245, 200, 66, 0.12);
+  border: 1px solid rgba(245, 200, 66, 0.35);
+  color: #ffe7c2;
+}
