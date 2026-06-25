@@ -140,7 +140,7 @@
             ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
           </p>
 
-          <div class="chat glass" role="region" aria-label="Booking assistant demo">
+          <div class="chat glass" data-client="willow-lane" role="region" aria-label="Booking assistant demo">
             <div class="chat-head">
               <div class="chat-avatar" aria-hidden="true">W</div>
               <div>
@@ -177,7 +177,7 @@
           <p class="st-demo-note">
             ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
           </p>
-          <div class="tm glass" id="tmRoot" role="group" aria-label="Find your treatment"></div>
+          <div class="tm glass" id="tmRoot" data-client="willow-lane" role="group" aria-label="Find your treatment"></div>
           <p class="st-asst-share">
             Not sure what to book? Answer two quick questions and we’ll suggest a treatment.
           </p>
@@ -199,7 +199,7 @@
           <p class="st-demo-note">
             ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
           </p>
-          <div class="cg glass" id="cgRoot" data-mode="taster" data-count="3">
+          <div class="cg glass" id="cgRoot" data-mode="taster" data-count="3" data-client="willow-lane">
             <span class="cg-private-flag">🔒 A private back-office tool — you’d use this to plan posts, not on your public site</span>
             <p class="cg-intro">Pick a topic and platform, and generate 3 sample captions in the business’s voice.</p>
             <div class="cg-form">
@@ -488,9 +488,9 @@
       });
     })();
   </script>
-  <script src="/studio/assistant.js?v=1" defer></script>
-  <script src="/studio/treatment-matcher.js?v=1" defer></script>
-  <script src="/studio/content-generator.js?v=2" defer></script>
+  <script src="/studio/assistant.js?v=2" defer></script>
+  <script src="/studio/treatment-matcher.js?v=2" defer></script>
+  <script src="/studio/content-generator.js?v=3" defer></script>
   <script src="/studio/studio-assistant-widget.js?v=1" defer></script>
 </body>
 

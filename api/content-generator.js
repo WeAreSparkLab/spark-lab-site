@@ -18,7 +18,7 @@
 // =============================================================================
 
 const Anthropic = require("@anthropic-ai/sdk");
-const business = require("./_knowledge/willow-lane-massage.js");
+const { resolveClient } = require("./_knowledge");
 const { makeIpLimiter, realIp, monthlyUsage, monthlyConsume } = require("./_lib/ratelimit.js");
 
 const MODEL = "claude-sonnet-4-6";
@@ -33,16 +33,36 @@ const TASTER_POSTS = 3; // the public /studio taster always returns 3
 // IP limiter: protects the public taster, and is a light floor for the full tool.
 const limiter = makeIpLimiter({ prefix: "content", perMinute: 8, perDay: 40 });
 
-// Per-client access + monthly allowance for the PRIVATE full tool. Both live in
-// the client's config (api/_knowledge/<client>.js):
+const BUSY_MESSAGE = "I'm getting a lot of requests right now — please try again in a moment.";
+
+// Per-client values are derived from whichever client config the request resolves to.
 //   contentToken         optional — if set, the private link must carry ?k=<token>
 //   contentMonthlyLimit  optional — generations per calendar month (default 12)
-const CLIENT_ID =
-  business.clientId ||
-  String(business.name || "client").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-const MONTHLY_LIMIT = Number(business.contentMonthlyLimit) > 0 ? Number(business.contentMonthlyLimit) : 12;
+function clientIdFor(b) {
+  return (
+    b.clientId ||
+    String(b.name || "client").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")
+  );
+}
+function monthlyLimitFor(b) {
+  return Number(b.contentMonthlyLimit) > 0 ? Number(b.contentMonthlyLimit) : 12;
+}
 
-const BUSY_MESSAGE = "I'm getting a lot of requests right now — please try again in a moment.";
+// The topic dropdown is built from THIS client's services (plus two generic ones),
+// so each client sees their own treatments — not a hard-coded list.
+function topicsFor(b) {
+  const seen = new Set();
+  const topics = [];
+  for (const s of b.services || []) {
+    if (s.name && !seen.has(s.name)) {
+      seen.add(s.name);
+      topics.push(s.name);
+    }
+  }
+  topics.push("Self-care & wellbeing");
+  topics.push("New clients (not sure what to book)");
+  return topics;
+}
 
 const RESULT_SCHEMA = {
   type: "object",
@@ -102,8 +122,16 @@ ${avoid || "- Make medical claims or promise cures."}
 }
 
 module.exports = async (req, res) => {
+  // GET = "what topics does this client offer?" — used by the widget to build
+  // the dropdown from the client's own services. e.g. GET ?c=willow-lane
+  if (req.method === "GET") {
+    const b = resolveClient(req.query && req.query.c);
+    if (!b) return res.status(404).json({ error: "Unknown business." });
+    return res.status(200).json({ businessName: b.name, topics: topicsFor(b) });
+  }
+
   if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
+    res.setHeader("Allow", "GET, POST");
     return res.status(405).json({ error: "Method not allowed" });
   }
 
@@ -124,6 +152,14 @@ module.exports = async (req, res) => {
   if (!body || typeof body !== "object") {
     return res.status(400).json({ error: "No options provided." });
   }
+
+  // Resolve which client this generation is for (blank → demo; unknown → error).
+  const business = resolveClient(body.client);
+  if (!business) {
+    return res.status(400).json({ error: "Unknown business." });
+  }
+  const clientId = clientIdFor(business);
+  const monthlyLimit = monthlyLimitFor(business);
 
   const mode = body.mode === "full" ? "full" : "taster";
   const token = typeof body.token === "string" ? body.token.trim() : "";
@@ -155,7 +191,7 @@ module.exports = async (req, res) => {
       console.warn("[content] full mode but no contentToken configured — tool is unprotected.");
     }
 
-    const usage = await monthlyUsage({ prefix: "content", client: CLIENT_ID, limit: MONTHLY_LIMIT });
+    const usage = await monthlyUsage({ prefix: "content", client: clientId, limit: monthlyLimit });
     if (!usage.ok) {
       return res.status(429).json({
         error: "You've used this month's posts — they refresh on the 1st. 🌱",
@@ -216,7 +252,7 @@ module.exports = async (req, res) => {
 
     // Count this generation against the client's monthly allowance (full tool only).
     if (mode === "full") {
-      await monthlyConsume({ prefix: "content", client: CLIENT_ID });
+      await monthlyConsume({ prefix: "content", client: clientId });
     }
 
     return res.status(200).json({ posts });

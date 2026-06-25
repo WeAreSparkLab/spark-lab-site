@@ -65,15 +65,31 @@ existing booking-assistant config shape — nothing else to add.
 - Soft booking nudge only when it fits; relevant + 1–2 local hashtags (not walls);
   platform-appropriate length (Instagram vs Facebook).
 
-## Set up a NEW client
-1. Copy `api/_knowledge/willow-lane-massage.js` → `api/_knowledge/<client>.js` and
-   fill in their details **plus** `voiceSamples` and `avoid`.
-2. Point the generator at it: in `api/content-generator.js`, change
-   `require("./_knowledge/willow-lane-massage.js")` → your new file. *(Same swap
-   pattern as the booking assistant. A single shared endpoint serves one config at
-   a time; for multiple live clients, duplicate the endpoint per client.)*
-3. Copy `studio/tools/content/index.html` to a client-specific path if you want a
-   separate private link, and update the heading/topic options to match their services.
+## Multi-client: how it knows which client is which
+
+All the agents are **multi-client** via one registry, `api/_knowledge/index.js`,
+which maps a client id → that client's config. A request carries the id and the
+function loads the right config — no per-client endpoints.
+
+- The **content tool** & **booking/matcher** widgets send the id from a
+  `data-client="<id>"` attribute on their root element (falling back to `?c=<id>`).
+- The **topic dropdown is built from that client's own `services`** — the widget
+  calls `GET /api/content-generator?c=<id>` on load and fills the options. So each
+  client automatically sees their own treatments.
+- The public `/studio` demos default to `willow-lane`.
+
+### Set up a NEW client
+1. Copy `api/_knowledge/willow-lane-massage.js` → `api/_knowledge/<client>.js`,
+   fill in their details (set a unique `clientId`, `contentToken`, and the
+   `voiceSamples` / `avoid` fields).
+2. Register it: add one line to `CLIENTS` in `api/_knowledge/index.js`, keyed by
+   the `clientId`. **That's the only code change — every agent now serves them.**
+3. Give them their private tool: copy `studio/tools/content/index.html` to a
+   client-specific path and set `data-client="<their clientId>"` on `#cgRoot`
+   (the topic options then load from their config automatically). Share the link
+   as `…/their-page?k=<their contentToken>`.
+4. For their public on-site booking/matcher widgets, set `data-client="<id>"` on
+   the widget's root element in the embed you give them.
 
 ## The private link
 - The tool lives at **`/studio/tools/content?k=<contentToken>`** — e.g.

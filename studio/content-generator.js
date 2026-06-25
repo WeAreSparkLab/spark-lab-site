@@ -27,10 +27,17 @@
 
   var fixedCount = parseInt(root.getAttribute("data-count"), 10) || 3;
   var mode = root.getAttribute("data-mode") === "full" ? "full" : "taster";
+  // Which client this widget is for. On a per-client page it's set via
+  // data-client; otherwise fall back to ?c= in the URL (defaults server-side).
+  var client = root.getAttribute("data-client") || "";
   // The private full-tool link carries an access key (?k=...). The public
   // taster has none and doesn't need one.
   var token = "";
-  try { token = new URLSearchParams(window.location.search).get("k") || ""; } catch (e) {}
+  try {
+    var qs = new URLSearchParams(window.location.search);
+    token = qs.get("k") || "";
+    if (!client) client = qs.get("c") || "";
+  } catch (e) {}
   var busy = false;
 
   function setStatus(text, isError) {
@@ -45,6 +52,7 @@
   function generate() {
     if (busy) return;
     var payload = {
+      client: client,
       mode: mode,
       token: token,
       topic: topicEl ? topicEl.value : "",
@@ -144,5 +152,26 @@
     resultsEl.appendChild(frag);
   }
 
+  // Build the topic dropdown from THIS client's services (falls back to whatever
+  // options are already in the HTML if the lookup fails).
+  function loadTopics() {
+    if (!topicEl) return;
+    var url = API_URL + (client ? "?c=" + encodeURIComponent(client) : "");
+    fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && Array.isArray(d.topics) && d.topics.length) {
+          topicEl.innerHTML = "";
+          d.topics.forEach(function (t) {
+            var o = document.createElement("option");
+            o.textContent = t;
+            topicEl.appendChild(o);
+          });
+        }
+      })
+      .catch(function () { /* keep the HTML fallback options */ });
+  }
+
   goEl.addEventListener("click", generate);
+  loadTopics();
 })();

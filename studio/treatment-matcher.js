@@ -14,6 +14,9 @@
   var root = document.getElementById("tmRoot");
   if (!root) return;
 
+  // Which client this widget is for (data-client on #tmRoot; defaults server-side).
+  var client = root.getAttribute("data-client") || "";
+
   var QUESTIONS = [
     {
       key: "bothering",
@@ -132,7 +135,12 @@
     fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(state.answers),
+      body: JSON.stringify({
+        client: client,
+        bothering: state.answers.bothering,
+        firstTime: state.answers.firstTime,
+        notes: state.answers.notes,
+      }),
     })
       .then(function (res) {
         return res.json().then(function (data) { return { ok: res.ok, data: data }; });
