@@ -16,6 +16,7 @@
 // =============================================================================
 
 const Anthropic = require("@anthropic-ai/sdk");
+const { makeIpLimiter, realIp } = require("./_lib/ratelimit.js");
 
 const MODEL = "claude-sonnet-4-6";
 const MAX_TOKENS = 1024;
@@ -38,22 +39,12 @@ const LEAD_EMAIL = process.env.LEAD_EMAIL || "support@wearesparklab.com";
 const MAX_MESSAGES = 20;
 const MAX_CHARS_PER_MESSAGE = 1000;
 const MAX_TOTAL_CHARS = 8000;
-const RATE_LIMIT_MAX = 12;
-const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 
-const hits = new Map();
-function rateLimited(ip) {
-  const now = Date.now();
-  const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  if (hits.size > 5000) {
-    for (const [k, v] of hits) {
-      if (v.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) hits.delete(k);
-    }
-  }
-  return recent.length > RATE_LIMIT_MAX;
-}
+// Per-IP usage protection (Upstash Redis, with in-memory fail-safe). Declared
+// once at module load so it's reused while the instance stays warm.
+const limiter = makeIpLimiter({ prefix: "enquiry", perMinute: 8, perDay: 40 });
+const BUSY_MESSAGE =
+  "I'm getting a lot of questions right now — please try again in a moment.";
 
 // --- Business-hours check (server-side, authoritative) -----------------------
 function isOutsideBusinessHours(date) {
@@ -208,12 +199,9 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const ip =
-    (req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
-    req.socket?.remoteAddress ||
-    "unknown";
-  if (rateLimited(ip)) {
-    return res.status(429).json({ error: "Too many messages — please wait a moment and try again." });
+  const gate = await limiter.check(realIp(req));
+  if (!gate.ok) {
+    return res.status(429).json({ error: BUSY_MESSAGE });
   }
 
   let body = req.body;

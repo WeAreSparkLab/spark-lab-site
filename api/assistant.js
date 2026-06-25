@@ -20,6 +20,7 @@
 
 const Anthropic = require("@anthropic-ai/sdk");
 const business = require("./_knowledge/willow-lane-massage.js");
+const { makeIpLimiter, realIp } = require("./_lib/ratelimit.js");
 
 const MODEL = "claude-sonnet-4-6";
 const MAX_TOKENS = 600;
@@ -28,26 +29,12 @@ const MAX_TOKENS = 600;
 const MAX_MESSAGES = 16; // cap conversation length sent per request
 const MAX_CHARS_PER_MESSAGE = 1000; // cap a single message
 const MAX_TOTAL_CHARS = 6000; // cap whole conversation
-const RATE_LIMIT_MAX = 12; // requests...
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // ...per IP per minute
 
-// Best-effort in-memory rate limiter. Serverless instances are ephemeral, so
-// this is a light deterrent against casual abuse, not a hard guarantee.
-const hits = new Map();
-
-function rateLimited(ip) {
-  const now = Date.now();
-  const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  // opportunistic cleanup so the map doesn't grow unbounded
-  if (hits.size > 5000) {
-    for (const [k, v] of hits) {
-      if (v.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) hits.delete(k);
-    }
-  }
-  return recent.length > RATE_LIMIT_MAX;
-}
+// Per-IP usage protection (Upstash Redis, with in-memory fail-safe). Declared
+// once at module load so it's reused while the instance stays warm.
+const limiter = makeIpLimiter({ prefix: "book", perMinute: 8, perDay: 40 });
+const BUSY_MESSAGE =
+  "I'm getting a lot of questions right now — please try again in a moment.";
 
 // --- System prompt -----------------------------------------------------------
 function buildSystemPrompt(b) {
@@ -97,15 +84,9 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const ip =
-    (req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
-    req.socket?.remoteAddress ||
-    "unknown";
-
-  if (rateLimited(ip)) {
-    return res
-      .status(429)
-      .json({ error: "Too many messages — please wait a moment and try again." });
+  const gate = await limiter.check(realIp(req));
+  if (!gate.ok) {
+    return res.status(429).json({ error: BUSY_MESSAGE });
   }
 
   // Body may arrive parsed (Vercel) or as a string — handle both.

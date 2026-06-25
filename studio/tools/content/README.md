@@ -45,6 +45,16 @@ avoid: [
 ],
 ```
 
+For the private tool's access + monthly allowance, also set:
+
+```js
+// The private link must carry ?k=<contentToken>. Treat like a password; unique
+// per client. Leave unset to disable token-gating (not recommended).
+contentToken: "wl-demo-2k7f9q",
+contentMonthlyLimit: 12,   // generations per calendar month (default 12)
+clientId: "willow-lane",   // stable id for the monthly Redis key (defaults to slug of name)
+```
+
 Everything else (business name, services, location, bookingLink, tone) reuses the
 existing booking-assistant config shape — nothing else to add.
 
@@ -66,9 +76,35 @@ existing booking-assistant config shape — nothing else to add.
    separate private link, and update the heading/topic options to match their services.
 
 ## The private link
-- The tool lives at **`/studio/tools/content`** (or your per-client copy).
-- It is **not linked anywhere** — share the URL directly with the client.
-- It's kept out of search by: `noindex,nofollow` on the page **and**
-  `Disallow: /studio/tools/` in `/robots.txt`.
-- **Phase 2 (recommended before real client use): add a password / login gate.**
-  Right now it's private-by-obscurity only — anyone with the link can open it.
+- The tool lives at **`/studio/tools/content?k=<contentToken>`** — e.g.
+  `https://wearesparklab.com/studio/tools/content?k=wl-demo-2k7f9q`.
+  Share this exact URL (with the key) directly with the client.
+- Without a matching `?k=`, the generator returns *"This link isn't valid"* — so
+  a leaked plain `/studio/tools/content` link can't actually generate anything.
+- It is **not linked anywhere**, kept out of search by `noindex,nofollow` on the
+  page **and** `Disallow: /studio/tools/` in `/robots.txt`.
+- **Phase 2 (recommended before scaling): add a real password / login gate.** The
+  `?k=` token is a lightweight guard, not full auth.
+
+## Usage protection (Upstash Redis)
+
+All AI agent functions are rate-limited via one Upstash Redis instance.
+
+**Set up (one-time):** in the Vercel dashboard → **Integrations → Upstash**, add
+the free Redis (one click). It injects **`UPSTASH_REDIS_REST_URL`** and
+**`UPSTASH_REDIS_REST_TOKEN`** as env vars — nothing else to configure.
+
+| Function | Protection |
+|---|---|
+| `assistant` / `treatment-matcher` / `studio-assistant` (public) | Per-IP: **8/min** + **40/day** (sliding windows) → HTTP 429 with a calm message |
+| `content-generator` **taster** (public) | Same per-IP limits; always 3 posts; no token |
+| `content-generator` **full tool** (private) | `?k=` token must match `contentToken`; **monthly cap** (`contentMonthlyLimit`, default 12) keyed `content:<clientId>:<YYYY-MM>` |
+
+**Fail-safe:** if Redis is unreachable or the env vars are missing, the limiter
+**logs and falls back to a small in-memory allowance** per warm instance — agents
+keep working rather than hard-breaking a client's live site. (Limiting is just
+best-effort until Redis is reachable.)
+
+Real client IP is read from Vercel's **`x-real-ip`** header (not the spoofable
+`x-forwarded-for`). Limits live at the top of each function file; the shared logic
+is in `api/_lib/ratelimit.js`.
