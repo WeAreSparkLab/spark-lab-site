@@ -24,6 +24,13 @@
 //                                       without speaking to a GP / professional
 //   faqs              array of { q, a }
 //   tone              string   — how the assistant should sound for THIS business
+//
+// Used ONLY by the private content generator (api/content-generator.js), not by
+// the public booking assistant:
+//   voiceSamples      array of string — 3–5 of the client's REAL captions. The
+//                                       generator imitates this voice.
+//   avoid             array of string — words / claims the generator must never
+//                                       use (medical claims, fake offers, etc.)
 // =============================================================================
 
 module.exports = {
@@ -116,4 +123,24 @@ module.exports = {
 
   tone:
     "Warm, calm and down-to-earth. Speak like a friendly practitioner, not a salesperson. Keep it short.",
+
+  // 3–5 of the client's REAL captions. The content generator (private tool)
+  // imitates this voice. Replace these with the actual client's posts.
+  voiceSamples: [
+    "That feeling when your shoulders finally drop down from your ears 😮‍💨 An hour on the table and you're a new person. Your turn this week?",
+    "Grey Norwich morning? A slow, quiet hour with no phone and no to-do list is allowed. Just you. 🤍",
+    "New here and not sure what to book? A relaxation massage is a lovely place to start — message us and we'll help you choose.",
+    "Carrying your whole week in your neck again? Thought so. 30 focused minutes on back, neck and shoulders, and out the door lighter.",
+    "Pregnancy aches are real. Our pregnancy massage (from your second trimester) is gentle, supported, and just for you. 🌿",
+  ],
+
+  // Words / claims the generator must NEVER use.
+  avoid: [
+    "medical or cure claims (cures, heals, fixes, treats a condition)",
+    "'detox', 'flushes toxins', 'boosts your immune system'",
+    "guarantees or 'miracle' / 'life-changing' language",
+    "diagnosing or naming medical conditions",
+    "discounts, deals or offers that haven't actually been announced",
+    "walls of 25+ hashtags",
+  ],
 };

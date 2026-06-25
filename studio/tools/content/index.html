@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- PRIVATE back-office tool. Keep it out of search and out of nav/sitemap. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Content generator — Spark Lab Studio (private tool)</title>
+
+  <!--
+    PHASE 2 (hardening): put this page behind a password / login gate.
+    For now it is "private by obscurity" only:
+      - noindex,nofollow (above)
+      - Disallowed in /robots.txt
+      - not linked from any nav, sitemap, or public page (direct link only)
+    Do NOT add it to the public client website template.
+  -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@600;800&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/spark-bolt.svg?v=3">
+  <meta name="theme-color" content="#0B1020">
+
+  <link rel="stylesheet" href="/styles.css?v=19">
+  <link rel="stylesheet" href="/studio/studio.css?v=7">
+</head>
+
+<body class="studio">
+  <div class="bg">
+    <div class="bg__noise"></div>
+    <div class="bg__gradient"></div>
+    <div class="bg__grid"></div>
+    <div class="bg__orbs"></div>
+  </div>
+
+  <header class="container">
+    <nav class="nav glass">
+      <div class="brand"><span>⚡</span><span class="brand-text">Spark Lab Studio</span></div>
+      <span class="cg-private-flag">🔒 Private tool · direct link only</span>
+    </nav>
+  </header>
+
+  <main class="container st-section" style="max-width:900px">
+    <span class="st-eyebrow">Back-office tool</span>
+    <h1 style="font-size:clamp(26px,4vw,36px);color:#f3f6ff;letter-spacing:-0.3px">Social content generator</h1>
+    <p class="st-sub">
+      Generate a batch of captions in your own voice — pick a topic, platform and how many you want.
+      Configured for: <strong>Willow Lane Massage</strong> (demo). This is for your own planning; it is
+      not shown anywhere on your public website.
+    </p>
+
+    <div class="cg glass" id="cgRoot" data-mode="full" data-count="5" style="margin-top:8px">
+      <div class="cg-form">
+        <label class="cg-field" for="cgTopic"><span>Topic / treatment</span>
+          <select id="cgTopic">
+            <option>Relaxation massage</option>
+            <option>Deep tissue massage</option>
+            <option>Pregnancy massage</option>
+            <option>Back, neck &amp; shoulders</option>
+            <option>Self-care &amp; wellbeing</option>
+            <option>New clients (not sure what to book)</option>
+          </select>
+        </label>
+        <label class="cg-field" for="cgPlatform"><span>Platform</span>
+          <select id="cgPlatform">
+            <option>Instagram</option>
+            <option>Facebook</option>
+          </select>
+        </label>
+        <label class="cg-field" for="cgCount"><span>How many</span>
+          <select id="cgCount">
+            <option>3</option>
+            <option>4</option>
+            <option selected>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+          </select>
+        </label>
+        <label class="cg-field" for="cgVibe"><span>Vibe</span>
+          <select id="cgVibe">
+            <option>Warm &amp; calm</option>
+            <option>Upbeat &amp; friendly</option>
+            <option>Informative</option>
+            <option>Gently persuasive</option>
+          </select>
+        </label>
+        <button class="cg-go" id="cgGo" type="button">Generate posts</button>
+      </div>
+      <div class="cg-status" id="cgStatus" aria-live="polite"></div>
+      <div class="cg-results" id="cgResults"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer glass">
+      <p class="muted">Spark Lab Studio · private tool · not for the public website</p>
+    </div>
+  </footer>
+
+  <script src="/studio/content-generator.js?v=1" defer></script>
+</body>
+
+</html>
