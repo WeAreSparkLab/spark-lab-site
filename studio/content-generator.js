@@ -26,6 +26,11 @@
   if (!goEl || !resultsEl) return;
 
   var fixedCount = parseInt(root.getAttribute("data-count"), 10) || 3;
+  var mode = root.getAttribute("data-mode") === "full" ? "full" : "taster";
+  // The private full-tool link carries an access key (?k=...). The public
+  // taster has none and doesn't need one.
+  var token = "";
+  try { token = new URLSearchParams(window.location.search).get("k") || ""; } catch (e) {}
   var busy = false;
 
   function setStatus(text, isError) {
@@ -40,6 +45,8 @@
   function generate() {
     if (busy) return;
     var payload = {
+      mode: mode,
+      token: token,
       topic: topicEl ? topicEl.value : "",
       platform: platformEl ? platformEl.value : "Instagram",
       count: countEl ? parseInt(countEl.value, 10) : fixedCount,

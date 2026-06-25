@@ -143,4 +143,15 @@ module.exports = {
     "discounts, deals or offers that haven't actually been announced",
     "walls of 25+ hashtags",
   ],
+
+  // --- Content generator: private-tool access + monthly allowance ------------
+  // The private tool link must carry ?k=<contentToken>. Treat it like a
+  // password and set a unique value per client. Leave unset to disable
+  // token-gating for this client (not recommended for real clients).
+  contentToken: "wl-demo-2k7f9q",
+  // Generations allowed per calendar month for this client (default 12 if unset).
+  contentMonthlyLimit: 12,
+  // Stable id used in the monthly Redis key "content:<clientId>:<YYYY-MM>"
+  // (defaults to a slug of `name` if unset).
+  clientId: "willow-lane",
 };

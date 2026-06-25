@@ -19,6 +19,7 @@
 
 const Anthropic = require("@anthropic-ai/sdk");
 const business = require("./_knowledge/willow-lane-massage.js");
+const { makeIpLimiter, realIp, monthlyUsage, monthlyConsume } = require("./_lib/ratelimit.js");
 
 const MODEL = "claude-sonnet-4-6";
 const MAX_TOKENS = 2000;
@@ -26,23 +27,22 @@ const MAX_TOKENS = 2000;
 const PLATFORMS = ["Instagram", "Facebook"];
 const MIN_POSTS = 3;
 const MAX_POSTS = 8;
+const TASTER_POSTS = 3; // the public /studio taster always returns 3
 
-// --- Abuse guards ------------------------------------------------------------
-const RATE_LIMIT_MAX = 8; // generation is heavier — keep this lower
-const RATE_LIMIT_WINDOW_MS = 60 * 1000;
-const hits = new Map();
-function rateLimited(ip) {
-  const now = Date.now();
-  const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  if (hits.size > 5000) {
-    for (const [k, v] of hits) {
-      if (v.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) hits.delete(k);
-    }
-  }
-  return recent.length > RATE_LIMIT_MAX;
-}
+// --- Usage protection --------------------------------------------------------
+// IP limiter: protects the public taster, and is a light floor for the full tool.
+const limiter = makeIpLimiter({ prefix: "content", perMinute: 8, perDay: 40 });
+
+// Per-client access + monthly allowance for the PRIVATE full tool. Both live in
+// the client's config (api/_knowledge/<client>.js):
+//   contentToken         optional — if set, the private link must carry ?k=<token>
+//   contentMonthlyLimit  optional — generations per calendar month (default 12)
+const CLIENT_ID =
+  business.clientId ||
+  String(business.name || "client").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+const MONTHLY_LIMIT = Number(business.contentMonthlyLimit) > 0 ? Number(business.contentMonthlyLimit) : 12;
+
+const BUSY_MESSAGE = "I'm getting a lot of requests right now — please try again in a moment.";
 
 const RESULT_SCHEMA = {
   type: "object",
@@ -107,12 +107,10 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const ip =
-    (req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
-    req.socket?.remoteAddress ||
-    "unknown";
-  if (rateLimited(ip)) {
-    return res.status(429).json({ error: "Too many requests — please wait a moment and try again." });
+  // IP limit (all modes) — protects the public taster, light floor for the tool.
+  const gate = await limiter.check(realIp(req));
+  if (!gate.ok) {
+    return res.status(429).json({ error: BUSY_MESSAGE });
   }
 
   let body = req.body;
@@ -127,15 +125,42 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: "No options provided." });
   }
 
+  const mode = body.mode === "full" ? "full" : "taster";
+  const token = typeof body.token === "string" ? body.token.trim() : "";
   const topic = typeof body.topic === "string" ? body.topic.slice(0, 120).trim() : "";
   const platform = PLATFORMS.includes(body.platform) ? body.platform : "Instagram";
-  let count = parseInt(body.count, 10);
-  if (!Number.isFinite(count)) count = MIN_POSTS;
-  count = Math.max(MIN_POSTS, Math.min(MAX_POSTS, count));
   const vibe = typeof body.vibe === "string" ? body.vibe.slice(0, 60).trim() : "";
+
+  // The public taster always returns 3; the private tool honours 3–8.
+  let count = TASTER_POSTS;
+  if (mode === "full") {
+    count = parseInt(body.count, 10);
+    if (!Number.isFinite(count)) count = MIN_POSTS;
+    count = Math.max(MIN_POSTS, Math.min(MAX_POSTS, count));
+  }
 
   if (!topic) {
     return res.status(400).json({ error: "Please choose a topic." });
+  }
+
+  // --- Private full tool: per-client token + monthly allowance ----------------
+  if (mode === "full") {
+    if (business.contentToken) {
+      if (token !== business.contentToken) {
+        return res
+          .status(403)
+          .json({ error: "This link isn't valid — please check the link you were given." });
+      }
+    } else {
+      console.warn("[content] full mode but no contentToken configured — tool is unprotected.");
+    }
+
+    const usage = await monthlyUsage({ prefix: "content", client: CLIENT_ID, limit: MONTHLY_LIMIT });
+    if (!usage.ok) {
+      return res.status(429).json({
+        error: "You've used this month's posts — they refresh on the 1st. 🌱",
+      });
+    }
   }
 
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -187,6 +212,11 @@ module.exports = async (req, res) => {
 
     if (posts.length === 0) {
       return res.status(502).json({ error: "I couldn't generate those just now — please try again." });
+    }
+
+    // Count this generation against the client's monthly allowance (full tool only).
+    if (mode === "full") {
+      await monthlyConsume({ prefix: "content", client: CLIENT_ID });
     }
 
     return res.status(200).json({ posts });
