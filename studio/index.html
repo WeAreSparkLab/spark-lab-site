@@ -32,7 +32,7 @@
   <meta name="theme-color" content="#0B1020">
 
   <link rel="stylesheet" href="/styles.css?v=19">
-  <link rel="stylesheet" href="/studio/studio.css?v=5">
+  <link rel="stylesheet" href="/studio/studio.css?v=6">
   <script defer src="/_vercel/insights/script.js"></script>
 
   <!-- Local business / service schema -->
@@ -120,6 +120,10 @@
             aria-controls="panel-booking" tabindex="0">
             Booking assistant <span class="st-pill-badge st-pill-badge--live">Live</span>
           </button>
+          <button class="st-pill" id="tab-matcher" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-matcher" tabindex="-1">
+            Find your treatment <span class="st-pill-badge st-pill-badge--live">Live</span>
+          </button>
           <button class="st-pill" id="tab-reviews" type="button" role="tab" aria-selected="false"
             aria-controls="panel-reviews" tabindex="-1">
             Review collector <span class="st-pill-badge">Coming soon</span>
@@ -165,6 +169,17 @@
           <p class="st-asst-share">
             Like it? <a href="/studio/assistant">Share this demo →</a>
             <span class="st-asst-share-note">a full-page version you can send to a prospect</span>
+          </p>
+        </div>
+
+        <!-- Panel: Find your treatment (LIVE — guided matcher, /api/treatment-matcher) -->
+        <div class="st-asst-frame" id="panel-matcher" role="tabpanel" aria-labelledby="tab-matcher" tabindex="0" hidden>
+          <p class="st-demo-note">
+            ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
+          </p>
+          <div class="tm glass" id="tmRoot" role="group" aria-label="Find your treatment"></div>
+          <p class="st-asst-share">
+            Not sure what to book? Answer two quick questions and we’ll suggest a treatment.
           </p>
         </div>
 
@@ -453,6 +468,7 @@
     })();
   </script>
   <script src="/studio/assistant.js?v=1" defer></script>
+  <script src="/studio/treatment-matcher.js?v=1" defer></script>
   <script src="/studio/studio-assistant-widget.js?v=1" defer></script>
 </body>
 
