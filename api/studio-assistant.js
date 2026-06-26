@@ -2,15 +2,16 @@
 // SparkLab Studio — out-of-hours ENQUIRY assistant API (Vercel Serverless Fn)
 // =============================================================================
 //
-// This answers visitor questions about SparkLab's OWN services/pricing and
-// captures enquiries when nobody's online, so no lead is lost. It doubles as a
-// live demo of the exact product SparkLab sells.
+// Answers visitor questions about SparkLab's own services/pricing and captures
+// enquiries so no lead is lost. Lead capture uses the Anthropic tool-use loop:
+// the model calls the `capture_lead` tool, this function POSTs the structured
+// lead to an n8n webhook (Webhook → Gmail → Notion), then returns a tool_result
+// so the model writes its closing confirmation to the visitor.
 //
-// Hosting note: the brief specified a Netlify function, but this site deploys on
-// Vercel (vercel.json / .vercel present, no netlify.toml), so the same secure
-// design is implemented as a Vercel function under /api. The Anthropic key lives
-// ONLY in the ANTHROPIC_API_KEY env var (Vercel → Settings → Environment
-// Variables) — never in the frontend bundle. See STUDIO-ASSISTANT-README.md.
+// Hosting: Vercel serverless function at /api/studio-assistant. Secrets are read
+// from env vars only (never the front end):
+//   ANTHROPIC_API_KEY        — Anthropic key (existing)
+//   SPARKLAB_LEAD_WEBHOOK     — n8n webhook the lead is POSTed to (NEW)
 //
 // Endpoint: POST /api/studio-assistant   body: { messages: [{role, content}] }
 // =============================================================================
@@ -20,6 +21,10 @@ const { makeIpLimiter, realIp } = require("./_lib/ratelimit.js");
 
 const MODEL = "claude-sonnet-4-6";
 const MAX_TOKENS = 1024;
+const MAX_TOOL_ITERATIONS = 3; // safety cap on the tool-use loop
+
+// If the webhook fails, the assistant tells the visitor to email here directly.
+const FALLBACK_EMAIL = "support@wearesparklab.com";
 
 // --- Business hours (edit here) ---------------------------------------------
 const BUSINESS_TZ = "Europe/London";
@@ -27,13 +32,6 @@ const BUSINESS_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 const BUSINESS_START_HOUR = 9; // 09:00
 const BUSINESS_END_HOUR = 17; // 17:00 (5pm)
 const REPLY_WINDOW = "one business day";
-
-// --- Where captured leads go (all optional; see README) ----------------------
-// LEAD_EMAIL         — inbox leads are emailed to (default below)
-// RESEND_API_KEY     — set to email leads via Resend (https://resend.com)
-// LEAD_FROM          — verified Resend sender; falls back to Resend's test sender
-// LEAD_WEBHOOK_URL   — if set, leads are POSTed here instead (Notion/Zapier/etc.)
-const LEAD_EMAIL = process.env.LEAD_EMAIL || "support@wearesparklab.com";
 
 // --- Abuse guards (public page) ---------------------------------------------
 const MAX_MESSAGES = 20;
@@ -45,6 +43,25 @@ const MAX_TOTAL_CHARS = 8000;
 const limiter = makeIpLimiter({ prefix: "enquiry", perMinute: 8, perDay: 40 });
 const BUSY_MESSAGE =
   "I'm getting a lot of questions right now — please try again in a moment.";
+
+// --- The lead-capture tool the model can call --------------------------------
+const CAPTURE_LEAD_TOOL = {
+  name: "capture_lead",
+  description:
+    "Send a visitor enquiry to Sara. Call this once you have the visitor's name, email, and a one-line summary of what they need — especially when the business is outside wellness/beauty, when it's out of hours, or when the visitor shows buying intent.",
+  input_schema: {
+    type: "object",
+    properties: {
+      name: { type: "string", description: "Visitor's name" },
+      email: { type: "string", description: "Visitor's email" },
+      business_name: { type: "string", description: "Their business name, if given" },
+      business_type: { type: "string", description: "Type of business, e.g. dental practice, massage therapist" },
+      in_niche: { type: "boolean", description: "true if wellness/beauty, false otherwise" },
+      enquiry_summary: { type: "string", description: "One line on what they need" },
+    },
+    required: ["name", "email", "enquiry_summary"],
+  },
+};
 
 // --- Business-hours check (server-side, authoritative) -----------------------
 function isOutsideBusinessHours(date) {
@@ -64,132 +81,45 @@ function isOutsideBusinessHours(date) {
 // SparkLab knowledge block — edit the [bracketed] bits to change the offer.
 // =============================================================================
 function buildSystemPrompt({ outsideHours }) {
-  return `You are the enquiry assistant for SparkLab Studio.
+  return `You are the enquiry assistant for SparkLab Studio. Tone: warm, concise, professional, British English. Keep replies short.
 
-TONE: warm, concise, professional. British English throughout.
+What SparkLab does: builds fast, beautiful websites for solo practitioners — plus optional AI add-ons (a booking assistant, an out-of-hours FAQ responder, a social content generator, and a "find your treatment" matcher).
 
-WHAT SPARKLAB DOES:
-SparkLab builds fast, beautiful one-page websites for solo wellness practitioners
-(massage, reflexology, holistic therapy), with optional AI add-ons:
-  - a booking assistant
-  - an out-of-hours FAQ responder
-  - a social content generator
-  - a "find your treatment" matcher
+Specialism vs who we'll take on: SparkLab specialises in wellness and beauty businesses, but Sara also takes on other businesses — dental and other clinics, and professional-services firms. When a visitor's business falls outside wellness/beauty, NEVER turn them away. Warmly note that wellness/beauty is the specialism but other businesses are welcome, explain it would be a tailored quote rather than a standard package, and capture the enquiry (see LEAD CAPTURE). Do not invent or quote a price for an out-of-niche business.
 
-PRICING — quote only as a BALLPARK and say the exact figure is confirmed in a
-follow-up. Never give a firm, final quote.
-  - One-page website: from £350
-  - AI Booking / FAQ Assistant: from £99 setup + £25/month
-  - Bundles (site + assistant): available at a discount
-The monthly AI add-ons are the core offer — where it's relevant and natural,
-steer the conversation toward them.
+Pricing — ballpark only, never a firm quote: one-page website from £450; AI Booking / FAQ Assistant from £99 setup + £25/month; bundles (site + assistant) at a discount. Always steer toward the monthly add-ons — they're the core offer. For anything specific, or any out-of-niche business, do not give a figure — capture the enquiry instead.
 
-HOURS: enquiries are answered within ${REPLY_WINDOW}.
-RIGHT NOW IT IS ${outsideHours ? "OUTSIDE" : "WITHIN"} SparkLab's business hours
-(Mon–Fri, 9am–5pm UK time).${
-    outsideHours
-      ? " Because we're offline, proactively offer to take the visitor's details so we can reply when we're back."
-      : ""
-  }
+Hours: enquiries are answered within ${REPLY_WINDOW}, during business hours. Right now it is ${
+    outsideHours ? "OUTSIDE" : "WITHIN"
+  } business hours (Mon–Fri, 9am–5pm UK time).
 
-LEAD CAPTURE:
-When a visitor shows buying intent — or whenever it's outside business hours —
-collect their: name, business name, email, and what they need. Ask for anything
-missing, one or two items at a time (don't interrogate). Once you have at least
-their name and email, confirm that a real person will personally reply within
-${REPLY_WINDOW}.
+LEAD CAPTURE — this is how Sara actually hears about a visitor. When ANY of these is true — the visitor has shown buying intent, it's outside business hours, or the business is outside wellness/beauty — collect their name, email, business name, and one line on what they need, then call the capture_lead tool with those details. Ask for anything missing one item at a time; don't interrogate. Do not tell the visitor they've been passed on until the tool has been called and returned successfully. After it succeeds, confirm warmly that Sara will personally reply within ${REPLY_WINDOW}. If the tool reports a failure, apologise briefly and ask the visitor to email Sara directly at ${FALLBACK_EMAIL} so their enquiry isn't lost.
 
-When (and only when) you have captured at least a name AND an email, append the
-details on a NEW LINE at the very end of that same reply as a machine-readable
-token in EXACTLY this format:
-[[LEAD]]{"name":"...","business":"...","email":"...","need":"..."}
-Use empty strings for anything you genuinely don't have. Emit this token at most
-once per conversation, only in the message where you confirm you've taken their
-details. NEVER mention the token, never explain it, and never show it as part of
-a sentence — it is stripped out before the visitor sees your reply.
-
-GUARDRAILS:
-- Only discuss SparkLab and its services. If asked about anything else, gently
-  steer back.
-- Never invent features, services, or policies that aren't listed above.
-- Never give a firm or final price. For anything specific, capture the enquiry
-  instead and say it'll be confirmed in the follow-up.
-- Keep replies short and easy to read.`;
+Guardrails: only discuss SparkLab and its services. Never invent features. Never give a firm quote. If you can't answer something specific, capture the enquiry rather than guess.`;
 }
 
-// --- Lead handling -----------------------------------------------------------
-// Pull the [[LEAD]]{...} token out of the model's reply, returning the cleaned
-// visitor-facing text plus the parsed lead (or null).
-function extractLead(text) {
-  const m = text.match(/\[\[LEAD\]\]\s*(\{[\s\S]*?\})/);
-  if (!m) return { cleanText: text, lead: null };
-  let lead = null;
+// --- POST the captured lead to the n8n webhook -------------------------------
+async function postLead(input) {
+  const url = process.env.SPARKLAB_LEAD_WEBHOOK;
+  if (!url) {
+    console.error("SPARKLAB_LEAD_WEBHOOK is not set — lead could not be delivered.");
+    return { ok: false };
+  }
   try {
-    lead = JSON.parse(m[1]);
-  } catch {
-    lead = null;
-  }
-  const cleanText = text.replace(m[0], "").trim();
-  return { cleanText, lead };
-}
-
-// Provider-agnostic delivery. Configure ONE of these via env vars; structured so
-// you can later swap in Notion/CRM by editing only this function.
-async function deliverLead(lead, messages) {
-  const transcript = messages
-    .map((m) => `${m.role === "user" ? "Visitor" : "Assistant"}: ${m.content}`)
-    .join("\n");
-
-  const payload = {
-    ...lead,
-    receivedAt: new Date().toISOString(),
-    source: "SparkLab Studio site assistant",
-    transcript,
-  };
-
-  // 1) Webhook (the easy "swap to Notion / Zapier / Make / your CRM" path)
-  if (process.env.LEAD_WEBHOOK_URL) {
-    await fetch(process.env.LEAD_WEBHOOK_URL, {
+    const r = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(input),
     });
-    return;
+    if (!r.ok) {
+      console.error("Lead webhook returned non-OK status:", r.status);
+      return { ok: false };
+    }
+    return { ok: true };
+  } catch (err) {
+    console.error("Lead webhook POST failed:", err?.message || err);
+    return { ok: false };
   }
-
-  // 2) Email via Resend (simplest reliable email-from-serverless)
-  if (process.env.RESEND_API_KEY) {
-    const text = [
-      `New SparkLab enquiry`,
-      ``,
-      `Name:     ${lead.name || "(not given)"}`,
-      `Business: ${lead.business || "(not given)"}`,
-      `Email:    ${lead.email || "(not given)"}`,
-      `Need:     ${lead.need || "(not given)"}`,
-      ``,
-      `— Conversation —`,
-      transcript,
-    ].join("\n");
-
-    await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: process.env.LEAD_FROM || "SparkLab Studio <onboarding@resend.dev>",
-        to: [LEAD_EMAIL],
-        reply_to: lead.email || undefined,
-        subject: `New SparkLab enquiry — ${lead.name || "website visitor"}`,
-        text,
-      }),
-    });
-    return;
-  }
-
-  // 3) Nothing configured yet — log so the lead is at least in function logs.
-  console.log("LEAD CAPTURED (no delivery configured):", JSON.stringify(payload));
 }
 
 // --- Handler -----------------------------------------------------------------
@@ -239,37 +169,74 @@ module.exports = async (req, res) => {
   }
 
   const outsideHours = isOutsideBusinessHours(new Date());
+  const system = buildSystemPrompt({ outsideHours });
 
   try {
     const client = new Anthropic();
-    const response = await client.messages.create({
+    const convo = messages.slice(); // working copy we extend across tool turns
+    let leadCaptured = false;
+
+    let response = await client.messages.create({
       model: MODEL,
       max_tokens: MAX_TOKENS,
-      system: buildSystemPrompt({ outsideHours }),
-      messages,
+      system,
+      messages: convo,
+      tools: [CAPTURE_LEAD_TOOL],
     });
 
-    const raw = response.content
+    // Standard Anthropic tool-use loop: run while the model wants to call a tool.
+    let iterations = 0;
+    while (response.stop_reason === "tool_use" && iterations < MAX_TOOL_ITERATIONS) {
+      iterations += 1;
+
+      // Append the assistant turn (includes the tool_use block) verbatim.
+      convo.push({ role: "assistant", content: response.content });
+
+      const toolResults = [];
+      for (const block of response.content) {
+        if (block.type !== "tool_use") continue;
+        if (block.name === "capture_lead") {
+          const { ok } = await postLead(block.input);
+          if (ok) leadCaptured = true;
+          toolResults.push({
+            type: "tool_result",
+            tool_use_id: block.id,
+            is_error: !ok,
+            content: ok
+              ? `Enquiry delivered to Sara successfully. Now confirm warmly to the visitor that Sara will personally reply within ${REPLY_WINDOW}.`
+              : `Delivery FAILED — the enquiry was NOT sent. Apologise briefly and ask the visitor to email Sara directly at ${FALLBACK_EMAIL} so it isn't lost.`,
+          });
+        } else {
+          toolResults.push({
+            type: "tool_result",
+            tool_use_id: block.id,
+            is_error: true,
+            content: "Unknown tool.",
+          });
+        }
+      }
+
+      convo.push({ role: "user", content: toolResults });
+
+      response = await client.messages.create({
+        model: MODEL,
+        max_tokens: MAX_TOKENS,
+        system,
+        messages: convo,
+        tools: [CAPTURE_LEAD_TOOL],
+      });
+    }
+
+    const reply = response.content
       .filter((b) => b.type === "text")
       .map((b) => b.text)
       .join("")
       .trim();
 
-    const { cleanText, lead } = extractLead(raw);
-
-    // Deliver the lead but never let a delivery hiccup break the visitor's reply.
-    if (lead && (lead.name || lead.email)) {
-      try {
-        await deliverLead(lead, messages);
-      } catch (err) {
-        console.error("Lead delivery failed:", err?.message || err);
-      }
-    }
-
     return res.status(200).json({
-      reply: cleanText || "Sorry — I didn't catch that. Could you rephrase?",
+      reply: reply || "Sorry — I didn't catch that. Could you rephrase?",
       outsideHours,
-      leadCaptured: Boolean(lead && (lead.name || lead.email)),
+      leadCaptured,
     });
   } catch (err) {
     console.error("Anthropic request failed:", err?.message || err);

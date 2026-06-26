@@ -43,46 +43,32 @@ Model: `claude-sonnet-4-6`, `max_tokens: 1024` (set at the top of
 
 ---
 
-## 2. Choose where captured leads go
+## 2. Set the lead webhook (required for leads to reach you)
 
-When a visitor gives their name + email (or any time it's out of hours), the
-assistant collects **name, business, email, what they need**, confirms a reply
-within one business day, and the function calls `deliverLead()`. That function
-tries, in order:
+Leads are delivered to an **n8n workflow** (Webhook → Gmail → Notion). Set the
+webhook URL as one env var:
 
-1. **`LEAD_WEBHOOK_URL`** — if set, the lead is `POST`ed there as JSON. This is
-   the easy path to **Notion / Zapier / Make / a CRM**: paste a webhook URL and
-   map the fields on the other end. *(Recommended if you want it in a database.)*
-2. **`RESEND_API_KEY`** — if set (and no webhook), the lead is **emailed** via
-   [Resend](https://resend.com). *(Recommended if you just want it in your inbox.)*
-3. **Neither set** — the lead is written to the function logs so nothing is lost
-   while you decide. The visitor still gets a normal confirmation.
+1. In n8n, open the workflow's **Webhook** node and copy its **Production URL**.
+2. Vercel → **Settings → Environment Variables** → add
+   **`SPARKLAB_LEAD_WEBHOOK`** = that URL. Scope: **Production**.
+3. **Redeploy.**
 
-### Option A — Email to your inbox (Resend)
-1. Create a free Resend account, add an **API key**.
-2. In Vercel env vars set:
-   - `RESEND_API_KEY` = your Resend key
-   - `LEAD_EMAIL` = where leads should land (default: `support@wearesparklab.com`)
-   - `LEAD_FROM` *(optional)* = a verified sender, e.g. `SparkLab <hello@wearesparklab.com>`.
-     Until you verify your domain, leave it unset and Resend's test sender is used
-     (it can deliver to your own account email for testing).
-3. Redeploy.
+`SPARKLAB_LEAD_WEBHOOK` is read **server-side only** — never exposed to the
+front end. If it isn't set (or the POST fails), the assistant tells the visitor
+to email `support@wearesparklab.com` directly, so a lead is never silently lost.
 
-### Option B — Send to Notion / Zapier / a webhook
-1. Create a webhook (Zapier "Catch Hook", Make, an n8n Webhook node, a Notion
-   integration endpoint, etc.).
-2. In Vercel env vars set `LEAD_WEBHOOK_URL` = that URL. Redeploy.
-3. The JSON payload is:
-   ```json
-   {
-     "name": "...", "business": "...", "email": "...", "need": "...",
-     "receivedAt": "ISO-8601", "source": "SparkLab Studio site assistant",
-     "transcript": "Visitor: ...\nAssistant: ..."
-   }
-   ```
-
-To swap to a fully custom destination later, edit **only** `deliverLead()` in
-`api/studio-assistant.js` — nothing else needs to change.
+**Payload POSTed to the webhook** (the `capture_lead` tool's arguments):
+```json
+{
+  "name": "...",
+  "email": "...",
+  "business_name": "...",
+  "business_type": "dental practice | massage therapist | ...",
+  "in_niche": true,
+  "enquiry_summary": "one line on what they need"
+}
+```
+(`name`, `email`, `enquiry_summary` are always present; the others may be absent.)
 
 ---
 
@@ -102,14 +88,18 @@ All in `api/studio-assistant.js`:
 
 ## How lead capture works (under the hood)
 
-The model is instructed to append a hidden token to its confirmation message:
+It uses the Anthropic **tool-use loop**, not text parsing:
 
-```
-[[LEAD]]{"name":"...","business":"...","email":"...","need":"..."}
-```
+1. The model is given a `capture_lead` tool. When it has the visitor's name,
+   email and a one-line summary, it calls the tool.
+2. The function POSTs the tool's structured arguments to `SPARKLAB_LEAD_WEBHOOK`
+   and returns a `tool_result` saying whether the POST succeeded.
+3. The model then writes its closing message to the visitor — a warm "Sara will
+   reply within one business day" on success, or the email-fallback on failure.
 
-The function parses that token, delivers the lead, and **strips it out** before
-the reply reaches the visitor — so they only ever see a normal, warm confirmation.
+Out-of-niche businesses (dental, clinics, professional services) are **never**
+turned away — the assistant notes wellness/beauty is the specialism, says it'd
+be a tailored quote, and captures the enquiry (with `in_niche: false`).
 
 ---
 
@@ -119,5 +109,8 @@ the reply reaches the visitor — so they only ever see a normal, warm confirmat
 2. Ask: *“How much for a website and a booking assistant?”* → expect a warm,
    ballpark answer that nudges toward the monthly add-on.
 3. Say: *“I'm interested — I'm Sam from Calm Hands Reflexology, sam@example.com.”*
-   → expect a confirmation it'll reply within one business day, and a lead to
-   arrive via whichever delivery you configured (or appear in the function logs).
+   → expect a warm confirmation it'll reply within one business day, and a lead
+   to land in your inbox + Notion via the n8n workflow.
+4. Out-of-niche test: *“I run a dental practice, can you build our site?”* →
+   it should welcome you (not refuse), say it'd be a tailored quote, and capture
+   the enquiry with `in_niche: false`.
