@@ -105,106 +105,177 @@
       </div>
     </section>
 
+    <!-- WHAT YOU GET -->
+    <section id=”whatyouget” class=”container st-section”>
+      <h2>What you get</h2>
+      <p class=”st-sub”>Two things, and you can start with just the website.</p>
+
+      <div class=”st-offers”>
+        <!-- Offer 1 -->
+        <article class=”st-offer glass”>
+          <h3>Website + care plan</h3>
+          <div class=”st-offer-tag”>The foundation</div>
+          <ul>
+            <li>A clean, one-page website that looks right on a phone</li>
+            <li>Wired straight to your Square booking</li>
+            <li>Your services, prices, location and hours, clearly laid out</li>
+            <li>Ongoing updates, hosting and small changes handled for you</li>
+          </ul>
+          <div class=”st-offer-foot”>
+            <p class=”st-price”>
+              <span class=”st-from”>from</span> £450 &nbsp;+&nbsp; £20/mo
+            </p>
+          </div>
+        </article>
+
+        <!-- Offer 2 -->
+        <article class=”st-offer glass”>
+          <h3>Booking assistant <span style=”font-size:13px;color:var(--st-muted)”>(add-on)</span></h3>
+          <div class=”st-offer-tag”>Catch every enquiry</div>
+          <ul>
+            <li>A 24/7 chat assistant on your site</li>
+            <li>Answers common questions in your words</li>
+            <li>Turns enquiries into bookings while you work</li>
+            <li>Set up with your own services, prices and policies</li>
+          </ul>
+          <div class=”st-offer-foot”>
+            <p class=”st-price”>£99 setup &nbsp;+&nbsp; £25/mo</p>
+            <p style=”margin:10px 0 0;”>
+              <a class=”btn btn-ghost” href=”#contact”>Enquire about assistants →</a>
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <hr class=”st-divider”>
+
+    <!-- HOW IT WORKS -->
+    <section class=”container st-section”>
+      <h2>How it works</h2>
+      <p class=”st-sub”>You see the real thing before you pay a penny.</p>
+
+      <div class=”st-steps”>
+        <article class=”st-step glass”>
+          <span class=”st-step-num”>1</span>
+          <h3>I research and build a demo</h3>
+          <p>I look at what you offer and put together a working demo of your site — for real, not a mock-up.</p>
+        </article>
+        <article class=”st-step glass”>
+          <span class=”st-step-num”>2</span>
+          <h3>You see it live first</h3>
+          <p>You get a link to your actual site and try it out. If it's not right, we fix it. Only then do you decide.</p>
+        </article>
+        <article class=”st-step glass”>
+          <span class=”st-step-num”>3</span>
+          <h3>It goes live, wired to booking</h3>
+          <p>Once you're happy, it goes live on your domain and connected to your booking — ready to take enquiries.</p>
+        </article>
+      </div>
+    </section>
+
+    <hr class=”st-divider”>
+
     <!-- AI ASSISTANTS SHOWCASE — scalable: add an assistant = add one pill + one panel.
-         The live "Booking assistant" panel reuses the existing widget + /api/assistant function. -->
-    <section id="assistants" class="container st-section" style="padding-top:6px" aria-label="Meet your AI assistants">
+         The live “Booking assistant” panel reuses the existing widget + /api/assistant function. -->
+    <section id=”assistants” class=”container st-section” style=”padding-top:6px” aria-label=”Meet your AI assistants”>
       <h2>Meet your AI assistants</h2>
-      <p class="st-sub">
+      <p class=”st-sub”>
         A growing line of assistants for your practice. Try the live one below — more are on the way.
       </p>
 
-      <div class="st-asst">
+      <div class=”st-asst”>
         <!-- Selector -->
-        <div class="st-asst-pills" role="tablist" aria-label="Choose an assistant">
-          <button class="st-pill is-active" id="tab-booking" type="button" role="tab" aria-selected="true"
-            aria-controls="panel-booking" tabindex="0">
-            Booking assistant <span class="st-pill-badge st-pill-badge--live">Live</span>
+        <div class=”st-asst-pills” role=”tablist” aria-label=”Choose an assistant”>
+          <button class=”st-pill is-active” id=”tab-booking” type=”button” role=”tab” aria-selected=”true”
+            aria-controls=”panel-booking” tabindex=”0”>
+            Booking assistant <span class=”st-pill-badge st-pill-badge--live”>Live</span>
           </button>
-          <button class="st-pill" id="tab-matcher" type="button" role="tab" aria-selected="false"
-            aria-controls="panel-matcher" tabindex="-1">
-            Find your treatment <span class="st-pill-badge st-pill-badge--live">Live</span>
+          <button class=”st-pill” id=”tab-matcher” type=”button” role=”tab” aria-selected=”false”
+            aria-controls=”panel-matcher” tabindex=”-1”>
+            Find your treatment <span class=”st-pill-badge st-pill-badge--live”>Live</span>
           </button>
-          <button class="st-pill" id="tab-reviews" type="button" role="tab" aria-selected="false"
-            aria-controls="panel-reviews" tabindex="-1">
-            Review collector <span class="st-pill-badge">Coming soon</span>
+          <button class=”st-pill” id=”tab-reviews” type=”button” role=”tab” aria-selected=”false”
+            aria-controls=”panel-reviews” tabindex=”-1”>
+            Review collector <span class=”st-pill-badge”>Coming soon</span>
           </button>
-          <button class="st-pill" id="tab-content" type="button" role="tab" aria-selected="false"
-            aria-controls="panel-content" tabindex="-1">
-            Content helper <span class="st-pill-badge st-pill-badge--live">Live</span>
+          <button class=”st-pill” id=”tab-content” type=”button” role=”tab” aria-selected=”false”
+            aria-controls=”panel-content” tabindex=”-1”>
+            Content helper <span class=”st-pill-badge st-pill-badge--live”>Live</span>
           </button>
         </div>
 
         <!-- Panel: Booking assistant (LIVE — existing widget) -->
-        <div class="st-asst-frame" id="panel-booking" role="tabpanel" aria-labelledby="tab-booking" tabindex="0">
-          <p class="st-demo-note">
-            ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
+        <div class=”st-asst-frame” id=”panel-booking” role=”tabpanel” aria-labelledby=”tab-booking” tabindex=”0”>
+          <p class=”st-demo-note”>
+            ⚠️ <strong>”Willow Lane Massage” is a fictional business</strong> used only for this demo.
           </p>
 
-          <div class="chat glass" data-client="willow-lane" role="region" aria-label="Booking assistant demo">
-            <div class="chat-head">
-              <div class="chat-avatar" aria-hidden="true">W</div>
+          <div class=”chat glass” data-client=”willow-lane” role=”region” aria-label=”Booking assistant demo”>
+            <div class=”chat-head”>
+              <div class=”chat-avatar” aria-hidden=”true”>W</div>
               <div>
-                <div class="chat-title">Willow Lane Massage</div>
-                <div class="chat-status">Booking assistant · usually replies instantly</div>
+                <div class=”chat-title”>Willow Lane Massage</div>
+                <div class=”chat-status”>Booking assistant · usually replies instantly</div>
               </div>
             </div>
 
-            <div class="chat-log" id="chatLog" aria-live="polite" aria-atomic="false"></div>
+            <div class=”chat-log” id=”chatLog” aria-live=”polite” aria-atomic=”false”></div>
 
-            <div class="chat-chips" id="chatChips" aria-label="Example questions">
-              <button type="button" class="chat-chip" data-q="Do you do pregnancy massage?">Do you do pregnancy massage?</button>
-              <button type="button" class="chat-chip" data-q="How much is a 60-minute massage?">How much is a 60-minute massage?</button>
-              <button type="button" class="chat-chip" data-q="Where are you and is there parking?">Where are you and is there parking?</button>
-              <button type="button" class="chat-chip" data-q="I'd like to book a deep tissue session">I'd like to book a deep tissue session</button>
+            <div class=”chat-chips” id=”chatChips” aria-label=”Example questions”>
+              <button type=”button” class=”chat-chip” data-q=”Do you do pregnancy massage?”>Do you do pregnancy massage?</button>
+              <button type=”button” class=”chat-chip” data-q=”How much is a 60-minute massage?”>How much is a 60-minute massage?</button>
+              <button type=”button” class=”chat-chip” data-q=”Where are you and is there parking?”>Where are you and is there parking?</button>
+              <button type=”button” class=”chat-chip” data-q=”I’d like to book a deep tissue session”>I’d like to book a deep tissue session</button>
             </div>
 
-            <form class="chat-form" id="chatForm" autocomplete="off">
-              <label for="chatInput" style="position:absolute;left:-9999px">Your message</label>
-              <input type="text" id="chatInput" name="message" placeholder="Type your question…" maxlength="1000" />
-              <button type="submit" class="chat-send" id="chatSend">Send</button>
+            <form class=”chat-form” id=”chatForm” autocomplete=”off”>
+              <label for=”chatInput” style=”position:absolute;left:-9999px”>Your message</label>
+              <input type=”text” id=”chatInput” name=”message” placeholder=”Type your question…” maxlength=”1000” />
+              <button type=”submit” class=”chat-send” id=”chatSend”>Send</button>
             </form>
           </div>
 
-          <!-- Standalone page is now a SHARE action, not a "try it" action -->
-          <p class="st-asst-share">
-            Like it? <a href="/studio/assistant">Share this demo →</a>
-            <span class="st-asst-share-note">a full-page version you can send to a prospect</span>
+          <!-- Standalone page is now a SHARE action, not a “try it” action -->
+          <p class=”st-asst-share”>
+            Like it? <a href=”/studio/assistant”>Share this demo →</a>
+            <span class=”st-asst-share-note”>a full-page version you can send to a prospect</span>
           </p>
         </div>
 
         <!-- Panel: Find your treatment (LIVE — guided matcher, /api/treatment-matcher) -->
-        <div class="st-asst-frame" id="panel-matcher" role="tabpanel" aria-labelledby="tab-matcher" tabindex="0" hidden>
-          <p class="st-demo-note">
-            ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
+        <div class=”st-asst-frame” id=”panel-matcher” role=”tabpanel” aria-labelledby=”tab-matcher” tabindex=”0” hidden>
+          <p class=”st-demo-note”>
+            ⚠️ <strong>”Willow Lane Massage” is a fictional business</strong> used only for this demo.
           </p>
-          <div class="tm glass" id="tmRoot" data-client="willow-lane" role="group" aria-label="Find your treatment"></div>
-          <p class="st-asst-share">
+          <div class=”tm glass” id=”tmRoot” data-client=”willow-lane” role=”group” aria-label=”Find your treatment”></div>
+          <p class=”st-asst-share”>
             Not sure what to book? Answer two quick questions and we’ll suggest a treatment.
           </p>
         </div>
 
         <!-- Panel: Review collector (COMING SOON) -->
-        <div class="st-asst-frame" id="panel-reviews" role="tabpanel" aria-labelledby="tab-reviews" tabindex="0" hidden>
-          <div class="st-soon glass">
-            <span class="st-soon-badge">Coming soon</span>
+        <div class=”st-asst-frame” id=”panel-reviews” role=”tabpanel” aria-labelledby=”tab-reviews” tabindex=”0” hidden>
+          <div class=”st-soon glass”>
+            <span class=”st-soon-badge”>Coming soon</span>
             <h3>Review collector</h3>
             <p>Asks happy clients for a review at just the right moment and gathers them in one place — so your
               good reputation builds itself.</p>
-            <a class="st-soon-link" href="#contact">Get early access →</a>
+            <a class=”st-soon-link” href=”#contact”>Get early access →</a>
           </div>
         </div>
 
         <!-- Panel: Content helper (LIVE — taster for the PRIVATE content tool) -->
-        <div class="st-asst-frame" id="panel-content" role="tabpanel" aria-labelledby="tab-content" tabindex="0" hidden>
-          <p class="st-demo-note">
-            ⚠️ <strong>“Willow Lane Massage” is a fictional business</strong> used only for this demo.
+        <div class=”st-asst-frame” id=”panel-content” role=”tabpanel” aria-labelledby=”tab-content” tabindex=”0” hidden>
+          <p class=”st-demo-note”>
+            ⚠️ <strong>”Willow Lane Massage” is a fictional business</strong> used only for this demo.
           </p>
-          <div class="cg glass" id="cgRoot" data-mode="taster" data-count="3" data-client="willow-lane">
-            <span class="cg-private-flag">🔒 A private back-office tool — you’d use this to plan posts, not on your public site</span>
-            <p class="cg-intro">Pick a topic and platform, and generate 3 sample captions in the business’s voice.</p>
-            <div class="cg-form">
-              <label class="cg-field" for="cgTopic"><span>Topic</span>
-                <select id="cgTopic">
+          <div class=”cg glass” id=”cgRoot” data-mode=”taster” data-count=”3” data-client=”willow-lane”>
+            <span class=”cg-private-flag”>🔒 A private back-office tool — you’d use this to plan posts, not on your public site</span>
+            <p class=”cg-intro”>Pick a topic and platform, and generate 3 sample captions in the business’s voice.</p>
+            <div class=”cg-form”>
+              <label class=”cg-field” for=”cgTopic”><span>Topic</span>
+                <select id=”cgTopic”>
                   <option>Relaxation massage</option>
                   <option>Deep tissue massage</option>
                   <option>Pregnancy massage</option>
@@ -213,93 +284,22 @@
                   <option>New clients (not sure what to book)</option>
                 </select>
               </label>
-              <label class="cg-field" for="cgPlatform"><span>Platform</span>
-                <select id="cgPlatform">
+              <label class=”cg-field” for=”cgPlatform”><span>Platform</span>
+                <select id=”cgPlatform”>
                   <option>Instagram</option>
                   <option>Facebook</option>
                 </select>
               </label>
-              <button class="cg-go" id="cgGo" type="button">Generate 3 captions</button>
+              <button class=”cg-go” id=”cgGo” type=”button”>Generate 3 captions</button>
             </div>
-            <div class="cg-status" id="cgStatus" aria-live="polite"></div>
-            <div class="cg-results" id="cgResults"></div>
+            <div class=”cg-status” id=”cgStatus” aria-live=”polite”></div>
+            <div class=”cg-results” id=”cgResults”></div>
           </div>
         </div>
       </div>
     </section>
 
-    <hr class="st-divider">
-
-    <!-- WHAT YOU GET -->
-    <section id="whatyouget" class="container st-section">
-      <h2>What you get</h2>
-      <p class="st-sub">Two things, and you can start with just the website.</p>
-
-      <div class="st-offers">
-        <!-- Offer 1 -->
-        <article class="st-offer glass">
-          <h3>Website + care plan</h3>
-          <div class="st-offer-tag">The foundation</div>
-          <ul>
-            <li>A clean, one-page website that looks right on a phone</li>
-            <li>Wired straight to your Square booking</li>
-            <li>Your services, prices, location and hours, clearly laid out</li>
-            <li>Ongoing updates, hosting and small changes handled for you</li>
-          </ul>
-          <div class="st-offer-foot">
-            <p class="st-price">
-              <span class="st-from">from</span> £450 &nbsp;+&nbsp; £20/mo
-            </p>
-          </div>
-        </article>
-
-        <!-- Offer 2 -->
-        <article class="st-offer glass">
-          <h3>Booking assistant <span style="font-size:13px;color:var(--st-muted)">(add-on)</span></h3>
-          <div class="st-offer-tag">Catch every enquiry</div>
-          <ul>
-            <li>A 24/7 chat assistant on your site</li>
-            <li>Answers common questions in your words</li>
-            <li>Turns enquiries into bookings while you work</li>
-            <li>Set up with your own services, prices and policies</li>
-          </ul>
-          <div class="st-offer-foot">
-            <p class="st-price">£99 setup &nbsp;+&nbsp; £25/mo</p>
-            <p style="margin:10px 0 0;">
-              <a class="btn btn-ghost" href="#contact">Enquire about assistants →</a>
-            </p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <hr class="st-divider">
-
-    <!-- HOW IT WORKS -->
-    <section class="container st-section">
-      <h2>How it works</h2>
-      <p class="st-sub">You see the real thing before you pay a penny.</p>
-
-      <div class="st-steps">
-        <article class="st-step glass">
-          <span class="st-step-num">1</span>
-          <h3>I research and build a demo</h3>
-          <p>I look at what you offer and put together a working demo of your site — for real, not a mock-up.</p>
-        </article>
-        <article class="st-step glass">
-          <span class="st-step-num">2</span>
-          <h3>You see it live first</h3>
-          <p>You get a link to your actual site and try it out. If it's not right, we fix it. Only then do you decide.</p>
-        </article>
-        <article class="st-step glass">
-          <span class="st-step-num">3</span>
-          <h3>It goes live, wired to booking</h3>
-          <p>Once you're happy, it goes live on your domain and connected to your booking — ready to take enquiries.</p>
-        </article>
-      </div>
-    </section>
-
-    <hr class="st-divider">
+    <hr class=”st-divider”>
 
     <!-- WHY IT'S WORTH IT -->
     <section class="container st-section">
