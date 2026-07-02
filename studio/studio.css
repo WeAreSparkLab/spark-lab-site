@@ -76,6 +76,23 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+/* WhatsApp — messages-only contact, brand green */
+.studio .btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  border: 0;
+  color: #0B141A;
+  font-weight: 800;
+}
+.studio .btn-whatsapp:hover {
+  background: #1EBE5B;
+}
+.studio .btn-whatsapp .btn-wa-icon {
+  flex: 0 0 auto;
+}
+
 /* --- Section scaffolding --------------------------------------------------- */
 .st-section {
   padding: 40px 20px;
