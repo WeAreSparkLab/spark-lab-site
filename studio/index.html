@@ -197,7 +197,7 @@
           </button>
           <button class="st-pill" id="tab-reviews" type="button" role="tab" aria-selected="false"
             aria-controls="panel-reviews" tabindex="-1">
-            Review collector <span class="st-pill-badge">Coming soon</span>
+            Review collector <span class="st-pill-badge st-pill-badge--live">Live</span>
           </button>
           <button class="st-pill" id="tab-content" type="button" role="tab" aria-selected="false"
             aria-controls="panel-content" tabindex="-1">
@@ -254,15 +254,16 @@
           </p>
         </div>
 
-        <!-- Panel: Review collector (COMING SOON) -->
+        <!-- Panel: Review collector (LIVE — guided flow, /api/review-collector) -->
         <div class="st-asst-frame" id="panel-reviews" role="tabpanel" aria-labelledby="tab-reviews" tabindex="0" hidden>
-          <div class="st-soon glass">
-            <span class="st-soon-badge">Coming soon</span>
-            <h3>Review collector</h3>
-            <p>Asks happy clients for a review at just the right moment and gathers them in one place — so your
-              good reputation builds itself.</p>
-            <a class="st-soon-link" href="#contact">Get early access →</a>
-          </div>
+          <p class="st-demo-note">
+            ⚠️ <strong>"Willow Lane Massage" is a fictional business</strong> used only for this demo.
+          </p>
+          <div class="rc glass" id="rcRoot" data-client="willow-lane" role="group" aria-label="Review collector"></div>
+          <p class="st-asst-share">
+            Asks happy clients for a review at just the right moment and gathers them in one place — so your
+            good reputation builds itself.
+          </p>
         </div>
 
         <!-- Panel: Content helper (LIVE — taster for the PRIVATE content tool) -->
@@ -514,6 +515,7 @@
   <script src="/studio/assistant.js?v=2" defer></script>
   <script src="/studio/treatment-matcher.js?v=2" defer></script>
   <script src="/studio/content-generator.js?v=3" defer></script>
+  <script src="/studio/review-collector.js?v=1" defer></script>
   <script src="/studio/studio-assistant-widget.js?v=1" defer></script>
 </body>
 
