@@ -3,11 +3,12 @@
 // =============================================================================
 //
 // Drafts the short, private message a practitioner would send a client shortly
-// after their appointment, asking how it went. The real product then routes a
-// happy reply to a public review link (e.g. Google) and an unhappy reply to a
-// private note to the practitioner — so nothing bad ever gets a public airing
-// by accident. This endpoint only drafts that first message; the "what happens
-// next" step is simulated client-side (see studio/review-collector.js).
+// after their appointment, asking how it went. The real product invites every
+// client to leave a public review (e.g. Google); an unhappy reply also pings
+// the practitioner privately so they can follow up and put things right early —
+// service recovery, not review gating. This endpoint only drafts that first
+// message; the "what happens next" step is simulated client-side (see
+// studio/review-collector.js).
 //
 // Reuse: the SAME per-client config as the booking assistant
 // (./_knowledge/willow-lane-massage.js) — name, tone and services. No new config.
