@@ -517,6 +517,9 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   max-width: 52ch;
   margin: 10px auto 22px;
 }
+.st-contact .st-cta-row {
+  justify-content: center;
+}
 
 /* =============================================================================
    Assistant demo page + chat widget
