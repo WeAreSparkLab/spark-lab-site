@@ -1300,3 +1300,193 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   border: 1px solid rgba(245, 200, 66, 0.35);
   color: #ffe7c2;
 }
+
+/* =============================================================================
+   Review collector — guided flow (studio showcase)
+   Lives under body.studio, so it inherits :focus-visible + reduced-motion.
+   ========================================================================== */
+.rc {
+  min-height: 360px;
+  padding: 26px 24px;
+}
+
+/* Step 1: the "recent appointment" trigger card */
+.rc-appt {
+  padding: 20px 22px;
+  margin-bottom: 22px;
+  border: 1px solid var(--st-line);
+  border-radius: 14px;
+  background: var(--st-panel);
+}
+.rc-appt-kicker {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--st-accent-2);
+}
+.rc-appt-name {
+  margin: 0 0 4px;
+  font-size: clamp(19px, 2.6vw, 22px);
+  color: var(--st-ink);
+}
+.rc-appt-detail {
+  margin: 0 0 16px;
+  font-size: 14.5px;
+  color: var(--st-muted);
+}
+
+.rc-go {
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 20px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: #0a0c1a;
+  font-family: inherit;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+}
+
+.rc-hint {
+  margin: 14px 0 12px;
+  font-size: 14px;
+  color: var(--st-muted);
+}
+
+/* Step 2: the private message preview, styled like a text message */
+.rc-sms {
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--st-line);
+  background: rgba(255, 255, 255, 0.04);
+}
+.rc-sms-label {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--st-accent-2);
+}
+.rc-sms-body {
+  margin: 0;
+  color: var(--st-ink);
+  font-size: 15px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+/* Simulated reply buttons */
+.rc-reply-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+.rc-reply {
+  border: 1px solid var(--st-line);
+  background: rgba(255, 255, 255, 0.04);
+  color: #e7ecff;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 11px 16px;
+  cursor: pointer;
+  transition: background .16s ease, border-color .16s ease, transform .16s ease;
+}
+.rc-reply:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+/* Step 4: outcome cards */
+.rc-result {
+  position: relative;
+  padding: 22px 24px 24px;
+  margin-bottom: 22px;
+  border: 1px solid var(--st-line);
+  border-radius: 16px;
+  background: var(--st-panel);
+  overflow: hidden;
+}
+.rc-result::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--st-accent), var(--st-accent-2));
+}
+.rc-result--private::before {
+  background: #f5c842;
+}
+.rc-result-kicker {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--st-accent-2);
+}
+.rc-result--private .rc-result-kicker {
+  color: #f5c842;
+}
+.rc-result-title {
+  margin: 0 0 8px;
+  font-size: clamp(19px, 2.8vw, 23px);
+  color: var(--st-ink);
+}
+.rc-result-body {
+  margin: 0;
+  color: #d8def5;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* The "gathered in one place" reviews wall */
+.rc-wall-label {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--st-muted);
+}
+.rc-wall-list {
+  display: grid;
+  gap: 10px;
+}
+@media (min-width: 640px) {
+  .rc-wall-list { grid-template-columns: 1fr 1fr; }
+}
+.rc-wall-item {
+  padding: 14px 16px;
+  border: 1px solid var(--st-line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.rc-wall-item--new {
+  border-style: dashed;
+  border-color: rgba(0, 246, 210, 0.4);
+  background: rgba(0, 246, 210, 0.06);
+}
+.rc-stars {
+  display: block;
+  color: var(--st-accent-2);
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.rc-wall-text {
+  margin: 0;
+  color: #d8def5;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.rc-wall-who {
+  color: var(--st-muted);
+  font-weight: 600;
+}
