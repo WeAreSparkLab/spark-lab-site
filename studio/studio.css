@@ -244,19 +244,31 @@
   color: var(--st-ink);
 }
 
-/* --- Portfolio ------------------------------------------------------------- */
+/* --- Portfolio ---------------------------------------------------------------
+   Responsive grid: 1 column on mobile, naturally reflows to 2–3 columns as
+   space allows (no hand-tuned breakpoints needed).
+   .st-portfolio-card is used two ways:
+     - as an <a> for a real, live project (screenshot + details, see below)
+     - as an <article class="is-placeholder"> for an empty "slot"
+   ------------------------------------------------------------------------- */
 .st-portfolio {
   display: grid;
-  gap: 16px;
-  grid-template-columns: 1fr;
-}
-@media (min-width: 680px) {
-  .st-portfolio {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 .st-portfolio-card {
+  display: flex;
+  flex-direction: column;
   padding: 22px;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+a.st-portfolio-card:hover,
+a.st-portfolio-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 .st-portfolio-card.is-placeholder {
   border-style: dashed;
@@ -271,6 +283,101 @@
   color: var(--st-muted);
   font-size: 14px;
   margin: 6px 0 0;
+}
+
+/* Live project card — screenshot in a little browser frame */
+.st-portfolio-card.st-has-shot {
+  padding: 0;
+  overflow: hidden;
+}
+.st-portfolio-frame {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 12px 0;
+}
+.st-portfolio-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+}
+.st-portfolio-dots {
+  display: flex;
+  gap: 6px;
+}
+.st-portfolio-dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+}
+.st-portfolio-url {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--st-line);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--st-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.st-portfolio-url b {
+  color: var(--st-ink);
+  font-weight: 600;
+}
+.st-portfolio-shot {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+}
+.st-portfolio-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.5s ease;
+}
+a.st-portfolio-card:hover .st-portfolio-shot img {
+  transform: scale(1.03);
+}
+.st-portfolio-body {
+  padding: 18px 20px 22px;
+}
+.st-portfolio-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--st-accent-2);
+  margin-bottom: 8px;
+}
+.st-portfolio-body h3 {
+  font-size: 19px;
+  margin: 0 0 8px;
+}
+.st-portfolio-desc {
+  color: var(--st-muted);
+  font-size: 14.5px;
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+.st-portfolio-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--st-ink);
+}
+.st-portfolio-link .arrow {
+  transition: transform 0.25s ease;
+}
+a.st-portfolio-card:hover .st-portfolio-link .arrow {
+  transform: translateX(4px);
 }
 
 /* --- Testimonial (built to hold ONE quote well) --------------------------- */
@@ -382,7 +489,7 @@
 .st-contact {
   text-align: center;
   padding: 40px 24px;
-  margin: 16px 20px 0;
+  margin: 16px auto 0;
 }
 .st-contact h2 {
   color: var(--st-ink);
