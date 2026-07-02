@@ -2,10 +2,10 @@
 // Review collector — guided-flow widget (vanilla JS, no framework)
 // -----------------------------------------------------------------------------
 // Simulates the real flow: a short private check-in is sent to a client after
-// their appointment; the widget then lets you simulate their reply. A happy
-// reply is routed to a public review link; anything else stays private with
-// the practitioner — nothing bad ever risks a public airing. Renders into
-// #rcRoot; if that element isn't on the page, it does nothing.
+// their appointment; the widget then lets you simulate their reply. Every
+// reply gets the same public review link (no review gating); an unhappy reply
+// also pings the practitioner so they can follow up and put things right early.
+// Renders into #rcRoot; if that element isn't on the page, it does nothing.
 // =============================================================================
 
 (function () {
@@ -114,21 +114,33 @@
     root.appendChild(el("p", "tm-hint", "Drafting the check-in message\u2026"));
   }
 
+  // A good local stand-in for the AI-drafted message, used whenever the live
+  // draft isn't available (rate limited, cold start, offline, etc.) — this is
+  // a demo of the FLOW, so it always shows what the client would actually see,
+  // sent or not.
+  function fallbackMessage(a) {
+    return (
+      "Hi " + a.name + "! Thanks for coming in for your " + a.service.toLowerCase() +
+      " \u2014 how did it go? Good or bad, we'd love to know: [link]"
+    );
+  }
+
   function submit() {
     renderLoading();
+    var appointment = appt;
     fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ client: client, name: appt.name, service: appt.service }),
+      body: JSON.stringify({ client: client, name: appointment.name, service: appointment.service }),
     })
       .then(function (res) {
         return res.json().then(function (data) { return { ok: res.ok, data: data }; });
       })
       .then(function (r) {
-        if (r.ok && r.data && r.data.message) renderSent(r.data.message);
-        else renderError((r.data && r.data.error) || null);
+        var message = r.ok && r.data && r.data.message ? r.data.message : fallbackMessage(appointment);
+        renderSent(message);
       })
-      .catch(function () { renderError(null); });
+      .catch(function () { renderSent(fallbackMessage(appointment)); });
   }
 
   // --- Step 3: preview the message + simulate the client's reply --------------
@@ -171,29 +183,17 @@
     focusFirst();
   }
 
-  // --- Step 4b: unhappy path — kept private ------------------------------------
+  // --- Step 4b: unhappy path — flagged for a personal follow-up ----------------
   function renderPrivate() {
     clear();
     var card = el("div", "rc-result rc-result--private");
-    card.appendChild(el("p", "rc-result-kicker", "Kept private"));
-    card.appendChild(el("h3", "rc-result-title", "Nothing posted publicly"));
-    card.appendChild(el("p", "rc-result-body", "Willow Lane gets a private note instead, so they can follow up with " + appt.name + " directly and put it right \u2014 before it ever becomes a public review."));
+    card.appendChild(el("p", "rc-result-kicker", "Flagged for a personal follow-up"));
+    card.appendChild(el("h3", "rc-result-title", "You hear about it first"));
+    card.appendChild(el("p", "rc-result-body", "Willow Lane gets an instant heads-up so they can reach out to " + appt.name + " and put it right. " + appt.name + " still gets the same review link \u2014 it's their call \u2014 but now the conversation starts with you, before anyone feels unheard."));
     root.appendChild(card);
     root.appendChild(reviewsWall());
     root.appendChild(restartLink());
     focusFirst();
-  }
-
-  function renderError(message) {
-    clear();
-    var card = el("div", "rc-result rc-result--private");
-    card.appendChild(el("p", "rc-result-body", message || "I'm having trouble connecting right now. Please try again in a moment."));
-    root.appendChild(card);
-    var again = el("button", "rc-go", "Try again");
-    again.type = "button";
-    again.addEventListener("click", submit);
-    root.appendChild(again);
-    root.appendChild(restartLink());
   }
 
   function backLink(onClick) {
