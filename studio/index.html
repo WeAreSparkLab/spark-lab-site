@@ -40,17 +40,29 @@
   {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
+    "@id": "https://www.wearesparklab.com/studio#business",
     "name": "Spark Lab Studio",
-    "description": "One-page websites and AI booking assistants for independent wellness practitioners in and around Norwich.",
+    "description": "One-page websites and AI booking assistants for independent wellness practitioners — massage therapists, reflexologists and beauty therapists — in and around Norwich.",
     "url": "https://www.wearesparklab.com/studio",
-    "areaServed": { "@type": "City", "name": "Norwich" },
-    "parentOrganization": { "@type": "Organization", "name": "Spark Lab", "url": "https://www.wearesparklab.com" },
+    "image": "https://www.wearesparklab.com/assets/portfolio/roots-home.jpeg",
+    "logo": "https://www.wearesparklab.com/assets/brand/spark-32.png",
+    "priceRange": "££",
+    "currenciesAccepted": "GBP",
     "email": "support@wearesparklab.com",
+    "serviceType": ["Web design", "AI booking assistant", "Website hosting and care plan"],
+    "areaServed": [
+      { "@type": "City", "name": "Norwich" },
+      { "@type": "AdministrativeArea", "name": "Norfolk" },
+      { "@type": "Country", "name": "United Kingdom" }
+    ],
+    "parentOrganization": { "@type": "Organization", "name": "Spark Lab", "url": "https://www.wearesparklab.com" },
     "makesOffer": [
       {
         "@type": "Offer",
         "name": "Website + care plan",
-        "description": "A simple one-page website wired to your Square booking, with ongoing updates and hosting."
+        "description": "A simple one-page website wired to your Square booking, with ongoing updates and hosting.",
+        "price": "450",
+        "priceCurrency": "GBP"
       },
       {
         "@type": "Offer",
@@ -58,6 +70,53 @@
         "description": "A 24/7 AI chat assistant that answers enquiries and turns them into bookings.",
         "price": "99",
         "priceCurrency": "GBP"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Breadcrumb -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Spark Lab", "item": "https://www.wearesparklab.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Spark Lab Studio", "item": "https://www.wearesparklab.com/studio" }
+    ]
+  }
+  </script>
+
+  <!-- FAQ (mirrors the visible FAQ section so it's eligible for rich results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I need to be technical?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Not at all. You don't touch any of the technical side — I handle the building, hosting and updates. You just tell me about your work." }
+      },
+      {
+        "@type": "Question",
+        "name": "Who hosts the website?",
+        "acceptedAnswer": { "@type": "Answer", "text": "I do, as part of the care plan. It stays online, secure and up to date without you having to think about it." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I keep my own domain and booking tool?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. If you already have a domain, we use it. The site wires into your existing Square booking — you keep your tools and your bookings." }
+      },
+      {
+        "@type": "Question",
+        "name": "What does the assistant cost to run?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It's £99 to set up and £25/mo, which covers running it on your site. There's nothing else to pay or manage on your end." }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does it take?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Usually a week or two from our first chat to going live — sometimes faster. You'll see a working demo early on, so there are no surprises." }
       }
     ]
   }
