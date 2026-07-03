@@ -88,6 +88,26 @@
         "description": "A 24/7 AI chat assistant that answers enquiries and turns them into bookings.",
         "price": "99",
         "priceCurrency": "GBP"
+      },
+      {
+        "@type": "Offer",
+        "name": "Find your treatment",
+        "description": "A guided AI matcher that helps unsure visitors choose the right treatment to book."
+      },
+      {
+        "@type": "Offer",
+        "name": "Review collector",
+        "description": "An AI assistant that invites happy clients to leave a review and flags unhappy ones to follow up first."
+      },
+      {
+        "@type": "Offer",
+        "name": "No-show saver",
+        "description": "An AI assistant that sends warm appointment reminders and wins back cancellations, so fewer slots are lost to no-shows."
+      },
+      {
+        "@type": "Offer",
+        "name": "Content helper",
+        "description": "A back-office AI tool that drafts social posts and captions in your business's voice."
       }
     ]
   }
@@ -184,8 +204,8 @@
 
     <!-- WHAT YOU GET -->
     <section id="whatyouget" class="container st-section">
-      <h2>What you get</h2>
-      <p class="st-sub">Two things, and you can start with just the website.</p>
+      <h2>The website, plus optional assistants</h2>
+      <p class="st-sub">Start with just the website. Add any of the AI assistants whenever you're ready — never all at once.</p>
 
       <div class="st-offers">
         <!-- Offer 1 -->
@@ -205,20 +225,24 @@
           </div>
         </article>
 
-        <!-- Offer 2 -->
+        <!-- Offer 2 — the growing line of AI assistants, all optional add-ons.
+             Each is demoed live in the #assistants showcase below; keep this
+             list in step with the pills there when an assistant is added. -->
         <article class="st-offer glass">
-          <h3>Booking assistant <span style="font-size:13px;color:var(--st-muted)">(add-on)</span></h3>
-          <div class="st-offer-tag">Catch every enquiry</div>
+          <h3>AI assistants <span style="font-size:13px;color:var(--st-muted)">(optional)</span></h3>
+          <div class="st-offer-tag">Add any, whenever you're ready</div>
           <ul>
-            <li>A 24/7 chat assistant on your site</li>
-            <li>Answers common questions in your words</li>
-            <li>Turns enquiries into bookings while you work</li>
-            <li>Set up with your own services, prices and policies</li>
+            <li><strong>Booking assistant</strong> — answers questions 24/7 and turns enquiries into bookings</li>
+            <li><strong>Find your treatment</strong> — guides unsure visitors to the right service</li>
+            <li><strong>Review collector</strong> — invites happy clients to leave a review, catches unhappy ones first</li>
+            <li><strong>No-show saver</strong> — reminders before, and warm win-backs after a cancellation</li>
+            <li><strong>Content helper</strong> — drafts social posts in your voice</li>
           </ul>
           <div class="st-offer-foot">
-            <p class="st-price">£99 setup &nbsp;+&nbsp; £25/mo</p>
-            <p style="margin:10px 0 0;">
-              <a class="btn btn-ghost" href="#contact">Enquire about assistants →</a>
+            <p class="st-price">Priced individually</p>
+            <p style="margin:6px 0 0;font-size:13px;color:var(--st-muted)">Some cost less than others, and the content helper has no setup fee. Get in touch and I'll quote for your practice.</p>
+            <p style="margin:12px 0 0;">
+              <a class="btn btn-ghost" href="#assistants">Try them live →</a>
             </p>
           </div>
         </article>
@@ -275,6 +299,10 @@
           <button class="st-pill" id="tab-reviews" type="button" role="tab" aria-selected="false"
             aria-controls="panel-reviews" tabindex="-1">
             Review collector <span class="st-pill-badge st-pill-badge--live">Live</span>
+          </button>
+          <button class="st-pill" id="tab-noshow" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-noshow" tabindex="-1">
+            No-show saver <span class="st-pill-badge st-pill-badge--live">Live</span>
           </button>
           <button class="st-pill" id="tab-content" type="button" role="tab" aria-selected="false"
             aria-controls="panel-content" tabindex="-1">
@@ -340,6 +368,18 @@
           <p class="st-asst-share">
             Asks every client how their visit went at just the right moment, invites them to leave a review, and
             flags anyone who wasn’t happy so you can follow up first — so your good reputation builds itself.
+          </p>
+        </div>
+
+        <!-- Panel: No-show saver (LIVE — guided flow, /api/no-show-saver) -->
+        <div class="st-asst-frame" id="panel-noshow" role="tabpanel" aria-labelledby="tab-noshow" tabindex="0" hidden>
+          <p class="st-demo-note">
+            ⚠️ <strong>"Willow Lane Massage" is a fictional business</strong> used only for this demo.
+          </p>
+          <div class="rc glass" id="nsRoot" data-client="willow-lane" role="group" aria-label="No-show saver"></div>
+          <p class="st-asst-share">
+            Sends a warm reminder before each appointment so wobbles become freed slots instead of no-shows — and
+            gently wins back anyone who cancels, so fewer hours are quietly lost.
           </p>
         </div>
 
@@ -638,6 +678,7 @@
   <script src="/studio/treatment-matcher.js?v=2" defer></script>
   <script src="/studio/content-generator.js?v=3" defer></script>
   <script src="/studio/review-collector.js?v=1" defer></script>
+  <script src="/studio/no-show-saver.js?v=1" defer></script>
   <script src="/studio/studio-assistant-widget.js?v=1" defer></script>
 </body>
 
