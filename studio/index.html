@@ -36,7 +36,7 @@
   <meta name="theme-color" content="#0B1020">
 
   <link rel="stylesheet" href="/styles.css?v=19">
-  <link rel="stylesheet" href="/studio/studio.css?v=9">
+  <link rel="stylesheet" href="/studio/studio.css?v=10">
   <script defer src="/_vercel/insights/script.js"></script>
 
   <!-- Local business / service schema -->
@@ -60,6 +60,20 @@
       { "@type": "Country", "name": "United Kingdom" }
     ],
     "parentOrganization": { "@type": "Organization", "name": "Spark Lab", "url": "https://www.wearesparklab.com" },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": "1",
+      "bestRating": "5"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "author": { "@type": "Person", "name": "Ruth Biene" },
+        "reviewBody": "Sara from Spark Lab got in touch with me in just the right moment! Since I qualified as a Complementary Therapist and Reflexologist I had been scrolling the web, installing and testing various booking platforms trying to figure out how clients could find out about me and also how they could book a treatment with ease. I felt completely overwhelmed and felt like I'd never be able to do this. Sara got my website up and running within a week and I got my first online booking one day after it launched: today I welcomed my first client and I am so, so happy that it all got sorted so easily and quickly. The website is clear and simple. It looks beautiful and my client said it was very easy to book. I can highly recommend Spark Lab and working with Sara. She is a very patient and professional collaborator on your journey to setting up your wellbeing business."
+      }
+    ],
     "makesOffer": [
       {
         "@type": "Offer",
@@ -398,26 +412,50 @@
       <p class="st-sub">Real practitioners, real sites. More coming soon.</p>
 
       <!-- ===================================================================
-           TESTIMONIAL — built to hold ONE real quote.
-           It is HIDDEN by default (note the `hidden` attribute on <figure>).
-
-           TO TURN IT ON:
-             1. Replace the four [bracketed] placeholders below with real words.
-             2. Delete the word  hidden  from the <figure ...> opening tag.
-
-           NO LIVE-SITE LINK YET?
-             Delete the whole <a class="st-attr-link"> ... </a> line — the
-             link is optional.
+           TESTIMONIAL — a real, consented client review.
+           The card shows a trimmed excerpt; "Read the full review" opens the
+           complete text in the dialog below. Keep both faithful to the words
+           the client actually wrote.
            =================================================================== -->
-      <figure class="st-testimonial glass" hidden>
+      <figure class="st-testimonial glass">
         <div class="st-quote-mark" aria-hidden="true">"</div>
-        <blockquote class="st-quote">[Client quote goes here]</blockquote>
+        <blockquote class="st-quote">
+          Sara from Spark Lab got in touch with me in just the right moment! &hellip; Sara got my
+          website up and running within a week and I got my first online booking one day after it
+          launched. &hellip; It looks beautiful and my client said it was very easy to book. I can
+          highly recommend Spark Lab and working with Sara.
+        </blockquote>
+        <button type="button" class="st-quote-more" data-testimonial-open>Read the full review →</button>
         <figcaption class="st-attr">
-          <cite class="st-attr-name">[Client name]</cite>
-          <span class="st-attr-biz">[Business name]</span>
-          <a class="st-attr-link" href="[live site URL]" target="_blank" rel="noopener noreferrer">View their site →</a>
+          <cite class="st-attr-name">Ruth Biene</cite>
+          <span class="st-attr-biz">Roots Reflexology &amp; Massage · ★★★★★</span>
+          <a class="st-attr-link" href="https://rootswellbeing.uk" target="_blank" rel="noopener noreferrer">View their site →</a>
         </figcaption>
       </figure>
+
+      <!-- Full-review popup, opened by the button above -->
+      <dialog class="st-review-dialog glass" id="testimonialDialog" aria-labelledby="testimonialDialogName">
+        <form method="dialog" class="st-review-dialog-close-row">
+          <button class="st-review-dialog-close" value="close" aria-label="Close review">×</button>
+        </form>
+        <div class="st-quote-mark" aria-hidden="true">"</div>
+        <blockquote class="st-review-dialog-quote">
+          Sara from Spark Lab got in touch with me in just the right moment! Since I qualified as a
+          Complementary Therapist and Reflexologist I had been scrolling the web, installing and
+          testing various booking platforms trying to figure out how clients could find out about me
+          and also how they could book a treatment with ease. I felt completely overwhelmed and felt
+          like I&rsquo;d never be able to do this. Sara got my website up and running within a week and
+          I got my first online booking one day after it launched: today I welcomed my first client
+          and I am so, so happy that it all got sorted so easily and quickly. The website is clear and
+          simple. It looks beautiful and my client said it was very easy to book. I can highly
+          recommend Spark Lab and working with Sara. She is a very patient and professional
+          collaborator on your journey to setting up your wellbeing business.
+        </blockquote>
+        <div class="st-attr">
+          <cite class="st-attr-name" id="testimonialDialogName">Ruth Biene</cite>
+          <span class="st-attr-biz">Roots Reflexology &amp; Massage · ★★★★★</span>
+        </div>
+      </dialog>
 
       <div class="st-portfolio">
         <!-- ===================================================================
@@ -549,6 +587,18 @@
           links.classList.remove('open');
           burger.setAttribute('aria-expanded', 'false');
         }
+      });
+    })();
+
+    // Testimonial: open the full review in a popup
+    (function () {
+      var dlg = document.getElementById('testimonialDialog');
+      var openBtn = document.querySelector('[data-testimonial-open]');
+      if (!dlg || !openBtn || typeof dlg.showModal !== 'function') return;
+      openBtn.addEventListener('click', function () { dlg.showModal(); });
+      // Click on the backdrop (outside the content) closes it
+      dlg.addEventListener('click', function (e) {
+        if (e.target === dlg) dlg.close();
       });
     })();
 
