@@ -154,6 +154,10 @@
   color: #d8def5;
   font-size: 15px;
 }
+.st-offer li strong {
+  color: var(--st-ink);
+  font-weight: 700;
+}
 .st-offer li::before {
   content: "✓";
   position: absolute;
