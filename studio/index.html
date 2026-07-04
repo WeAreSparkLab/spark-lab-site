@@ -106,6 +106,11 @@
       },
       {
         "@type": "Offer",
+        "name": "Review responder",
+        "description": "An AI assistant that drafts an on-brand public reply to any review — staying calm and gracious even on the awkward negative ones."
+      },
+      {
+        "@type": "Offer",
         "name": "Content helper",
         "description": "A back-office AI tool that drafts social posts and captions in your business's voice."
       }
@@ -236,6 +241,7 @@
             <li><strong>Find your treatment</strong> — guides unsure visitors to the right service</li>
             <li><strong>Review collector</strong> — invites happy clients to leave a review, catches unhappy ones first</li>
             <li><strong>No-show saver</strong> — reminders before, and warm win-backs after a cancellation</li>
+            <li><strong>Review responder</strong> — drafts an on-brand public reply to every review, even the awkward ones</li>
             <li><strong>Content helper</strong> — drafts social posts in your voice</li>
           </ul>
           <div class="st-offer-foot">
@@ -303,6 +309,10 @@
           <button class="st-pill" id="tab-noshow" type="button" role="tab" aria-selected="false"
             aria-controls="panel-noshow" tabindex="-1">
             No-show saver <span class="st-pill-badge st-pill-badge--live">Live</span>
+          </button>
+          <button class="st-pill" id="tab-responder" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-responder" tabindex="-1">
+            Review responder <span class="st-pill-badge st-pill-badge--live">Live</span>
           </button>
           <button class="st-pill" id="tab-content" type="button" role="tab" aria-selected="false"
             aria-controls="panel-content" tabindex="-1">
@@ -380,6 +390,18 @@
           <p class="st-asst-share">
             Sends a warm reminder before each appointment so wobbles become freed slots instead of no-shows — and
             gently wins back anyone who cancels, so fewer hours are quietly lost.
+          </p>
+        </div>
+
+        <!-- Panel: Review responder (LIVE — guided flow, /api/review-responder) -->
+        <div class="st-asst-frame" id="panel-responder" role="tabpanel" aria-labelledby="tab-responder" tabindex="0" hidden>
+          <p class="st-demo-note">
+            ⚠️ <strong>"Willow Lane Massage" is a fictional business</strong> used only for this demo.
+          </p>
+          <div class="rc glass" id="rrRoot" data-client="willow-lane" role="group" aria-label="Review responder"></div>
+          <p class="st-asst-share">
+            Paste any review and get an on-brand public reply in seconds — warm on the good ones, and
+            calm and gracious on the awkward negative ones, so every reply protects your reputation.
           </p>
         </div>
 
@@ -679,6 +701,7 @@
   <script src="/studio/content-generator.js?v=3" defer></script>
   <script src="/studio/review-collector.js?v=1" defer></script>
   <script src="/studio/no-show-saver.js?v=1" defer></script>
+  <script src="/studio/review-responder.js?v=1" defer></script>
   <script src="/studio/studio-assistant-widget.js?v=1" defer></script>
 </body>
 
