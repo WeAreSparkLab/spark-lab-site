@@ -111,6 +111,11 @@
       },
       {
         "@type": "Offer",
+        "name": "FAQ answerer",
+        "description": "A lightweight AI helper for a single service page that answers 'is this for me?' and practical questions from your FAQs and access info."
+      },
+      {
+        "@type": "Offer",
         "name": "Content helper",
         "description": "A back-office AI tool that drafts social posts and captions in your business's voice."
       }
@@ -242,6 +247,7 @@
             <li><strong>Review collector</strong> — invites happy clients to leave a review, catches unhappy ones first</li>
             <li><strong>No-show saver</strong> — reminders before, and warm win-backs after a cancellation</li>
             <li><strong>Review responder</strong> — drafts an on-brand public reply to every review, even the awkward ones</li>
+            <li><strong>FAQ answerer</strong> — a light page widget for "is this for me?" and before-you-book questions</li>
             <li><strong>Content helper</strong> — drafts social posts in your voice</li>
           </ul>
           <div class="st-offer-foot">
@@ -313,6 +319,10 @@
           <button class="st-pill" id="tab-responder" type="button" role="tab" aria-selected="false"
             aria-controls="panel-responder" tabindex="-1">
             Review responder <span class="st-pill-badge st-pill-badge--live">Live</span>
+          </button>
+          <button class="st-pill" id="tab-faq" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-faq" tabindex="-1">
+            FAQ answerer <span class="st-pill-badge st-pill-badge--live">Live</span>
           </button>
           <button class="st-pill" id="tab-content" type="button" role="tab" aria-selected="false"
             aria-controls="panel-content" tabindex="-1">
@@ -402,6 +412,18 @@
           <p class="st-asst-share">
             Paste any review and get an on-brand public reply in seconds — warm on the good ones, and
             calm and gracious on the awkward negative ones, so every reply protects your reputation.
+          </p>
+        </div>
+
+        <!-- Panel: FAQ answerer (LIVE — single-shot Q&A, /api/faq-answerer) -->
+        <div class="st-asst-frame" id="panel-faq" role="tabpanel" aria-labelledby="tab-faq" tabindex="0" hidden>
+          <p class="st-demo-note">
+            ⚠️ <strong>"Willow Lane Massage" is a fictional business</strong> used only for this demo.
+          </p>
+          <div class="faq glass" id="faqRoot" data-client="willow-lane" role="group" aria-label="FAQ answerer"></div>
+          <p class="st-asst-share">
+            A light widget for a single service page — answers the practical "before you book" and
+            "is this for me?" questions from your own FAQs, and points health concerns to a GP.
           </p>
         </div>
 
@@ -702,6 +724,7 @@
   <script src="/studio/review-collector.js?v=1" defer></script>
   <script src="/studio/no-show-saver.js?v=1" defer></script>
   <script src="/studio/review-responder.js?v=1" defer></script>
+  <script src="/studio/faq-answerer.js?v=1" defer></script>
   <script src="/studio/studio-assistant-widget.js?v=1" defer></script>
 </body>
 

@@ -1573,3 +1573,71 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   color: var(--st-muted);
   font-weight: 600;
 }
+
+/* =============================================================================
+   FAQ / "is this for me?" answerer (lightweight single-page Q&A)
+   Reuses .chat-chips/.chat-chip for the starter questions and .sl-typing for
+   the pending indicator; only the ask form and Q&A list are its own.
+   ========================================================================== */
+.faq-intro {
+  margin: 0 0 14px;
+  font-size: 14px;
+  color: var(--st-muted);
+}
+.faq-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.faq-form input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--st-line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--st-ink);
+  font-size: 15px;
+  font-family: inherit;
+}
+.faq-form input::placeholder { color: #8089a8; }
+.faq-ask {
+  border: 0;
+  border-radius: 12px;
+  padding: 0 20px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: #0a0c1a;
+  font-family: inherit;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+}
+.faq-ask:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* The .chat-chips composer has bottom padding meant for the chat frame; here
+   the chips sit inline, so pull that padding back. */
+.faq .chat-chips { padding: 0 0 4px; }
+
+.faq-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 6px;
+}
+.faq-item {
+  padding: 14px 16px;
+  border: 1px solid var(--st-line);
+  border-radius: 12px;
+  background: var(--st-panel);
+}
+.faq-q {
+  margin: 0 0 6px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--st-ink);
+}
+.faq-a {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #d8def5;
+  white-space: pre-wrap;
+}
