@@ -28,9 +28,14 @@
   <meta name="twitter:image" content="https://www.wearesparklab.com/assets/og-studio.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@600;800&display=swap"
-    rel="stylesheet">
+    media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@600;800&display=swap">
+  </noscript>
   <link rel="icon" type="image/svg+xml" href="/assets/brand/spark-bolt.svg?v=3">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/spark-32.png?v=3">
   <meta name="theme-color" content="#0B1020">
@@ -740,15 +745,47 @@
       });
     })();
   </script>
-  <script src="/studio/assistant.js?v=2" defer></script>
-  <script src="/studio/treatment-matcher.js?v=2" defer></script>
-  <script src="/studio/content-generator.js?v=3" defer></script>
-  <script src="/studio/review-collector.js?v=1" defer></script>
-  <script src="/studio/no-show-saver.js?v=1" defer></script>
-  <script src="/studio/intake-summariser.js?v=1" defer></script>
-  <script src="/studio/review-responder.js?v=1" defer></script>
-  <script src="/studio/faq-answerer.js?v=2" defer></script>
-  <script src="/studio/studio-assistant-widget.js?v=1" defer></script>
+  <script>
+    // Assistant demo scripts don't need to run before the page is usable.
+    // Load them off the critical path: on browser idle, or the moment the
+    // visitor interacts with the page — whichever comes first. Each script
+    // is a self-contained IIFE that targets static markup already in the DOM,
+    // so loading them late is safe. async=false preserves execution order.
+    (function () {
+      var srcs = [
+        "/studio/assistant.js?v=2",
+        "/studio/treatment-matcher.js?v=2",
+        "/studio/content-generator.js?v=3",
+        "/studio/review-collector.js?v=1",
+        "/studio/no-show-saver.js?v=1",
+        "/studio/intake-summariser.js?v=1",
+        "/studio/review-responder.js?v=1",
+        "/studio/faq-answerer.js?v=2",
+        "/studio/studio-assistant-widget.js?v=1"
+      ];
+      var started = false;
+      function loadAll() {
+        if (started) return;
+        started = true;
+        events.forEach(function (e) { window.removeEventListener(e, loadAll); });
+        srcs.forEach(function (src) {
+          var s = document.createElement("script");
+          s.src = src;
+          s.async = false;
+          document.body.appendChild(s);
+        });
+      }
+      var events = ["pointerdown", "keydown", "touchstart", "scroll"];
+      events.forEach(function (e) {
+        window.addEventListener(e, loadAll, { passive: true });
+      });
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(loadAll, { timeout: 3000 });
+      } else {
+        window.addEventListener("load", function () { setTimeout(loadAll, 1200); });
+      }
+    })();
+  </script>
 </body>
 
 </html>
