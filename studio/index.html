@@ -2246,6 +2246,141 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   white-space: pre-wrap;
 }
 
+/* =============================================================================
+   Reply drafter widget — the one demo that runs on the visitor's own business
+   ========================================================================== */
+.rd {
+  min-height: 360px;
+  padding: 26px 24px;
+}
+.rd-intro {
+  margin: 0 0 16px;
+  font-size: 14.5px;
+  color: var(--st-muted);
+}
+.rd-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.rd-preset {
+  border: 1px solid var(--st-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--st-ink);
+  font-family: inherit;
+  font-size: 13.5px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.rd-preset:hover,
+.rd-preset:focus-visible {
+  border-color: var(--st-accent);
+  color: var(--st-accent);
+}
+.rd-hint {
+  margin: 10px 0 18px;
+  font-size: 13px;
+  color: var(--st-muted);
+}
+
+.rd-field {
+  margin-bottom: 14px;
+}
+.rd-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--st-muted);
+}
+.rd-field input,
+.rd-field textarea,
+.rd-field select {
+  width: 100%;
+  border: 1px solid var(--st-line);
+  border-radius: 12px;
+  background: var(--st-panel);
+  color: var(--st-ink);
+  font-family: inherit;
+  font-size: 14.5px;
+  padding: 10px 12px;
+}
+.rd-field textarea {
+  resize: vertical;
+}
+.rd-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rd-row > .rd-field {
+  flex: 1 1 12rem;
+}
+
+.rd-go {
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 20px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: #0a0c1a;
+  font-family: inherit;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+}
+.rd-go[disabled] {
+  opacity: 0.55;
+  cursor: default;
+}
+.rd-err {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: #ffc14d;
+}
+
+.rd-out {
+  margin-top: 22px;
+}
+.rd-out-label {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--st-accent-2);
+}
+.rd-reply {
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--st-line);
+  background: rgba(255, 255, 255, 0.04);
+  white-space: pre-wrap;
+  font-size: 14.5px;
+  color: var(--st-ink);
+}
+.rd-gaps-label {
+  margin: 18px 0 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #ffc14d;
+}
+.rd-gaps {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 14px;
+  color: var(--st-muted);
+}
+.rd-gaps li {
+  margin-bottom: 4px;
+}
+.rd-ready {
+  margin: 18px 0 0;
+  font-size: 14px;
+  color: var(--st-accent-2);
+}
+
   </style>
   <!-- inline-css:end -->
   <script defer src="/_vercel/insights/script.js"></script>
@@ -2549,6 +2684,10 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
             aria-controls="panel-content" tabindex="-1">
             Content helper <span class="st-pill-badge st-pill-badge--live">Live</span>
           </button>
+          <button class="st-pill" id="tab-reply" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-reply" tabindex="-1">
+            Reply drafter <span class="st-pill-badge st-pill-badge--live">Try it on your business</span>
+          </button>
         </div>
 
         <!-- Panel: Booking assistant (LIVE — existing widget) -->
@@ -2690,6 +2829,17 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
             <div class="cg-status" id="cgStatus" aria-live="polite"></div>
             <div class="cg-results" id="cgResults"></div>
           </div>
+        </div>
+
+        <!-- Panel: Reply drafter (LIVE — the only demo that runs on the visitor's
+             own business rather than the Willow Lane config) -->
+        <div class="st-asst-frame" id="panel-reply" role="tabpanel" aria-labelledby="tab-reply" tabindex="0" hidden>
+          <div class="rd glass" id="replyRoot" role="group" aria-label="Reply drafter"></div>
+          <p class="st-asst-share">
+            Answering enquiries is the job you do every day and never enjoy. Describe your business once and
+            this drafts the reply in your voice — and it only uses what you actually told it, so it never
+            invents a price. Anything it doesn't know comes back as a blank for you to fill, not a guess.
+          </p>
         </div>
       </div>
     </section>
@@ -2967,6 +3117,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
         "/studio/intake-summariser.js?v=1",
         "/studio/review-responder.js?v=1",
         "/studio/faq-answerer.js?v=2",
+        "/studio/reply-drafter.js?v=1",
         "/studio/studio-assistant-widget.js?v=1"
       ];
       var started = false;
