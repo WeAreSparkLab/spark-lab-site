@@ -126,11 +126,17 @@
     setBusy(true);
 
     var item = el("div", "faq-item");
-    item.appendChild(el("p", "faq-q", text));
-    var answer = el("p", "faq-a");
-    answer.innerHTML = '<span class="sl-typing"><span></span><span></span><span></span></span>';
-    answer.setAttribute("aria-label", "Finding an answer");
-    item.appendChild(answer);
+    var q = el("p", "faq-q");
+    q.appendChild(el("span", "faq-qtext", text));
+    item.appendChild(q);
+
+    var a = el("p", "faq-a");
+    var atext = el("span", "faq-atext");
+    atext.innerHTML = '<span class="sl-typing"><span></span><span></span><span></span></span>';
+    atext.setAttribute("aria-label", "Finding an answer");
+    a.appendChild(atext);
+    item.appendChild(a);
+
     listEl.appendChild(item);
     item.scrollIntoView({ block: "nearest" });
 
@@ -143,10 +149,10 @@
         return res.json().then(function (data) { return { ok: res.ok, data: data }; });
       })
       .then(function (r) {
-        var a = r.ok && r.data && r.data.answer ? r.data.answer : fallbackAnswer(text);
-        setAnswer(answer, a);
+        var answer = r.ok && r.data && r.data.answer ? r.data.answer : fallbackAnswer(text);
+        setAnswer(atext, answer);
       })
-      .catch(function () { setAnswer(answer, fallbackAnswer(text)); })
+      .catch(function () { setAnswer(atext, fallbackAnswer(text)); })
       .then(function () { setBusy(false); inputEl.focus(); });
   }
 

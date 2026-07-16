@@ -1579,6 +1579,9 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
    Reuses .chat-chips/.chat-chip for the starter questions and .sl-typing for
    the pending indicator; only the ask form and Q&A list are its own.
    ========================================================================== */
+.faq {
+  padding: 26px 24px;
+}
 .faq-intro {
   margin: 0 0 14px;
   font-size: 14px;
@@ -1600,6 +1603,11 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-family: inherit;
 }
 .faq-form input::placeholder { color: #8089a8; }
+.faq-form input:focus-visible {
+  outline: none;
+  border-color: var(--st-accent-2);
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.16);
+}
 .faq-ask {
   border: 0;
   border-radius: 12px;
@@ -1610,34 +1618,82 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   color: #0a0c1a;
   font-family: inherit;
   background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+  transition: transform .16s ease, box-shadow .16s ease, opacity .16s ease;
+}
+.faq-ask:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 229, 255, 0.18);
 }
 .faq-ask:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* The .chat-chips composer has bottom padding meant for the chat frame; here
    the chips sit inline, so pull that padding back. */
-.faq .chat-chips { padding: 0 0 4px; }
+.faq .chat-chips { padding: 0 0 6px; }
 
 .faq-list {
   display: grid;
   gap: 12px;
-  margin-top: 6px;
+  margin-top: 8px;
 }
+
+/* Each answered question is a small Q&A card. A Q/A badge pair gives the flat
+   stack some rhythm; a soft top-light and entrance keep it feeling alive. */
 .faq-item {
-  padding: 14px 16px;
+  padding: 15px 18px;
   border: 1px solid var(--st-line);
-  border-radius: 12px;
-  background: var(--st-panel);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+  animation: faqIn .28s ease both;
 }
-.faq-q {
-  margin: 0 0 6px;
-  font-size: 14.5px;
+@keyframes faqIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.faq-q,
+.faq-a {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+.faq-q { margin: 0 0 10px; }
+.faq-a { margin: 0; }
+
+/* Q / A badges */
+.faq-q::before,
+.faq-a::before {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 800;
+  line-height: 1;
+}
+.faq-q::before {
+  content: "Q";
+  color: #0a0c1a;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+}
+.faq-a::before {
+  content: "A";
+  color: var(--st-accent-2);
+  background: rgba(0, 229, 255, 0.09);
+  border: 1px solid rgba(0, 229, 255, 0.28);
+}
+
+.faq-q > .faq-qtext {
+  font-size: 15px;
   font-weight: 700;
   color: var(--st-ink);
+  line-height: 1.45;
 }
-.faq-a {
-  margin: 0;
+.faq-a > .faq-atext {
   font-size: 14.5px;
-  line-height: 1.55;
+  line-height: 1.6;
   color: #d8def5;
   white-space: pre-wrap;
 }

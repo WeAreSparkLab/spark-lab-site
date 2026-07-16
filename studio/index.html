@@ -36,7 +36,7 @@
   <meta name="theme-color" content="#0B1020">
 
   <link rel="stylesheet" href="/styles.css?v=19">
-  <link rel="stylesheet" href="/studio/studio.css?v=10">
+  <link rel="stylesheet" href="/studio/studio.css?v=12">
   <script defer src="/_vercel/insights/script.js"></script>
 
   <!-- Local business / service schema -->
@@ -113,6 +113,11 @@
         "@type": "Offer",
         "name": "FAQ answerer",
         "description": "A lightweight AI helper for a single service page that answers 'is this for me?' and practical questions from your FAQs and access info."
+      },
+      {
+        "@type": "Offer",
+        "name": "Intake summariser",
+        "description": "A private back-office AI tool that turns a new client's intake answers into a pre-appointment brief and flags anything to check before treating them."
       },
       {
         "@type": "Offer",
@@ -248,6 +253,7 @@
             <li><strong>No-show saver</strong> — reminders before, and warm win-backs after a cancellation</li>
             <li><strong>Review responder</strong> — drafts an on-brand public reply to every review, even the awkward ones</li>
             <li><strong>FAQ answerer</strong> — a light page widget for "is this for me?" and before-you-book questions</li>
+            <li><strong>Intake summariser</strong> — briefs you on a new client and flags what to check first</li>
             <li><strong>Content helper</strong> — drafts social posts in your voice</li>
           </ul>
           <div class="st-offer-foot">
@@ -323,6 +329,10 @@
           <button class="st-pill" id="tab-faq" type="button" role="tab" aria-selected="false"
             aria-controls="panel-faq" tabindex="-1">
             FAQ answerer <span class="st-pill-badge st-pill-badge--live">Live</span>
+          </button>
+          <button class="st-pill" id="tab-intake" type="button" role="tab" aria-selected="false"
+            aria-controls="panel-intake" tabindex="-1">
+            Intake summariser <span class="st-pill-badge st-pill-badge--live">Live</span>
           </button>
           <button class="st-pill" id="tab-content" type="button" role="tab" aria-selected="false"
             aria-controls="panel-content" tabindex="-1">
@@ -424,6 +434,18 @@
           <p class="st-asst-share">
             A light widget for a single service page — answers the practical "before you book" and
             "is this for me?" questions from your own FAQs, and points health concerns to a GP.
+          </p>
+        </div>
+
+        <!-- Panel: Intake summariser (LIVE — private back-office tool, /api/intake-summariser) -->
+        <div class="st-asst-frame" id="panel-intake" role="tabpanel" aria-labelledby="tab-intake" tabindex="0" hidden>
+          <p class="st-demo-note">
+            ⚠️ <strong>"Willow Lane Massage" is a fictional business</strong> used only for this demo.
+          </p>
+          <div class="rc glass" id="intakeRoot" data-client="willow-lane" role="group" aria-label="Intake summariser"></div>
+          <p class="st-asst-share">
+            Reads a new client's intake answers before their visit and hands you a quick brief — what they want,
+            a plain summary, and any safety points to check first — so you walk in prepared.
           </p>
         </div>
 
@@ -563,8 +585,8 @@
             </div>
           </div>
           <div class="st-portfolio-shot">
-            <img src="/assets/portfolio/roots-home.jpeg"
-              alt="Homepage of Roots Reflexology &amp; Massage, a one-page website built by Spark Lab Studio">
+            <picture><source srcset="/assets/portfolio/roots-home.webp" type="image/webp"><img src="/assets/portfolio/roots-home.jpeg"
+              alt="Homepage of Roots Reflexology &amp; Massage, a one-page website built by Spark Lab Studio"></picture>
           </div>
           <div class="st-portfolio-body">
             <span class="st-portfolio-tag">Web design · Booking setup</span>
@@ -723,8 +745,9 @@
   <script src="/studio/content-generator.js?v=3" defer></script>
   <script src="/studio/review-collector.js?v=1" defer></script>
   <script src="/studio/no-show-saver.js?v=1" defer></script>
+  <script src="/studio/intake-summariser.js?v=1" defer></script>
   <script src="/studio/review-responder.js?v=1" defer></script>
-  <script src="/studio/faq-answerer.js?v=1" defer></script>
+  <script src="/studio/faq-answerer.js?v=2" defer></script>
   <script src="/studio/studio-assistant-widget.js?v=1" defer></script>
 </body>
 
