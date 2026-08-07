@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Verdance Medi-Spa | Norwich</title>
+
+<!--
+  SPARKLAB DEMO — Verdance Medi-Spa, Norwich
+  Built from: signage photo (supplied), Google Business Profile info block (supplied),
+  Fresha listing (fresha.com/a/verdance-medi-spa-norwich-uk-wyohqx01), Birdeye/Google reviews aggregator.
+
+  TODO (Sara — verify before outreach):
+  1. PHONE NUMBER CONFLICT: signage reads 01632 960244, but the Google Business Profile
+     info block (paired with the hours screenshot) gives 01632 960244. Site currently
+     displays 01632 960244 as the more likely current number — CONFIRM which is live
+     before sending. A wrong number on a cold pitch is a real trust risk.
+  2. HOURS CONFLICT: Google Business Profile hours (used below) say Tue/Wed 10:00–20:00,
+     Thu 09:00–20:00, Fri 09:00–17:00, Sat 09:00–15:00, Mon/Sun closed.
+     Fresha's listing says Tue 16:00–20:00, Wed/Thu 09:30–19:00, Fri 09:30–18:00,
+     Sat 09:00–13:00 — noticeably different. Went with Google's hours as the more
+     likely maintained source, but worth a quick call to confirm before this goes live.
+  3. PHOTOS: no verified real photos of this specific venue to use (the Fresha URLs I'd
+     first tried didn't actually load, and an image search didn't turn up reliable ones
+     either), so there's no photo section on the page right now. A gallery/"inside the
+     clinic" section would slot in well between Services and Reviews once real photos
+     exist — worth adding back in at that point.
+  4. No pricing shown anywhere — nothing confirmed from a live public source, per policy.
+  5. Kept services to what's confirmed under Verdance's own name (Fresha "About" text +
+     reviews). Did NOT fold in VBA Viva Beauty & Aesthetics — that's a separate tenant
+     business operating inside the same unit, not Verdance itself.
+  6. No live online booking (Fresha profile is unbookable) — this business is phone/FB-led,
+     which makes it a strong candidate for the AI booking assistant add-on later.
+-->
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --green:#7CB342;
+    --green-deep:#33511C;
+    --ink:#1A1A16;
+    --paper:#FAF9F3;
+    --sage:#E1EFCF;
+    --white:#FFFFFF;
+    --radius:14px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'IBM Plex Sans', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img{max-width:100%;display:block;}
+
+  a{color:inherit;}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--green-deep);
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    line-height:1.08;
+    letter-spacing:-0.01em;
+  }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    padding:18px 0;
+    transition:background .35s ease, box-shadow .35s ease, padding .35s ease;
+  }
+  header.scrolled{
+    background:rgba(250,249,243,0.92);
+    backdrop-filter:blur(8px);
+    box-shadow:0 1px 0 rgba(26,26,22,0.08);
+    padding:12px 0;
+  }
+  header .wrap{display:flex;align-items:center;justify-content:space-between;}
+
+  .logo{display:flex;flex-direction:column;line-height:1;}
+  .logo .g{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.55rem;
+    color:var(--green);
+  }
+  .logo .m{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.62rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,0.82);
+    margin-top:1px;
+    transition:color .3s ease;
+  }
+  header.scrolled .logo .m{color:var(--ink);}
+
+  nav.links{display:flex;align-items:center;gap:32px;}
+  nav.links a{
+    font-size:0.88rem;
+    font-weight:500;
+    text-decoration:none;
+    color:rgba(255,255,255,0.9);
+    opacity:0.85;
+    transition:opacity .2s ease, color .3s ease;
+  }
+  nav.links a:hover{opacity:1;}
+  header.scrolled nav.links a{color:var(--ink);}
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:600;
+    font-size:0.88rem;
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:100px;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-primary{
+    background:var(--green-deep);
+    color:var(--white);
+  }
+  .btn-primary:hover{background:var(--green); color:var(--ink); transform:translateY(-1px);}
+  .btn-ghost{
+    background:transparent;
+    color:var(--ink);
+    border:1.5px solid rgba(26,26,22,0.18);
+  }
+  .btn-ghost:hover{border-color:var(--green-deep); transform:translateY(-1px);}
+
+  .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .menu-toggle span{display:block;width:22px;height:2px;background:rgba(255,255,255,0.9);margin:5px 0;transition:.3s;}
+  header.scrolled .menu-toggle span{background:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:120px 0 80px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 900px 600px at 85% 15%, rgba(124,179,66,0.35) 0%, rgba(124,179,66,0) 60%),
+      linear-gradient(155deg, var(--ink) 0%, var(--green-deep) 78%);
+  }
+  .hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px);
+    background-size:26px 26px;
+    mask-image:linear-gradient(180deg, transparent, rgba(0,0,0,0.6) 40%, transparent 85%);
+    pointer-events:none;
+  }
+  .hero .wrap{position:relative;z-index:2;}
+  .hero-inner{max-width:640px;}
+  .hero .eyebrow{color:var(--green);}
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.4rem);
+    color:var(--white);
+    margin:14px 0 22px;
+  }
+  .hero h1 em{color:var(--green);font-style:italic;}
+
+  .ribbon{
+    display:inline-flex;
+    align-items:center;
+    background:var(--green);
+    color:var(--ink);
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.05rem;
+    padding:9px 22px 9px 20px;
+    clip-path:polygon(0 0, 100% 0, 96% 50%, 100% 100%, 0 100%, 4% 50%);
+    margin-bottom:26px;
+  }
+
+  .hero p.lede{
+    color:rgba(255,255,255,0.88);
+    font-size:1.08rem;
+    max-width:480px;
+    margin-bottom:34px;
+  }
+
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;}
+  .hero-ctas .btn-ghost{
+    color:var(--white);
+    border-color:rgba(255,255,255,0.4);
+  }
+  .hero-ctas .btn-ghost:hover{border-color:var(--green);}
+
+  .hero-meta{
+    margin-top:46px;
+    display:flex;
+    gap:34px;
+    flex-wrap:wrap;
+  }
+  .hero-meta div{color:rgba(255,255,255,0.75);font-size:0.85rem;}
+  .hero-meta strong{
+    display:block;
+    color:var(--white);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:96px 0;}
+  .section-head{max-width:620px;margin-bottom:52px;}
+  .section-head .eyebrow{margin-bottom:12px;}
+  .section-head h2{font-size:clamp(1.9rem, 3.4vw, 2.6rem);}
+  .section-head p{margin-top:14px;color:rgba(26,26,22,0.72);font-size:1.02rem;}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--white);}
+  .about .wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;}
+  .about p{font-size:1.05rem;color:rgba(26,26,22,0.78);margin-bottom:18px;}
+  .about-fact{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    padding:16px 0;
+    border-top:1px solid rgba(51,81,28,0.16);
+  }
+  .about-fact:last-child{border-bottom:1px solid rgba(51,81,28,0.16);}
+  .about-fact .num{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    color:var(--green-deep);
+    font-size:1.5rem;
+    min-width:70px;
+  }
+  .about-fact .lbl{font-size:0.92rem;color:rgba(26,26,22,0.68);}
+
+  /* ---------- SERVICES ---------- */
+  .services{background:var(--sage);}
+  .service-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  .service-card{
+    background:var(--white);
+    border-radius:var(--radius);
+    padding:30px 26px;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .service-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 32px rgba(26,26,22,0.09);
+  }
+  .service-card .icon{
+    width:38px;height:38px;
+    margin-bottom:18px;
+    color:var(--green-deep);
+  }
+  .service-card h3{font-size:1.2rem;font-weight:500;margin-bottom:8px;}
+  .service-card p{font-size:0.92rem;color:rgba(26,26,22,0.68);}
+  .service-card.wide{grid-column:span 1;}
+
+
+  /* ---------- REVIEWS ---------- */
+  .reviews{background:var(--green-deep); color:var(--white);}
+  .reviews .eyebrow{color:var(--green);}
+  .reviews .section-head p{color:rgba(255,255,255,0.75);}
+  .rating-badge{
+    display:inline-flex;
+    align-items:baseline;
+    gap:10px;
+    font-family:'Fraunces', serif;
+    margin-bottom:44px;
+  }
+  .rating-badge .score{font-size:3.2rem;font-style:italic;color:var(--green);}
+  .rating-badge .of{font-size:1.1rem;color:rgba(255,255,255,0.6);}
+  .rating-badge .stars{font-family:'IBM Plex Mono', monospace;font-size:0.78rem;letter-spacing:0.05em;color:rgba(255,255,255,0.75);display:block;margin-top:4px;}
+
+  .review-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  .review-card{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:var(--radius);
+    padding:26px;
+  }
+  .review-card p.quote{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.12rem;
+    margin-bottom:16px;
+  }
+  .review-card .who{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.74rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,0.6);
+  }
+
+  /* ---------- VISIT ---------- */
+  .visit{background:var(--paper);}
+  .visit .wrap{display:grid;grid-template-columns:0.95fr 1.05fr;gap:56px;align-items:start;}
+  .hours-table{width:100%;border-collapse:collapse;margin-top:8px;}
+  .hours-table td{
+    padding:11px 0;
+    border-top:1px solid rgba(51,81,28,0.16);
+    font-size:0.95rem;
+  }
+  .hours-table tr:last-child td{border-bottom:1px solid rgba(51,81,28,0.16);}
+  .hours-table td:first-child{color:rgba(26,26,22,0.65);}
+  .hours-table td:last-child{
+    text-align:right;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.86rem;
+  }
+  .hours-table tr.closed td:last-child{color:rgba(26,26,22,0.4);}
+
+  .addr-block{margin-top:28px;}
+  .addr-block p{font-size:0.98rem;margin-bottom:6px;}
+  .addr-block .btn{margin-top:16px;}
+
+  .map-frame{
+    border-radius:var(--radius);
+    overflow:hidden;
+    border:1px solid rgba(26,26,22,0.1);
+    aspect-ratio:4/3.1;
+  }
+  .map-frame iframe{width:100%;height:100%;border:0;}
+
+  /* ---------- CTA BANNER ---------- */
+  .cta-banner{
+    background:var(--white);
+    text-align:center;
+    padding:70px 0 90px;
+  }
+  .cta-banner .ribbon{margin-bottom:26px;}
+  .cta-banner h2{font-size:clamp(1.9rem, 4vw, 2.7rem); max-width:600px; margin:0 auto 30px;}
+  .cta-banner .hero-ctas{justify-content:center;}
+  .cta-banner .btn-ghost{border-color:rgba(26,26,22,0.18);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);
+    color:rgba(255,255,255,0.7);
+    padding:44px 0;
+  }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  footer a{text-decoration:none;color:rgba(255,255,255,0.7);transition:color .2s ease;}
+  footer a:hover{color:var(--green);}
+  footer .foot-links{display:flex;gap:24px;font-size:0.85rem;flex-wrap:wrap;}
+  footer .credit{font-size:0.78rem;color:rgba(255,255,255,0.4);}
+  footer .credit a{color:rgba(255,255,255,0.55);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:860px){
+    nav.links{
+      position:fixed;
+      top:0;right:0;
+      height:100vh;
+      width:min(78vw, 320px);
+      background:var(--paper);
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:center;
+      gap:26px;
+      padding:0 40px;
+      transform:translateX(100%);
+      transition:transform .35s ease;
+      box-shadow:-8px 0 24px rgba(0,0,0,0.12);
+    }
+    nav.links.open{transform:translateX(0);}
+    nav.links a{font-size:1.1rem;color:var(--ink) !important;}
+    .menu-toggle{display:block;}
+    header .btn-primary{display:none;}
+    nav.links .btn-primary{display:inline-flex;margin-top:10px;}
+
+    .about .wrap,
+    .visit .wrap{grid-template-columns:1fr;}
+    .service-grid{grid-template-columns:repeat(2, 1fr);}
+    .review-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){
+    .service-grid{grid-template-columns:1fr;}
+    section{padding:72px 0;}
+    footer .wrap{flex-direction:column;align-items:flex-start;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .btn, .service-card, header{transition:none;}
+  }
+</style>
+</head>
+<body>
+<!-- concept-banner: these pages are linked from the studio portfolio, so say
+     plainly that the business is invented before anyone tries to book it. -->
+<div style="box-sizing:border-box;position:relative;z-index:2147483647;width:100%;padding:12px 16px;background:#0b1020;color:#e7ecff;font:13px/1.55 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;text-align:center">
+  <strong>Concept build.</strong> Verdance Medi-Spa is an invented business — this is a demo by
+  <a href="https://www.wearesparklab.com/studio" style="color:#7ad7f0;text-decoration:underline">Spark Lab Studio</a>
+  showing what a site like this looks like. Nothing here is real, so nothing here can be booked.
+</div>
+
+
+<header id="siteHeader">
+  <div class="wrap">
+    <a href="#top" class="logo">
+      <span class="g">verdance</span>
+      <span class="m">medi&#8209;spa</span>
+    </a>
+    <nav class="links" id="navLinks">
+      <a href="#services">Services</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Visit Us</a>
+      <a class="btn btn-primary" href="tel:01632 960244">Call 01632 960244</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <span class="eyebrow">Mill Lane &middot; Norwich</span>
+        <h1>Feel good.<br>Look <em>verdance.</em></h1>
+        <span class="ribbon">It's a feel good thing</span>
+        <p class="lede">A calm, professional beauty and aesthetics clinic just off Mill Lane — facials, electrolysis, nails and more, done properly by a trained team.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="tel:01632 960244">Call to book &rarr;</a>
+          <a class="btn btn-ghost" href="#" target="_blank" rel="noopener">Message on Facebook</a>
+        </div>
+        <div class="hero-meta">
+          <div><strong>Rated</strong>Rated on Google</div>
+          <div><strong>Find us</strong>Mill Lane, Norwich</div>
+          <div><strong>Today</strong>See hours below</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">About the clinic</span>
+        <h2 style="font-size:2.2rem;margin:14px 0 20px;">Trained hands, a clean space, no rushing you.</h2>
+        <p>Verdance Medi-Spa has been a fixture on Mill Lane for local clients who want their beauty and aesthetic treatments taken seriously — not squeezed into a ten-minute slot. Clients regularly point to the same two things: how spotless the clinic feels, and how welcoming the team are the moment you walk in.</p>
+        <p>Whether you're after a precise electrolysis session, a facial that actually gives your skin a chance to breathe, or your nails finished properly, it's the same clinical attention to detail throughout.</p>
+      </div>
+      <div class="reveal">
+        <div class="about-fact">
+          <span class="num">4.3</span>
+          <span class="lbl">Average rating from clients on Google</span>
+        </div>
+        <div class="about-fact">
+          <span class="num">5+</span>
+          <span class="lbl">Treatment categories on offer, from nails to full aesthetics</span>
+        </div>
+        <div class="about-fact">
+          <span class="num">NR1</span>
+          <span class="lbl">Based on Mill Lane, easy to find off the industrial estate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Treatments</span>
+        <h2>What Verdance does best</h2>
+        <p>A focused menu, done well — ask the team about the full range when you call.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card reveal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 3 5 6 5 9a5 5 0 0 1-10 0c0-3 2-6 5-9Z"/></svg>
+          <h3>Facials</h3>
+          <p>Rejuvenating facials tailored to your skin, for a genuinely radiant finish — not a rushed cleanse.</p>
+        </div>
+        <div class="service-card reveal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+          <h3>Electrolysis</h3>
+          <p>Precise, permanent hair removal — a timeless treatment done with a steady, experienced hand.</p>
+        </div>
+        <div class="service-card reveal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 14c0-4 2-9 5-11 3 2 5 7 5 11a5 5 0 0 1-10 0Z"/></svg>
+          <h3>Manicure &amp; Pedicure</h3>
+          <p>Nail care and finishing with real attention to detail, from shape to polish.</p>
+        </div>
+        <div class="service-card reveal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12c3-6 15-6 18 0-3 6-15 6-18 0Z"/><circle cx="12" cy="12" r="2.4"/></svg>
+          <h3>Face Waxing</h3>
+          <p>Smooth, refined waxing for a clean, polished finish, gently done.</p>
+        </div>
+        <div class="service-card reveal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l1.8 5.6L19 9l-5.2 1.4L12 16l-1.8-5.6L5 9l5.2-1.4L12 2Z"/></svg>
+          <h3>Aesthetic Treatments</h3>
+          <p>A full range of aesthetic treatments now available — the team will talk you through what's right for you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews" id="reviews">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">From clients on Google</span>
+        <h2>What people say after visiting</h2>
+      </div>
+      <div class="rating-badge reveal">
+        <span class="score">4.3</span>
+        <div>
+          <span class="of">out of 5</span>
+          <span class="stars">GOOGLE REVIEWS</span>
+        </div>
+      </div>
+      <div class="review-grid">
+        <div class="review-card reveal">
+          <p class="quote">"Spotlessly clean, every single visit — exactly what you want from a clinic."</p>
+          <span class="who">Jazmin B.</span>
+        </div>
+        <div class="review-card reveal">
+          <p class="quote">"Professional and welcoming, with a genuinely full range of treatments."</p>
+          <span class="who">Marianne K.</span>
+        </div>
+        <div class="review-card reveal">
+          <p class="quote">"Very good — and happy to recommend them."</p>
+          <span class="who">Tony R.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section class="visit" id="visit">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">Opening hours</span>
+        <h2 style="font-size:2rem;margin:12px 0 6px;">When to find us</h2>
+        <table class="hours-table">
+          <tr class="closed"><td>Monday</td><td>Closed</td></tr>
+          <tr><td>Tuesday</td><td>10:00 &ndash; 20:00</td></tr>
+          <tr><td>Wednesday</td><td>10:00 &ndash; 20:00</td></tr>
+          <tr><td>Thursday</td><td>09:00 &ndash; 20:00</td></tr>
+          <tr><td>Friday</td><td>09:00 &ndash; 17:00</td></tr>
+          <tr><td>Saturday</td><td>09:00 &ndash; 15:00</td></tr>
+          <tr class="closed"><td>Sunday</td><td>Closed</td></tr>
+        </table>
+        <div class="addr-block">
+          <p><strong>Verdance Medi-Spa</strong></p>
+          <p>1 Mill Lane, Mill Lane</p>
+          <p>Norwich, NR1</p>
+          <a class="btn btn-primary" href="tel:01632 960244">Call 01632 960244</a>
+        </div>
+      </div>
+      <div class="map-frame reveal">
+        <iframe src="https://www.google.com/maps?q=Norwich,+UK&output=embed" loading="lazy" title="Map to Verdance Medi-Spa, Norwich"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="wrap reveal">
+      <span class="ribbon">It's a feel good thing</span>
+      <h2>Ready to feel good? Get in touch.</h2>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="tel:01632 960244">Call 01632 960244</a>
+        <a class="btn btn-ghost" href="mailto:hello@example.co.uk">Email the team</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">
+      <span class="g" style="color:var(--green);">verdance</span>
+      <span class="m" style="color:rgba(255,255,255,0.6);">medi&#8209;spa</span>
+    </div>
+    <div class="foot-links">
+      <a href="tel:01632 960244">01632 960244</a>
+      <a href="mailto:hello@example.co.uk">Email</a>
+      <a href="#" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:22px;">
+    <span class="credit">Demo site by <a href="#" data-demo-link target="_blank" rel="noopener">SparkLab</a></span>
+  </div>
+</footer>
+
+<script>
+  // Header solid-on-scroll
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>

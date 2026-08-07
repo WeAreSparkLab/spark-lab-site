@@ -3055,14 +3055,17 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
              CONCEPT CARDS — speculative builds, shown anonymised.
              These are real demos, but the businesses they were built for never
              became clients and never agreed to be featured, so every name,
-             address, phone number and rating in the screenshot is replaced
-             with a fictional one before it goes in here. That's also why they
-             are <article> not <a>: there is nothing to link to, because the
-             live demo still carries the real business's details.
+             address, phone number, rating and piece of logo artwork is
+             replaced with a fictional one.
+             They link to our OWN anonymised copies under /studio/concepts/ —
+             never to the original *.vercel.app builds, which still carry the
+             real business's details. Regenerate those copies with
+             scratchpad/anon/anonymise.js + publish-concepts.js; each one is
+             noindex and carries a banner saying the business is invented.
              If a business later says yes to being named, promote it to a
              proper linked card using the template above.
              =================================================================== -->
-        <article class="st-portfolio-card st-has-shot glass">
+        <a class="st-portfolio-card st-has-shot glass" href="/studio/concepts/foot-clinic" target="_blank" rel="noopener noreferrer">
           <div class="st-portfolio-frame">
             <div class="st-portfolio-bar">
               <div class="st-portfolio-dots"><span></span><span></span><span></span></div>
@@ -3079,10 +3082,11 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
             <h3>A chiropody &amp; podiatry clinic</h3>
             <p class="st-portfolio-desc">Quiet and clinical, built to answer the two things people ring up to
               ask: are you open, and can I get seen. Live opening hours, one tap to call.</p>
+                    <span class="st-portfolio-link">Open the concept <span class="arrow" aria-hidden="true">→</span></span>
           </div>
-        </article>
+        </a>
 
-        <article class="st-portfolio-card st-has-shot glass">
+        <a class="st-portfolio-card st-has-shot glass" href="/studio/concepts/medi-spa" target="_blank" rel="noopener noreferrer">
           <div class="st-portfolio-frame">
             <div class="st-portfolio-bar">
               <div class="st-portfolio-dots"><span></span><span></span><span></span></div>
@@ -3099,10 +3103,11 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
             <h3>A beauty &amp; aesthetics clinic</h3>
             <p class="st-portfolio-desc">Warmer and more confident, for a treatment list long enough to
               confuse people. Booking and directions sit above the fold on a phone.</p>
+                    <span class="st-portfolio-link">Open the concept <span class="arrow" aria-hidden="true">→</span></span>
           </div>
-        </article>
+        </a>
 
-        <article class="st-portfolio-card st-has-shot glass">
+        <a class="st-portfolio-card st-has-shot glass" href="/studio/concepts/brow-bar" target="_blank" rel="noopener noreferrer">
           <div class="st-portfolio-frame">
             <div class="st-portfolio-bar">
               <div class="st-portfolio-dots"><span></span><span></span><span></span></div>
@@ -3119,8 +3124,9 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
             <h3>A brow &amp; lash studio</h3>
             <p class="st-portfolio-desc">Editorial and a bit bolder, for a business that sells on how it
               looks — with salon and mobile treated as two different front doors.</p>
+                    <span class="st-portfolio-link">Open the concept <span class="arrow" aria-hidden="true">→</span></span>
           </div>
-        </article>
+        </a>
 
         <!-- Empty slot — swap for a copy of the linked template above once the
              next client project is live and they've agreed to be featured. -->

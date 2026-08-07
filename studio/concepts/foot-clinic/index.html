@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Elmfield Foot Clinic | Chiropody & Podiatry, Wymondham</title>
+<meta name="description" content="Elmfield Foot Clinic — chiropody and podiatry care from an HCPC-registered podiatrist, on Market Street, Wymondham.">
+
+<!--
+  DEMO SITE — built by SparkLab for prospecting purposes.
+  Data sources: shopfront photo (business name, tagline, phone digits),
+  Google Business hours screenshot, NHS service directory (phone, address,
+  practitioner name/qualifications), Facebook business page (services list,
+  152 likes), owner-provided email.
+  TODO flags left as HTML comments throughout — review before sending to Sally.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --cream: #F6F1E6;
+    --card: #FCFAF4;
+    --ink: #2A241D;
+    --ink-soft: #5C5348;
+    --brass: #A9803C;
+    --brass-deep: #7E5E28;
+    --navy: #1D3A44;
+    --navy-deep: #12262D;
+    --line: rgba(42,36,29,0.14);
+    --good: #3F6B4A;
+    --shadow: 0 12px 32px rgba(18,38,45,0.10);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  h1,h2,h3{
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--ink);
+    margin: 0;
+    font-weight: 600;
+  }
+  a{ color: inherit; }
+  img{ max-width: 100%; display:block; }
+  .wrap{ max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .eyebrow{
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass-deep);
+    font-weight: 600;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position: sticky; top:0; z-index: 40;
+    background: rgba(246,241,230,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 14px 24px;
+    max-width: 1080px; margin: 0 auto;
+    gap: 16px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Cormorant Garamond', serif;
+    font-weight:700; font-size: 20px; letter-spacing: 0.01em;
+    text-decoration:none; color: var(--ink);
+  }
+  .brand svg{ width:22px; height:22px; flex-shrink:0; color: var(--brass); }
+  .header-actions{ display:flex; align-items:center; gap:10px; }
+  .status-pill{
+    display:flex; align-items:center; gap:7px;
+    font-size: 12.5px; font-weight:600;
+    padding: 7px 12px; border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    white-space: nowrap;
+  }
+  .status-dot{ width:7px; height:7px; border-radius:50%; background: var(--ink-soft); flex-shrink:0; }
+  .status-pill.is-open .status-dot{ background: var(--good); }
+  .status-pill.is-open{ color: var(--good); border-color: rgba(63,107,74,0.3); }
+  .status-pill.is-closed{ color: var(--ink-soft); }
+  .call-btn{
+    display:inline-flex; align-items:center; gap:7px;
+    background: var(--navy); color: #F6F1E6;
+    padding: 9px 16px; border-radius: 999px;
+    font-size: 13.5px; font-weight:600; text-decoration:none;
+    white-space: nowrap;
+  }
+  .call-btn svg{ width:14px; height:14px; }
+
+  @media (max-width: 640px){
+    .status-pill span.status-text{ display:none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 76px 24px 64px;
+    text-align:center;
+    position: relative;
+  }
+  .hero-mark{
+    width:46px; height:46px; margin: 0 auto 22px;
+    color: var(--brass);
+  }
+  .hero h1{
+    font-size: clamp(38px, 6vw, 62px);
+    line-height: 1.05;
+  }
+  .hero-rule{
+    width: 84px; height: 2px; background: var(--brass);
+    margin: 22px auto;
+    opacity: 0.75;
+  }
+  .hero-sub{
+    font-size: clamp(16px, 2.2vw, 19px);
+    color: var(--ink-soft);
+    max-width: 480px; margin: 0 auto;
+  }
+  .hero-cred{
+    margin-top: 18px;
+    font-size: 13.5px;
+    color: var(--brass-deep);
+    letter-spacing: 0.03em;
+    font-weight: 600;
+  }
+  .hero-ctas{
+    display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+    margin-top: 34px;
+  }
+  .btn-primary, .btn-secondary{
+    padding: 13px 26px; border-radius: 999px;
+    font-size: 14.5px; font-weight:600; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .btn-primary{ background: var(--navy); color:#F6F1E6; }
+  .btn-secondary{ background: transparent; color: var(--navy); border: 1.5px solid var(--navy); }
+  .btn-primary:hover, .btn-secondary:hover{ transform: translateY(-2px); box-shadow: var(--shadow); }
+  .btn-primary svg, .btn-secondary svg{ width:15px; height:15px; }
+
+  /* ---------- Plaque (signature element) ---------- */
+  .plaque-section{ padding: 0 24px 72px; }
+  .plaque{
+    max-width: 620px; margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 26px 30px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap: 20px; flex-wrap: wrap;
+    position: relative;
+  }
+  .plaque::before{
+    content:'';
+    position:absolute; top:-9px; left:50%; transform: translateX(-50%);
+    width: 46px; height: 9px;
+    border-radius: 4px 4px 0 0;
+    background: var(--brass);
+    opacity:0.85;
+  }
+  .plaque-left{ display:flex; align-items:center; gap:14px; }
+  .plaque-dot-wrap{
+    width:14px; height:14px; border-radius:50%;
+    background: var(--ink-soft); flex-shrink:0;
+    position:relative;
+  }
+  .plaque-dot-wrap.is-open{ background: var(--good); }
+  .plaque-dot-wrap.is-open::after{
+    content:''; position:absolute; inset:-5px; border-radius:50%;
+    border: 1.5px solid var(--good); opacity: 0.5;
+    animation: pulse 2.2s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{ transform: scale(0.8); opacity:0.6; }
+    100%{ transform: scale(1.7); opacity:0; }
+  }
+  .plaque-status{ font-family:'Cormorant Garamond', serif; font-size: 24px; font-weight:700; }
+  .plaque-detail{ font-size: 13.5px; color: var(--ink-soft); margin-top:2px; }
+  .plaque-today{
+    text-align:right; font-size: 13px; color: var(--ink-soft);
+  }
+  .plaque-today strong{ color: var(--ink); display:block; font-size: 14px; margin-bottom:2px; }
+
+  /* ---------- Section shared ---------- */
+  section{ padding: 64px 24px; }
+  .section-head{ text-align:center; max-width: 560px; margin: 0 auto 44px; }
+  .section-head h2{ font-size: clamp(28px, 4vw, 38px); margin-top: 8px; }
+
+  /* ---------- Services ---------- */
+  .services{ background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .service-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    max-width: 900px; margin: 0 auto;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  @media (max-width: 760px){ .service-grid{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 480px){ .service-grid{ grid-template-columns: 1fr; } }
+  .service-card{
+    background: var(--card);
+    padding: 30px 24px;
+    display:flex; flex-direction:column; gap: 12px;
+  }
+  .service-card svg{ width:26px; height:26px; color: var(--brass); }
+  .service-card h3{ font-size: 19px; font-weight:600; }
+  .service-card p{ margin:0; font-size: 14px; color: var(--ink-soft); }
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid; grid-template-columns: 1fr 1.3fr; gap: 48px;
+    max-width: 900px; margin: 0 auto; align-items: start;
+  }
+  @media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; gap: 28px; } }
+  .about-badge{
+    background: var(--navy); color: #F6F1E6; border-radius: 16px;
+    padding: 26px; text-align:center;
+  }
+  .about-badge .initials{
+    font-family:'Cormorant Garamond', serif; font-size: 40px; font-weight:700;
+    width: 68px; height: 68px; border-radius: 50%;
+    background: rgba(246,241,230,0.12); border: 1px solid rgba(246,241,230,0.3);
+    display:flex; align-items:center; justify-content:center; margin: 0 auto 14px;
+  }
+  .about-badge h3{ color:#F6F1E6; font-size: 20px; }
+  .about-badge .cred{
+    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--brass); margin-top: 6px; font-weight:600;
+  }
+  .about-text p{ color: var(--ink-soft); font-size: 15.5px; margin: 0 0 14px; }
+  .about-text p:last-child{ margin-bottom: 0; }
+  .hcpc-line{
+    margin-top:18px; padding-top:18px; border-top:1px solid var(--line);
+    font-size: 13px; color: var(--brass-deep); font-weight:600;
+  }
+
+  /* ---------- Hours ---------- */
+  .hours-wrap{ max-width: 480px; margin: 0 auto; }
+  .hours-row{
+    display:flex; justify-content:space-between;
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+  }
+  .hours-row:last-child{ border-bottom:none; }
+  .hours-row .day{ color: var(--ink-soft); }
+  .hours-row.today{
+    background: var(--navy); color: #F6F1E6; border-radius: 10px;
+    border-bottom: 1px solid transparent;
+  }
+  .hours-row.today .day{ color: #F6F1E6; font-weight:600; }
+  .hours-row.today .time{ font-weight:600; }
+  .hours-row .closed{ color: var(--ink-soft); font-style: italic; }
+  .hours-row.today .closed{ color: rgba(246,241,230,0.75); }
+
+  /* ---------- Visit ---------- */
+  .visit{ background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .visit-grid{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 40px;
+    max-width: 980px; margin:0 auto; align-items:center;
+  }
+  @media (max-width: 760px){ .visit-grid{ grid-template-columns: 1fr; } }
+  .visit-map{
+    border-radius: 16px; overflow:hidden; border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .visit-map iframe{ width:100%; height: 320px; border:0; display:block; }
+  .visit-details h3{ font-size: 26px; margin-bottom: 18px; }
+  .visit-row{
+    display:flex; gap:12px; align-items:flex-start;
+    margin-bottom: 16px; font-size: 15px;
+  }
+  .visit-row svg{ width:18px; height:18px; color: var(--brass); flex-shrink:0; margin-top:2px; }
+  .visit-row a{ text-decoration: none; }
+  .visit-row a:hover{ text-decoration: underline; }
+  .visit-row .label{ color: var(--ink-soft); font-size: 12px; letter-spacing:0.05em; text-transform:uppercase; display:block; margin-bottom:2px; }
+
+  /* ---------- Closing CTA ---------- */
+  .closing{
+    background: var(--navy); color: #F6F1E6; text-align:center;
+  }
+  .closing h2{ color:#F6F1E6; font-size: clamp(28px,4vw,36px); }
+  .closing p{ color: rgba(246,241,230,0.75); max-width: 480px; margin: 14px auto 30px; font-size: 15.5px; }
+  .closing .btn-primary{ background: var(--brass); }
+  .closing .btn-secondary{ color:#F6F1E6; border-color: rgba(246,241,230,0.5); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding: 40px 24px 32px;
+    text-align:center;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  footer a{ text-decoration: none; color: var(--ink-soft); }
+  footer a:hover{ color: var(--ink); }
+  .footer-links{ display:flex; gap:18px; justify-content:center; margin-bottom: 14px; flex-wrap:wrap; }
+  .credit{ opacity: 0.7; }
+  .credit a{ color: var(--brass-deep); font-weight:600; }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in{ opacity:1; transform: translateY(0); }
+</style>
+</head>
+<body>
+<!-- concept-banner: these pages are linked from the studio portfolio, so say
+     plainly that the business is invented before anyone tries to book it. -->
+<div style="box-sizing:border-box;position:relative;z-index:2147483647;width:100%;padding:12px 16px;background:#0b1020;color:#e7ecff;font:13px/1.55 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;text-align:center">
+  <strong>Concept build.</strong> Elmfield Foot Clinic is an invented business — this is a demo by
+  <a href="https://www.wearesparklab.com/studio" style="color:#7ad7f0;text-decoration:underline">Spark Lab Studio</a>
+  showing what a site like this looks like. Nothing here is real, so nothing here can be booked.
+</div>
+
+
+<header>
+  <div class="header-inner">
+    <a href="#top" class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3c-2 0-3 2-3 4.5 0 3-1.5 3.8-1.5 6.5A4 4 0 0 0 7.5 18c1.2 0 1.5-.7 2.5-.7s1.3.7 2.5.7a4 4 0 0 0 4-4c0-2.7-1.5-3.5-1.5-6.5C15 5 14 3 12 3c-1 0-1.4.5-2 .5S9 3 8 3Z"/><path d="M9.5 21c1-1 1.5-2 1.5-3"/></svg>
+      Elmfield Foot Clinic
+    </a>
+    <div class="header-actions">
+      <span class="status-pill" id="statusPill"><span class="status-dot"></span><span class="status-text" id="statusText">Checking hours…</span></span>
+      <a class="call-btn" href="tel:01632 960118">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        01632 960118
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ---------- Hero ---------- -->
+  <section class="hero">
+    <div class="wrap">
+      <svg class="hero-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 3c-2 0-3 2-3 4.5 0 3-1.5 3.8-1.5 6.5A4 4 0 0 0 7.5 18c1.2 0 1.5-.7 2.5-.7s1.3.7 2.5.7a4 4 0 0 0 4-4c0-2.7-1.5-3.5-1.5-6.5C15 5 14 3 12 3c-1 0-1.4.5-2 .5S9 3 8 3Z"/><path d="M9.5 21c1-1 1.5-2 1.5-3"/></svg>
+      <h1>Elmfield Foot Clinic</h1>
+      <div class="hero-rule"></div>
+      <p class="hero-sub">Chiropody & podiatry care on Market Street, in the heart of Wymondham.</p>
+      <p class="hero-cred">HCPC-Registered Podiatrist</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="tel:01632 960118">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call to book
+        </a>
+        <a class="btn-secondary" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Get directions
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Live open/closed plaque (signature element) ---------- -->
+  <section class="plaque-section">
+    <div class="plaque reveal" id="plaqueCard">
+      <div class="plaque-left">
+        <div class="plaque-dot-wrap" id="plaqueDot"></div>
+        <div>
+          <div class="plaque-status" id="plaqueStatus">Checking today's hours…</div>
+          <div class="plaque-detail" id="plaqueDetail"></div>
+        </div>
+      </div>
+      <div class="plaque-today">
+        <strong id="plaqueTodayLabel">Today</strong>
+        <span id="plaqueTodayHours"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Services ---------- -->
+  <section class="services">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Treatments</span>
+        <h2>Foot care, done properly</h2>
+      </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20h16"/><path d="M7 20V9a5 5 0 0 1 10 0v11"/><path d="M9 13h6"/></svg>
+          <h3>Nail care</h3>
+          <p>Routine nail cutting and care, done safely and comfortably.</p>
+        </div>
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M9 9h4M9 15h4"/></svg>
+          <h3>Ingrowing toenails</h3>
+          <p>Assessment and treatment to ease pain and prevent infection.</p>
+        </div>
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a5 5 0 0 1 5 5c0 3-2 4-2 7a3 3 0 0 1-6 0c0-3-2-4-2-7a5 5 0 0 1 5-5Z"/></svg>
+          <h3>Corns & callus</h3>
+          <p>Removal of hard skin, corns and callus for lasting relief.</p>
+        </div>
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3.5"/><circle cx="12" cy="12" r="8.5"/></svg>
+          <h3>Verrucae</h3>
+          <p>Treatment and advice for verrucae at any stage.</p>
+        </div>
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 6v6c0 5 3.6 8.4 8 10 4.4-1.6 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+          <h3>Diabetic assessments</h3>
+          <p>Regular diabetic footcare checks to catch problems early.</p>
+        </div>
+        <div class="service-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+          <h3>Footcare advice</h3>
+          <p>Practical guidance on keeping your feet healthy day to day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- About ---------- -->
+  <section class="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Your Podiatrist</span>
+        <h2>A familiar face on Market Street</h2>
+      </div>
+      <div class="about-grid reveal">
+        <div class="about-badge">
+          <div class="initials">SC</div>
+          <h3>the podiatrist</h3>
+          <div class="cred">MRCPod DPodM</div>
+        </div>
+        <div class="about-text">
+          <!-- TODO: career background below is sourced from a single third-party directory
+               listing, not confirmed directly with Sally. Verify before this goes live. -->
+          <p>Sally trained at the Wessex School of Chiropody in Southampton, then spent nine years with the NHS on the Isle of Wight. She later moved to Lincolnshire and continued working in NHS podiatry before bringing that experience to Elmfield Foot Clinic in Wymondham.</p>
+          <p>Today, Sally treats patients from the clinic on Market Street, offering the same NHS-trained care in a local, independent practice.</p>
+          <div class="hcpc-line">HCPC-registered podiatrist · Member, Royal College of Podiatry</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Hours ---------- -->
+  <section class="hours">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Opening Hours</span>
+        <h2>When to find us</h2>
+      </div>
+      <div class="hours-wrap reveal" id="hoursTable">
+        <div class="hours-row" data-day="1"><span class="day">Monday</span><span class="time">8:30am – 5:00pm</span></div>
+        <div class="hours-row" data-day="2"><span class="day">Tuesday</span><span class="time">8:30am – 5:00pm</span></div>
+        <div class="hours-row" data-day="3"><span class="day">Wednesday</span><span class="time">8:30am – 6:00pm</span></div>
+        <!-- TODO: source screenshot showed "8:30am–4:30 am" for Thursday — almost certainly
+             a typo for 4:30pm, corrected here. Please confirm with Sally before go-live. -->
+        <div class="hours-row" data-day="4"><span class="day">Thursday</span><span class="time">8:30am – 4:30pm</span></div>
+        <div class="hours-row" data-day="5"><span class="day">Friday</span><span class="time">8:30am – 1:00pm</span></div>
+        <div class="hours-row" data-day="6"><span class="day">Saturday</span><span class="time closed">Closed</span></div>
+        <div class="hours-row" data-day="0"><span class="day">Sunday</span><span class="time closed">Closed</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Visit ---------- -->
+  <section class="visit">
+    <div class="wrap">
+      <div class="visit-grid reveal">
+        <div class="visit-map">
+          <iframe src="https://www.google.com/maps?q=Norwich,+UK&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="visit-details">
+          <h3>Visit the clinic</h3>
+          <div class="visit-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div><span class="label">Address</span>12 Market Street, Wymondham, NR18</div>
+          </div>
+          <div class="visit-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <div><span class="label">Phone</span><a href="tel:01632 960118">01632 960118</a></div>
+          </div>
+          <div class="visit-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <div><span class="label">Email</span><a href="mailto:hello@example.co.uk">hello@example.co.uk</a></div>
+          </div>
+          <div class="visit-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"/></svg>
+            <div><span class="label">Facebook</span><a href="#" target="_blank" rel="noopener">Elmfield Foot Clinic</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Closing CTA ---------- -->
+  <section class="closing">
+    <div class="wrap reveal">
+      <h2>Book your appointment</h2>
+      <p>Give the clinic a call to arrange a visit — Sally looks forward to seeing you on Market Street.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="tel:01632 960118">Call 01632 960118</a>
+        <a class="btn-secondary" href="mailto:hello@example.co.uk">Email the clinic</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="tel:01632 960118">01632 960118</a>
+    <a href="mailto:hello@example.co.uk">hello@example.co.uk</a>
+    <a href="#" target="_blank" rel="noopener">Facebook</a>
+  </div>
+  <div>12 Market Street, Wymondham, NR18</div>
+  <div class="credit" style="margin-top:10px;">Designed by <a href="#" data-demo-link target="_blank" rel="noopener">SparkLab</a></div>
+</footer>
+
+<script>
+  // Real opening hours, Mon(1)..Sun(0), 24hr [openHour, openMin, closeHour, closeMin] or null if closed
+  const HOURS = {
+    0: null,
+    1: [8,30,17,0],
+    2: [8,30,17,0],
+    3: [8,30,18,0],
+    4: [8,30,16,30],
+    5: [8,30,13,0],
+    6: null
+  };
+  const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  function fmt(h,m){
+    const period = h >= 12 ? 'pm' : 'am';
+    let hh = h % 12; if(hh === 0) hh = 12;
+    return m === 0 ? `${hh}${period}` : `${hh}:${String(m).padStart(2,'0')}${period}`;
+  }
+
+  function nextOpenLabel(fromDay){
+    for(let i=1;i<=7;i++){
+      const d = (fromDay + i) % 7;
+      if(HOURS[d]){
+        const [oh, om] = HOURS[d];
+        const label = i === 1 ? DAY_NAMES[d] : DAY_NAMES[d];
+        return `${label} at ${fmt(oh,om)}`;
+      }
+    }
+    return '';
+  }
+
+  function updateStatus(){
+    const now = new Date();
+    const day = now.getDay();
+    const mins = now.getHours()*60 + now.getMinutes();
+    const today = HOURS[day];
+
+    const pill = document.getElementById('statusPill');
+    const pillText = document.getElementById('statusText');
+    const plaqueDot = document.getElementById('plaqueDot');
+    const plaqueStatus = document.getElementById('plaqueStatus');
+    const plaqueDetail = document.getElementById('plaqueDetail');
+    const plaqueTodayHours = document.getElementById('plaqueTodayHours');
+
+    let isOpen = false;
+    if(today){
+      const openMins = today[0]*60 + today[1];
+      const closeMins = today[2]*60 + today[3];
+      isOpen = mins >= openMins && mins < closeMins;
+      plaqueTodayHours.textContent = `${fmt(today[0],today[1])} – ${fmt(today[2],today[3])}`;
+    } else {
+      plaqueTodayHours.textContent = 'Closed';
+    }
+
+    if(isOpen){
+      pill.classList.add('is-open'); pill.classList.remove('is-closed');
+      plaqueDot.classList.add('is-open');
+      pillText.textContent = 'Open now';
+      plaqueStatus.textContent = 'Open now';
+      plaqueDetail.textContent = `Closes today at ${fmt(today[2],today[3])}`;
+    } else {
+      pill.classList.add('is-closed'); pill.classList.remove('is-open');
+      plaqueDot.classList.remove('is-open');
+      pillText.textContent = 'Closed';
+      plaqueStatus.textContent = 'Closed now';
+      plaqueDetail.textContent = `Opens ${nextOpenLabel(day)}`;
+    }
+
+    document.querySelectorAll('.hours-row').forEach(row=>{
+      row.classList.toggle('today', parseInt(row.dataset.day,10) === day);
+    });
+  }
+  updateStatus();
+  setInterval(updateStatus, 60000);
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
