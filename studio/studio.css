@@ -730,6 +730,9 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 }
 .chat-form input {
   flex: 1;
+  /* Without this an input refuses to shrink past its default ~20-character
+     width, and the Send button gets pushed off a phone screen. */
+  min-width: 0;
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid var(--st-line);
   border-radius: 12px;
@@ -742,6 +745,8 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   color: #8089a8;
 }
 .chat-send {
+  flex: 0 0 auto;
+  white-space: nowrap;
   border: 0;
   border-radius: 12px;
   padding: 0 18px;
@@ -915,6 +920,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-weight: 700;
   font-size: 14px;
   color: #0a0c1a;
+  max-width: calc(100vw - 28px);
   background: linear-gradient(135deg, var(--brand), var(--brand2));
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   transition: transform .18s ease, box-shadow .18s ease;
@@ -1054,6 +1060,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 }
 .sl-input {
   flex: 1;
+  min-width: 0; /* keeps Send inside the panel on narrow screens */
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid var(--st-line);
   border-radius: 12px;
@@ -1064,6 +1071,8 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 }
 .sl-input::placeholder { color: #8089a8; }
 .sl-send {
+  flex: 0 0 auto;
+  white-space: nowrap;
   border: 0;
   border-radius: 12px;
   padding: 0 16px;
@@ -1268,6 +1277,11 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  /* A <select> is as wide as its longest option ("New clients (not sure what to
+     book)"), which used to push the whole page sideways on a phone. Let the
+     field shrink and cap the control to the row instead. */
+  flex: 0 1 auto;
+  min-width: 0;
   font-size: 13px;
   color: var(--st-muted);
   font-weight: 600;
@@ -1280,9 +1294,12 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   border: 1px solid var(--st-line);
   border-radius: 10px;
   padding: 10px 12px;
-  min-width: 150px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 .cg-go {
+  flex: 0 0 auto;
   border: 0;
   border-radius: 12px;
   padding: 11px 18px;
@@ -1331,6 +1348,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-size: 15px;
   line-height: 1.55;
   white-space: pre-wrap;
+  overflow-wrap: anywhere; /* a long link or hashtag can't widen the card */
 }
 .cg-hashtags {
   margin: 10px 0 0;
@@ -1459,6 +1477,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-size: 15px;
   line-height: 1.55;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 /* Simulated reply buttons */
@@ -1594,6 +1613,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 }
 .faq-form input {
   flex: 1;
+  min-width: 0; /* let the input shrink so "Ask" stays on screen — see .chat-form */
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid var(--st-line);
   border-radius: 12px;
@@ -1609,6 +1629,8 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.16);
 }
 .faq-ask {
+  flex: 0 0 auto;
+  white-space: nowrap;
   border: 0;
   border-radius: 12px;
   padding: 0 20px;
@@ -1690,12 +1712,16 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-weight: 700;
   color: var(--st-ink);
   line-height: 1.45;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .faq-a > .faq-atext {
   font-size: 14.5px;
   line-height: 1.6;
   color: #d8def5;
   white-space: pre-wrap;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 /* =============================================================================
@@ -1769,6 +1795,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 }
 .rd-row > .rd-field {
   flex: 1 1 12rem;
+  min-width: 0; /* inputs inside must be allowed to shrink below their default width */
 }
 
 .rd-go {
@@ -1809,6 +1836,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   border: 1px solid var(--st-line);
   background: rgba(255, 255, 255, 0.04);
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
   font-size: 14.5px;
   color: var(--st-ink);
 }
@@ -1831,4 +1859,54 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   margin: 18px 0 0;
   font-size: 14px;
   color: var(--st-accent-2);
+}
+
+/* =============================================================================
+   Phones — the demo widgets
+   Kept at the end of the file on purpose: these override the widget rules
+   above, and everything here is same-specificity, so source order decides.
+   ========================================================================== */
+@media (max-width: 480px) {
+  /* The section already gives 16px of gutter, so the widget's own 24-26px of
+     padding was eating a third of the screen. */
+  .chat-log,
+  .chat-form {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .chat-chips {
+    padding: 0 14px 12px;
+  }
+  .faq,
+  .rc,
+  .rd,
+  .cg,
+  .tm {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* One field per row, so the two dropdowns don't end up different widths. */
+  .cg-field {
+    flex-basis: 100%;
+  }
+
+  /* A button alone on its row reads better full width than stranded. */
+  .cg-go,
+  .rd-go {
+    width: 100%;
+  }
+
+  /* iOS zooms the page in when a focused control is under 16px, which leaves
+     the visitor panned sideways with the demo half off screen. */
+  .chat-form input,
+  .faq-form input,
+  .sl-input,
+  .cg-field select,
+  .rd-field input,
+  .rd-field textarea,
+  .rd-field select,
+  .tm-textarea {
+    font-size: 16px;
+  }
 }
