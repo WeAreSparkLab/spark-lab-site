@@ -814,16 +814,86 @@ footer.footer p{ margin:6px 0; }
 }
 
 /* --- Portfolio ---------------------------------------------------------------
-   Responsive grid: 1 column on mobile, naturally reflows to 2–3 columns as
-   space allows (no hand-tuned breakpoints needed).
-   .st-portfolio-card is used two ways:
+   A horizontal rail rather than a grid: the row holds any number of projects
+   without the section growing down the page. Adding a project = adding one
+   more card, nothing else to touch.
+   .st-portfolio-card is used three ways:
      - as an <a> for a real, live project (screenshot + details, see below)
+     - as an <a> for an anonymised concept build
      - as an <article class="is-placeholder"> for an empty "slot"
    ------------------------------------------------------------------------- */
+.st-portfolio-rail {
+  position: relative;
+}
 .st-portfolio {
-  display: grid;
+  display: flex;
   gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  /* room for the scrollbar so it never sits on top of a card */
+  padding-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+.st-portfolio::-webkit-scrollbar {
+  height: 8px;
+}
+.st-portfolio::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+}
+.st-portfolio::-webkit-scrollbar-track {
+  background: transparent;
+}
+.st-portfolio > * {
+  /* the fraction leaves the next card peeking, which is what tells people
+     there is more to the right */
+  flex: 0 0 min(310px, 84%);
+  scroll-snap-align: start;
+}
+
+/* Arrows: pointer users get them, touch users just swipe. Hidden by the rail
+   script when everything already fits. */
+.st-rail-btn {
+  display: none;
+}
+@media (min-width: 760px) {
+  .st-rail-btn {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 130px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--st-line);
+    background: rgba(12, 14, 36, 0.92);
+    color: var(--st-ink);
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    transition: background .18s ease, border-color .18s ease, opacity .18s ease;
+  }
+  .st-rail-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+  .st-rail-btn:disabled {
+    opacity: 0.28;
+    cursor: default;
+  }
+  .st-rail-btn[hidden] {
+    display: none;
+  }
+  .st-rail-prev {
+    left: -14px;
+  }
+  .st-rail-next {
+    right: -14px;
+  }
 }
 .st-portfolio-card {
   display: flex;
@@ -3017,7 +3087,13 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
         </div>
       </dialog>
 
-      <div class="st-portfolio">
+      <!-- Horizontal rail — see .st-portfolio in studio.css. Add a project by
+           dropping one more card in; the arrows and scrollbar sort themselves
+           out, and the section height never changes. -->
+      <div class="st-portfolio-rail">
+        <button class="st-rail-btn st-rail-prev" type="button" aria-label="Previous projects" hidden>‹</button>
+        <button class="st-rail-btn st-rail-next" type="button" aria-label="More projects" hidden>›</button>
+        <div class="st-portfolio" role="region" aria-label="Recent work, scroll for more" tabindex="0">
         <!-- ===================================================================
              PORTFOLIO CARD TEMPLATE — copy this whole <a> block for each new,
              consented client project. Fields to change:
@@ -3134,6 +3210,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
           <h3>Your business here?</h3>
           <p>Be one of the first businesses featured here. Get in touch and let's build your demo.</p>
         </article>
+        </div>
       </div>
     </section>
 
@@ -3229,6 +3306,55 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
           burger.setAttribute('aria-expanded', 'false');
         }
       });
+    })();
+
+    // Portfolio rail: arrow buttons, and hide them when nothing overflows
+    (function () {
+      var rail = document.querySelector('.st-portfolio');
+      var prev = document.querySelector('.st-rail-prev');
+      var next = document.querySelector('.st-rail-next');
+      if (!rail || !prev || !next) return;
+
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function step() {
+        var card = rail.querySelector('.st-portfolio-card');
+        // one card plus the gap, so a click lands cleanly on the next snap point
+        return card ? card.getBoundingClientRect().width + 20 : rail.clientWidth * 0.9;
+      }
+      function update() {
+        var max = rail.scrollWidth - rail.clientWidth;
+        var fits = max <= 1;
+        prev.hidden = next.hidden = fits;
+        if (fits) return;
+        prev.disabled = rail.scrollLeft <= 1;
+        next.disabled = rail.scrollLeft >= max - 1;
+      }
+      // Aim at a tracked target rather than scrollBy: mid-animation scrollLeft
+      // is wherever the smooth scroll has got to, so rapid clicks would
+      // otherwise each measure from a stale position and lose ground.
+      var target = null;
+      function go(dir) {
+        var max = rail.scrollWidth - rail.clientWidth;
+        var from = target === null ? rail.scrollLeft : target;
+        target = Math.max(0, Math.min(max, from + dir * step()));
+        rail.scrollTo({ left: target, behavior: reduce ? 'auto' : 'smooth' });
+      }
+      function letGo() { target = null; }
+      rail.addEventListener('wheel', letGo, { passive: true });
+      rail.addEventListener('touchstart', letGo, { passive: true });
+      rail.addEventListener('keydown', letGo);
+
+      prev.addEventListener('click', function () { go(-1); });
+      next.addEventListener('click', function () { go(1); });
+      rail.addEventListener('scroll', function () {
+        if (target !== null && Math.abs(rail.scrollLeft - target) < 2) target = null;
+        update();
+      }, { passive: true });
+      window.addEventListener('resize', update);
+      // late-loading screenshots change scrollWidth
+      window.addEventListener('load', update);
+      update();
     })();
 
     // Testimonial: open the full review in a popup
