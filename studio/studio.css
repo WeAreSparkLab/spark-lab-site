@@ -266,16 +266,86 @@
 }
 
 /* --- Portfolio ---------------------------------------------------------------
-   Responsive grid: 1 column on mobile, naturally reflows to 2–3 columns as
-   space allows (no hand-tuned breakpoints needed).
-   .st-portfolio-card is used two ways:
+   A horizontal rail rather than a grid: the row holds any number of projects
+   without the section growing down the page. Adding a project = adding one
+   more card, nothing else to touch.
+   .st-portfolio-card is used three ways:
      - as an <a> for a real, live project (screenshot + details, see below)
+     - as an <a> for an anonymised concept build
      - as an <article class="is-placeholder"> for an empty "slot"
    ------------------------------------------------------------------------- */
+.st-portfolio-rail {
+  position: relative;
+}
 .st-portfolio {
-  display: grid;
+  display: flex;
   gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  /* room for the scrollbar so it never sits on top of a card */
+  padding-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+.st-portfolio::-webkit-scrollbar {
+  height: 8px;
+}
+.st-portfolio::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+}
+.st-portfolio::-webkit-scrollbar-track {
+  background: transparent;
+}
+.st-portfolio > * {
+  /* the fraction leaves the next card peeking, which is what tells people
+     there is more to the right */
+  flex: 0 0 min(310px, 84%);
+  scroll-snap-align: start;
+}
+
+/* Arrows: pointer users get them, touch users just swipe. Hidden by the rail
+   script when everything already fits. */
+.st-rail-btn {
+  display: none;
+}
+@media (min-width: 760px) {
+  .st-rail-btn {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 130px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--st-line);
+    background: rgba(12, 14, 36, 0.92);
+    color: var(--st-ink);
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    transition: background .18s ease, border-color .18s ease, opacity .18s ease;
+  }
+  .st-rail-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+  .st-rail-btn:disabled {
+    opacity: 0.28;
+    cursor: default;
+  }
+  .st-rail-btn[hidden] {
+    display: none;
+  }
+  .st-rail-prev {
+    left: -14px;
+  }
+  .st-rail-next {
+    right: -14px;
+  }
 }
 .st-portfolio-card {
   display: flex;
