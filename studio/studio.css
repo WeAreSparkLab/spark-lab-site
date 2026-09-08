@@ -192,6 +192,98 @@
   padding-top: 16px;
 }
 
+/* --- ROI calculator --------------------------------------------------------- */
+.st-roi {
+  display: grid;
+  gap: 28px;
+  padding: 28px;
+}
+@media (min-width: 760px) {
+  .st-roi {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+.st-roi-fields {
+  display: grid;
+  gap: 22px;
+}
+.st-roi-field label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 14px;
+  color: var(--st-muted);
+  margin-bottom: 8px;
+}
+.st-roi-val {
+  color: var(--st-ink);
+  font-weight: 700;
+  font-size: 15px;
+}
+.st-roi-field input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--st-line);
+  outline: none;
+}
+.st-roi-field input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+  cursor: pointer;
+  border: 3px solid #0a0c1a;
+}
+.st-roi-field input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+  cursor: pointer;
+  border: 3px solid #0a0c1a;
+}
+.st-roi-result {
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--st-panel);
+  border: 1px solid var(--st-line);
+}
+.st-roi-result-label {
+  font-size: 14px;
+  color: var(--st-muted);
+  margin-bottom: 4px;
+}
+.st-roi-amount {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--st-accent-2);
+  line-height: 1.1;
+}
+.st-roi-compare {
+  margin-top: 12px;
+  font-size: 15px;
+  color: #d8def5;
+  line-height: 1.5;
+}
+.st-roi-multiple {
+  color: var(--st-accent);
+  font-weight: 700;
+}
+.st-roi-result .btn {
+  margin-top: 18px;
+}
+.st-roi-footnote {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--st-muted);
+}
+
 /* --- How it works (steps) -------------------------------------------------- */
 .st-steps {
   display: grid;
@@ -471,6 +563,45 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   transform: translateX(4px);
 }
 
+/* --- Case study stat strip -------------------------------------------------- */
+.st-case {
+  padding: 22px 24px;
+  margin-bottom: 18px;
+}
+.st-case-eyebrow {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--st-accent-2);
+  margin-bottom: 14px;
+}
+.st-case-stats {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+}
+.st-case-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.st-case-num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--st-ink);
+  letter-spacing: -0.3px;
+}
+.st-case-label {
+  font-size: 13px;
+  color: var(--st-muted);
+}
+@media (max-width: 560px) {
+  .st-case-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
 /* --- Testimonial (built to hold ONE quote well) --------------------------- */
 .st-testimonial {
   position: relative;
@@ -736,6 +867,23 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   background: rgba(255, 90, 90, 0.1);
   border: 1px solid rgba(255, 120, 120, 0.4);
   color: #ffd9d9;
+}
+
+/* --- Static example transcript (preview above the live demo) -------------- */
+.st-transcript {
+  max-width: 480px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.st-transcript-log {
+  overflow-y: visible;
+}
+.st-transcript-note {
+  max-width: 480px;
+  margin: 10px auto 26px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--st-muted);
 }
 
 /* typing indicator */
