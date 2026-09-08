@@ -740,6 +740,98 @@ footer.footer p{ margin:6px 0; }
   padding-top: 16px;
 }
 
+/* --- ROI calculator --------------------------------------------------------- */
+.st-roi {
+  display: grid;
+  gap: 28px;
+  padding: 28px;
+}
+@media (min-width: 760px) {
+  .st-roi {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+.st-roi-fields {
+  display: grid;
+  gap: 22px;
+}
+.st-roi-field label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 14px;
+  color: var(--st-muted);
+  margin-bottom: 8px;
+}
+.st-roi-val {
+  color: var(--st-ink);
+  font-weight: 700;
+  font-size: 15px;
+}
+.st-roi-field input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--st-line);
+  outline: none;
+}
+.st-roi-field input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+  cursor: pointer;
+  border: 3px solid #0a0c1a;
+}
+.st-roi-field input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
+  cursor: pointer;
+  border: 3px solid #0a0c1a;
+}
+.st-roi-result {
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--st-panel);
+  border: 1px solid var(--st-line);
+}
+.st-roi-result-label {
+  font-size: 14px;
+  color: var(--st-muted);
+  margin-bottom: 4px;
+}
+.st-roi-amount {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--st-accent-2);
+  line-height: 1.1;
+}
+.st-roi-compare {
+  margin-top: 12px;
+  font-size: 15px;
+  color: #d8def5;
+  line-height: 1.5;
+}
+.st-roi-multiple {
+  color: var(--st-accent);
+  font-weight: 700;
+}
+.st-roi-result .btn {
+  margin-top: 18px;
+}
+.st-roi-footnote {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--st-muted);
+}
+
 /* --- How it works (steps) -------------------------------------------------- */
 .st-steps {
   display: grid;
@@ -1019,6 +1111,45 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   transform: translateX(4px);
 }
 
+/* --- Case study stat strip -------------------------------------------------- */
+.st-case {
+  padding: 22px 24px;
+  margin-bottom: 18px;
+}
+.st-case-eyebrow {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--st-accent-2);
+  margin-bottom: 14px;
+}
+.st-case-stats {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+}
+.st-case-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.st-case-num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--st-ink);
+  letter-spacing: -0.3px;
+}
+.st-case-label {
+  font-size: 13px;
+  color: var(--st-muted);
+}
+@media (max-width: 560px) {
+  .st-case-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
 /* --- Testimonial (built to hold ONE quote well) --------------------------- */
 .st-testimonial {
   position: relative;
@@ -1284,6 +1415,23 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   background: rgba(255, 90, 90, 0.1);
   border: 1px solid rgba(255, 120, 120, 0.4);
   color: #ffd9d9;
+}
+
+/* --- Static example transcript (preview above the live demo) -------------- */
+.st-transcript {
+  max-width: 480px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.st-transcript-log {
+  overflow-y: visible;
+}
+.st-transcript-note {
+  max-width: 480px;
+  margin: 10px auto 26px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--st-muted);
 }
 
 /* typing indicator */
@@ -2704,12 +2852,12 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
     <!-- HERO -->
     <section class="container st-hero">
       <span class="st-eyebrow">Spark Lab Studio · for small businesses</span>
-      <h1>A website and AI assistants for your small business.</h1>
+      <h1>Your first digital team member.</h1>
       <p class="st-lead">
         Barber, dog groomer, plumber, massage therapist, tutor, photographer, bookkeeper — whatever
-        it says on your van or your window, I build you a simple, beautiful website wired to how
-        people book or get in touch. Add an assistant that answers enquiries while your hands are
-        full, and the admin stops eating your evenings.
+        it says on your van or your window, I build a website that captures enquiries around the
+        clock, plus an AI assistant that answers them for you. From £450. You see it live, working,
+        before you spend a penny.
       </p>
       <div class="st-cta-row">
         <a class="btn btn-primary" href="#whatyouget">See what's included</a>
@@ -2769,6 +2917,42 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 
     <hr class="st-divider">
 
+    <!-- ROI CALCULATOR -->
+    <section id="roi" class="container st-section">
+      <h2>What are missed enquiries costing you?</h2>
+      <p class="st-sub">Move the sliders to match your business — see what a booking assistant could be worth.</p>
+
+      <div class="st-roi glass">
+        <div class="st-roi-fields">
+          <div class="st-roi-field">
+            <label for="roiEnquiries">Enquiries you miss per week <span class="st-roi-val" id="roiEnquiriesVal">5</span></label>
+            <input type="range" id="roiEnquiries" min="0" max="30" step="1" value="5">
+          </div>
+          <div class="st-roi-field">
+            <label for="roiJobValue">Average job value <span class="st-roi-val" id="roiJobValueVal">£70</span></label>
+            <input type="range" id="roiJobValue" min="10" max="1000" step="10" value="70">
+          </div>
+          <div class="st-roi-field">
+            <label for="roiConversion">Estimated conversion rate <span class="st-roi-val" id="roiConversionVal">25%</span></label>
+            <input type="range" id="roiConversion" min="5" max="80" step="5" value="25">
+          </div>
+        </div>
+
+        <div class="st-roi-result">
+          <div class="st-roi-result-label">Potential lost revenue</div>
+          <div class="st-roi-amount" id="roiLostRevenue">£455/mo</div>
+          <div class="st-roi-compare">
+            A booking assistant costs <strong>£25/mo</strong> — that's a
+            <span class="st-roi-multiple" id="roiMultiple">18x</span> return if it catches even a quarter of that.
+          </div>
+          <a class="btn btn-primary" href="#assistants">Try the booking assistant →</a>
+        </div>
+      </div>
+      <p class="st-roi-footnote">Rough estimate based on the figures above — every business is different, this is just to give you a feel for the numbers.</p>
+    </section>
+
+    <hr class="st-divider">
+
     <!-- HOW IT WORKS -->
     <section class="container st-section">
       <h2>How it works</h2>
@@ -2805,6 +2989,26 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
         about — yours would run on yours. Want proof? The last one, <strong>Reply drafter</strong>,
         runs on whatever business you type in.
       </p>
+
+      <!-- Static example transcript — shows the payoff at a glance before anyone
+           has to type anything. Reuses the live widget's own chat classes for
+           visual consistency, but this exchange is illustrative, not live. -->
+      <div class="st-transcript glass" aria-hidden="true">
+        <div class="chat-head">
+          <div class="chat-avatar">W</div>
+          <div>
+            <div class="chat-title">Willow Lane Massage</div>
+            <div class="chat-status">Booking assistant · example conversation</div>
+          </div>
+        </div>
+        <div class="chat-log st-transcript-log">
+          <div class="msg user">Do you have availability Thursday?</div>
+          <div class="msg bot">Yes — 10am and 3pm are free Thursday. Which works better?</div>
+          <div class="msg user">Book 3pm.</div>
+          <div class="msg bot">Booked ✓ Thursday 3pm, deep tissue massage. You'll get a confirmation text shortly.</div>
+        </div>
+      </div>
+      <p class="st-transcript-note">An example of what a booking exchange looks like. Try the real thing below ↓</p>
 
       <div class="st-asst">
         <!-- Selector -->
@@ -3040,6 +3244,31 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
         talk money. The concepts are shown with the business details swapped out, because those
         businesses haven't agreed to be named.
       </p>
+
+      <!-- ===================================================================
+           CASE STUDY STRIP — Roots Reflexology & Massage.
+           Every figure here is drawn directly from Ruth's own testimonial
+           below ("up and running within a week", "first online booking one
+           day after it launched") — do not add a number that isn't traceable
+           to her actual words or another consented, verified source.
+           =================================================================== -->
+      <div class="st-case glass">
+        <span class="st-case-eyebrow">Case study · Roots Reflexology &amp; Massage</span>
+        <div class="st-case-stats">
+          <div class="st-case-stat">
+            <span class="st-case-num">1 week</span>
+            <span class="st-case-label">from enquiry to live site</span>
+          </div>
+          <div class="st-case-stat">
+            <span class="st-case-num">1 day</span>
+            <span class="st-case-label">to her first online booking</span>
+          </div>
+          <div class="st-case-stat">
+            <span class="st-case-num">★★★★★</span>
+            <span class="st-case-label">from her first client</span>
+          </div>
+        </div>
+      </div>
 
       <!-- ===================================================================
            TESTIMONIAL — a real, consented client review.
@@ -3306,6 +3535,48 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
           burger.setAttribute('aria-expanded', 'false');
         }
       });
+    })();
+
+    // ROI calculator: missed enquiries -> potential lost revenue
+    (function () {
+      var ASSISTANT_COST = 25; // £/mo, matches the booking assistant price above
+      var WEEKS_PER_MONTH = 4.33;
+
+      var enquiriesEl = document.getElementById('roiEnquiries');
+      var jobValueEl = document.getElementById('roiJobValue');
+      var conversionEl = document.getElementById('roiConversion');
+      if (!enquiriesEl || !jobValueEl || !conversionEl) return;
+
+      var enquiriesValEl = document.getElementById('roiEnquiriesVal');
+      var jobValueValEl = document.getElementById('roiJobValueVal');
+      var conversionValEl = document.getElementById('roiConversionVal');
+      var lostRevenueEl = document.getElementById('roiLostRevenue');
+      var multipleEl = document.getElementById('roiMultiple');
+
+      function formatGBP(n) {
+        return '£' + Math.round(n).toLocaleString('en-GB');
+      }
+
+      function recalc() {
+        var enquiries = parseFloat(enquiriesEl.value);
+        var jobValue = parseFloat(jobValueEl.value);
+        var conversion = parseFloat(conversionEl.value) / 100;
+
+        enquiriesValEl.textContent = enquiries;
+        jobValueValEl.textContent = formatGBP(jobValue);
+        conversionValEl.textContent = Math.round(conversion * 100) + '%';
+
+        var lostRevenue = enquiries * WEEKS_PER_MONTH * jobValue * conversion;
+        var multiple = lostRevenue / ASSISTANT_COST;
+
+        lostRevenueEl.textContent = formatGBP(lostRevenue) + '/mo';
+        multipleEl.textContent = (multiple >= 1 ? Math.round(multiple) : Math.round(multiple * 10) / 10) + 'x';
+      }
+
+      [enquiriesEl, jobValueEl, conversionEl].forEach(function (el) {
+        el.addEventListener('input', recalc);
+      });
+      recalc();
     })();
 
     // Portfolio rail: arrow buttons, and hide them when nothing overflows
