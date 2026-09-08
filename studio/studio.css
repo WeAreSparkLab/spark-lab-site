@@ -563,9 +563,9 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   transform: translateX(4px);
 }
 
-/* --- Case study stat strip -------------------------------------------------- */
+/* --- Case study ------------------------------------------------------------- */
 .st-case {
-  padding: 22px 24px;
+  padding: 26px 24px;
   margin-bottom: 18px;
 }
 .st-case-eyebrow {
@@ -573,12 +573,40 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-size: 13px;
   font-weight: 600;
   color: var(--st-accent-2);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
+}
+.st-case-heading {
+  font-size: clamp(18px, 2.4vw, 22px);
+  color: var(--st-ink);
+  margin: 0 0 22px;
+  max-width: 52ch;
+}
+.st-case-narrative {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--st-line);
+}
+.st-case-part h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--st-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 8px;
+}
+.st-case-part p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #d8def5;
+  margin: 0;
 }
 .st-case-stats {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 .st-case-stat {
   display: flex;
@@ -591,9 +619,21 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   color: var(--st-ink);
   letter-spacing: -0.3px;
 }
+.st-case-num.st-placeholder {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  padding: 6px 10px;
+}
 .st-case-label {
   font-size: 13px;
   color: var(--st-muted);
+}
+@media (max-width: 700px) {
+  .st-case-narrative {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
 }
 @media (max-width: 560px) {
   .st-case-stats {
