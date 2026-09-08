@@ -557,12 +557,35 @@ footer.footer p{ margin:6px 0; }
    ========================================================================== */
 
 .studio {
-  --st-accent: var(--brand);      /* #7b7cf6 */
+  /* Single accent: both tokens resolve to the same cyan so every gradient
+     built from accent+accent-2 collapses to one flat colour. --brand (purple)
+     is intentionally unused here - kept only where styles.css needs it
+     sitewide. Reserve this colour for primary CTAs and key highlights only. */
+  --st-accent: var(--brand2);
   --st-accent-2: var(--brand2);   /* #00e5ff */
   --st-ink: #f3f6ff;
   --st-muted: var(--muted);
   --st-line: rgba(255, 255, 255, 0.1);
   --st-panel: rgba(255, 255, 255, 0.04);
+}
+
+/* Studio-only CTA: solid single accent, overriding styles.css .btn-primary's
+   sitewide purple->cyan gradient (which stays as-is on the main homepage).
+   Also fixes a contrast issue inherited from the shared .btn rule: white
+   text (--text-on-accent) on this bright cyan is ~1.5:1, far under WCAG AA.
+   Dark text here matches the ~12.6:1 ratio already used on every other
+   accent-coloured button on this page (chat send, demo "go" buttons, etc). */
+.studio .btn-primary {
+  background: var(--st-accent-2);
+  color: #0a0c1a;
+  box-shadow: 0 6px 24px rgba(0, 229, 255, 0.18);
+}
+
+/* Studio-only: the sitewide ambient background orb (styles.css .bg__orbs) is
+   purple on one side, cyan on the other - recolour the purple one so the page
+   background doesn't reintroduce the second hue. Main homepage keeps both. */
+.studio .bg__orbs::before {
+  background: radial-gradient(circle, var(--st-accent-2) 0%, #0000 60%);
 }
 
 /* Visible keyboard focus everywhere on the Studio pages */
@@ -586,7 +609,7 @@ footer.footer p{ margin:6px 0; }
   font-size: 12px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
   margin: 0 0 14px;
 }
 
@@ -685,7 +708,7 @@ footer.footer p{ margin:6px 0; }
 }
 .st-offer .st-offer-tag {
   font-size: 13px;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
   font-weight: 600;
   margin-bottom: 12px;
 }
@@ -711,7 +734,7 @@ footer.footer p{ margin:6px 0; }
   position: absolute;
   left: 0;
   top: 0;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
   font-weight: 700;
 }
 .st-price {
@@ -729,9 +752,9 @@ footer.footer p{ margin:6px 0; }
 .st-placeholder {
   display: inline-block;
   padding: 1px 8px;
-  border: 1px dashed var(--st-accent);
+  border: 1px dashed var(--st-muted);
   border-radius: 6px;
-  color: #c9cffb;
+  color: var(--st-muted);
   font-weight: 600;
   letter-spacing: 0.5px;
 }
@@ -854,8 +877,9 @@ footer.footer p{ margin:6px 0; }
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-2));
-  color: #0a0c1a;
+  background: var(--st-panel);
+  border: 1px solid var(--st-line);
+  color: var(--st-ink);
   font-weight: 800;
   margin-bottom: 12px;
 }
@@ -893,8 +917,7 @@ footer.footer p{ margin:6px 0; }
   height: 10px;
   margin-top: 7px;
   border-radius: 50%;
-  background: var(--st-accent-2);
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+  background: var(--st-muted);
 }
 .st-outcome p {
   margin: 0;
@@ -1266,7 +1289,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font: inherit;
   font-size: 15px;
   font-weight: 600;
-  color: var(--st-accent-2);
+  color: var(--st-ink);
   cursor: pointer;
 }
 .st-quote-more:hover {
@@ -1611,8 +1634,8 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   color: #aab3d1;
 }
 .st-pill-badge--live {
-  background: rgba(0, 246, 210, 0.16);
-  color: var(--cyan);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--st-muted);
 }
 .st-pill.is-active .st-pill-badge,
 .st-pill.is-active .st-pill-badge--live {
@@ -1727,7 +1750,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-size: 14px;
   color: #0a0c1a;
   max-width: calc(100vw - 28px);
-  background: linear-gradient(135deg, var(--brand), var(--brand2));
+  background: var(--st-accent-2);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   transition: transform .18s ease, box-shadow .18s ease;
 }
@@ -1829,7 +1852,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 }
 .sl-msg.user {
   align-self: flex-end;
-  background: linear-gradient(135deg, var(--brand), var(--brand2));
+  background: var(--st-accent-2);
   color: #0a0c1a;
   border-bottom-right-radius: 4px;
 }
@@ -1886,7 +1909,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   cursor: pointer;
   color: #0a0c1a;
   font-family: inherit;
-  background: linear-gradient(135deg, var(--brand), var(--brand2));
+  background: var(--st-accent-2);
 }
 .sl-send:disabled { opacity: .5; cursor: not-allowed; }
 
@@ -1917,7 +1940,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-weight: 700;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
 }
 .tm-q {
   margin: 0 0 4px;
@@ -2029,7 +2052,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
 }
 .tm-result-name {
   margin: 0 0 8px;
@@ -2145,7 +2168,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-weight: 800;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
   margin-bottom: 8px;
 }
 .cg-caption {
@@ -2158,7 +2181,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 }
 .cg-hashtags {
   margin: 10px 0 0;
-  color: #9fc7ff;
+  color: var(--st-muted);
   font-size: 14px;
   line-height: 1.5;
   word-break: break-word;
@@ -2189,8 +2212,8 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 }
 .cg-copy:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
 .cg-copy.is-copied {
-  background: rgba(0, 246, 210, 0.16);
-  color: var(--cyan);
+  background: rgba(0, 229, 255, 0.16);
+  color: var(--st-accent-2);
   border-color: transparent;
 }
 
@@ -2231,7 +2254,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-weight: 700;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
 }
 .rc-appt-name {
   margin: 0 0 4px;
@@ -2275,7 +2298,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-weight: 700;
   letter-spacing: 0.3px;
   text-transform: uppercase;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
 }
 .rc-sms-body {
   margin: 0;
@@ -2337,7 +2360,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
 }
 .rc-result--private .rc-result-kicker {
   color: #f5c842;
@@ -2378,12 +2401,12 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 }
 .rc-wall-item--new {
   border-style: dashed;
-  border-color: rgba(0, 246, 210, 0.4);
-  background: rgba(0, 246, 210, 0.06);
+  border-color: rgba(0, 229, 255, 0.4);
+  background: rgba(0, 229, 255, 0.06);
 }
 .rc-stars {
   display: block;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
   font-size: 14px;
   letter-spacing: 2px;
   margin-bottom: 6px;
@@ -2634,7 +2657,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-weight: 700;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
 }
 .rd-reply {
   padding: 16px 18px;
@@ -2664,7 +2687,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 .rd-ready {
   margin: 18px 0 0;
   font-size: 14px;
-  color: var(--st-accent-2);
+  color: var(--st-muted);
 }
 
 /* =============================================================================
@@ -3293,10 +3316,10 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
            The narrative and the "1 week" / "1 day" stats are drawn directly
            from Ruth's own testimonial below ("up and running within a week",
            "first online booking one day after it launched", the overwhelm
-           she describes before). The two marked placeholders are numbers
-           Sara hasn't confirmed yet — do not fill them in with a guess, and
-           do not add any other figure that isn't traceable to Ruth's actual
-           words or another consented, verified source.
+           she describes before). Do not add a figure that isn't traceable to
+           Ruth's actual words or another consented, verified source — bring
+           back a placeholder stat tile (see git history) once real numbers
+           for bookings-since-launch / hours-saved are confirmed.
            =================================================================== -->
       <div class="st-case glass">
         <span class="st-case-eyebrow">Case study · Roots Reflexology &amp; Massage</span>
@@ -3330,12 +3353,6 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
           <div class="st-case-stat">
             <span class="st-case-num">1 day</span>
             <span class="st-case-label">to her first online booking</span>
-          </div>
-          <div class="st-case-stat">
-            <span class="st-case-num st-placeholder">[ADD: bookings since launch]</span>
-          </div>
-          <div class="st-case-stat">
-            <span class="st-case-num st-placeholder">[ADD: hours saved per week]</span>
           </div>
         </div>
       </div>
