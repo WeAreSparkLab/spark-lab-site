@@ -1111,9 +1111,9 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   transform: translateX(4px);
 }
 
-/* --- Case study stat strip -------------------------------------------------- */
+/* --- Case study ------------------------------------------------------------- */
 .st-case {
-  padding: 22px 24px;
+  padding: 26px 24px;
   margin-bottom: 18px;
 }
 .st-case-eyebrow {
@@ -1121,12 +1121,40 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   font-size: 13px;
   font-weight: 600;
   color: var(--st-accent-2);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
+}
+.st-case-heading {
+  font-size: clamp(18px, 2.4vw, 22px);
+  color: var(--st-ink);
+  margin: 0 0 22px;
+  max-width: 52ch;
+}
+.st-case-narrative {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--st-line);
+}
+.st-case-part h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--st-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 8px;
+}
+.st-case-part p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #d8def5;
+  margin: 0;
 }
 .st-case-stats {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 .st-case-stat {
   display: flex;
@@ -1139,9 +1167,21 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   color: var(--st-ink);
   letter-spacing: -0.3px;
 }
+.st-case-num.st-placeholder {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  padding: 6px 10px;
+}
 .st-case-label {
   font-size: 13px;
   color: var(--st-muted);
+}
+@media (max-width: 700px) {
+  .st-case-narrative {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
 }
 @media (max-width: 560px) {
   .st-case-stats {
@@ -2905,8 +2945,10 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
             <li><strong>Content helper</strong> — drafts social posts in your voice</li>
           </ul>
           <div class="st-offer-foot">
-            <p class="st-price">Priced individually</p>
-            <p style="margin:6px 0 0;font-size:13px;color:var(--st-muted)">Some cost less than others, and the content helper has no setup fee. Get in touch and I'll quote for your business.</p>
+            <p class="st-price">
+              <span class="st-from">from</span> £25/mo
+            </p>
+            <p style="margin:6px 0 0;font-size:13px;color:var(--st-muted)">The content helper has no setup fee — heavier builds are quoted individually.</p>
             <p style="margin:12px 0 0;">
               <a class="btn btn-ghost" href="#assistants">Try them live →</a>
             </p>
@@ -3246,14 +3288,37 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
       </p>
 
       <!-- ===================================================================
-           CASE STUDY STRIP — Roots Reflexology & Massage.
-           Every figure here is drawn directly from Ruth's own testimonial
-           below ("up and running within a week", "first online booking one
-           day after it launched") — do not add a number that isn't traceable
-           to her actual words or another consented, verified source.
+           CASE STUDY — Roots Reflexology & Massage.
+           The narrative and the "1 week" / "1 day" stats are drawn directly
+           from Ruth's own testimonial below ("up and running within a week",
+           "first online booking one day after it launched", the overwhelm
+           she describes before). The two marked placeholders are numbers
+           Sara hasn't confirmed yet — do not fill them in with a guess, and
+           do not add any other figure that isn't traceable to Ruth's actual
+           words or another consented, verified source.
            =================================================================== -->
       <div class="st-case glass">
         <span class="st-case-eyebrow">Case study · Roots Reflexology &amp; Massage</span>
+        <h3 class="st-case-heading">From overwhelmed by booking platforms to her first client in a week</h3>
+
+        <div class="st-case-narrative">
+          <div class="st-case-part">
+            <h4>What she needed</h4>
+            <p>Ruth had just qualified as a Complementary Therapist and Reflexologist and needed a way
+              for clients to find her and book a treatment — without wrestling with booking platforms
+              herself.</p>
+          </div>
+          <div class="st-case-part">
+            <h4>What we built</h4>
+            <p>A calm, one-page website with Square booking built in, plus hosting and go-live handled
+              end to end.</p>
+          </div>
+          <div class="st-case-part">
+            <h4>The result</h4>
+            <p>Live within a week. Her first online booking came one day after launch.</p>
+          </div>
+        </div>
+
         <div class="st-case-stats">
           <div class="st-case-stat">
             <span class="st-case-num">1 week</span>
@@ -3264,8 +3329,10 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
             <span class="st-case-label">to her first online booking</span>
           </div>
           <div class="st-case-stat">
-            <span class="st-case-num">★★★★★</span>
-            <span class="st-case-label">from her first client</span>
+            <span class="st-case-num st-placeholder">[ADD: bookings since launch]</span>
+          </div>
+          <div class="st-case-stat">
+            <span class="st-case-num st-placeholder">[ADD: hours saved per week]</span>
           </div>
         </div>
       </div>
