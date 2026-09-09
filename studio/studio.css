@@ -318,6 +318,10 @@
   .st-steps {
     grid-template-columns: repeat(3, 1fr);
   }
+  /* Same card/badge pattern, sized for a 4-step sequence (no-show saver). */
+  .st-steps--four {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 .st-step {
   padding: 22px;
