@@ -866,6 +866,10 @@ footer.footer p{ margin:6px 0; }
   .st-steps {
     grid-template-columns: repeat(3, 1fr);
   }
+  /* Same card/badge pattern, sized for a 4-step sequence (no-show saver). */
+  .st-steps--four {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 .st-step {
   padding: 22px;
@@ -3270,6 +3274,39 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
             invents a price. Anything it doesn't know comes back as a blank for you to fill, not a guess.
           </p>
         </div>
+      </div>
+    </section>
+
+    <hr class="st-divider">
+
+    <!-- HOW THE NO-SHOW SAVER WORKS — reuses the .st-step / .st-step-num
+         pattern from the "How it works" section above; only the grid's
+         column count differs (4 steps here vs 3 there), via .st-steps--four. -->
+    <section class="container st-section">
+      <h2>How the no-show saver works</h2>
+      <p class="st-sub">Reminders before, and warm win-backs after — so an empty slot doesn't stay empty.</p>
+
+      <div class="st-steps st-steps--four">
+        <article class="st-step glass">
+          <span class="st-step-num">1</span>
+          <h3>Reminder sent</h3>
+          <p>A friendly nudge goes out before the appointment, cutting down no-shows before they happen.</p>
+        </article>
+        <article class="st-step glass">
+          <span class="st-step-num">2</span>
+          <h3>Cancellation spotted</h3>
+          <p>If someone cancels or doesn't confirm, the assistant knows straight away, no manual checking needed.</p>
+        </article>
+        <article class="st-step glass">
+          <span class="st-step-num">3</span>
+          <h3>Warm win-back sent</h3>
+          <p>An on-brand message goes out asking if they'd like to rebook — no hard sell, just an easy way back in.</p>
+        </article>
+        <article class="st-step glass">
+          <span class="st-step-num">4</span>
+          <h3>Slot filled</h3>
+          <p>The gap gets picked up instead of sitting empty on the calendar.</p>
+        </article>
       </div>
     </section>
 
