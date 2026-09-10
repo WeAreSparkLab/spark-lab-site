@@ -4,6 +4,15 @@
   "outputDirectory": ".",
   "redirects": [
     { "source": "/privacy.html", "destination": "/privacy" },
-    { "source": "/studio", "destination": "/", "permanent": true }
+    { "source": "/studio", "destination": "/", "permanent": true },
+    { "source": "/blog/why-daily-walk-changes-everything", "destination": "/apps/blog/why-daily-walk-changes-everything", "permanent": true },
+    { "source": "/blog/digital-wellness-habits-without-willpower", "destination": "/apps/blog/digital-wellness-habits-without-willpower", "permanent": true },
+    { "source": "/blog/how-to-stop-waiting-until-you-feel-ready", "destination": "/apps/blog/how-to-stop-waiting-until-you-feel-ready", "permanent": true },
+    { "source": "/blog/the-5-minute-reset", "destination": "/apps/blog/the-5-minute-reset", "permanent": true },
+    { "source": "/blog/5-things-that-happen-when-you-walk-every-day", "destination": "/apps/blog/5-things-that-happen-when-you-walk-every-day", "permanent": true },
+    { "source": "/blog/5-quotes-that-actually-help", "destination": "/apps/blog/5-quotes-that-actually-help", "permanent": true },
+    { "source": "/blog/morning-routine-without-the-pressure", "destination": "/apps/blog/morning-routine-without-the-pressure", "permanent": true },
+    { "source": "/blog/free-apps-for-mental-wellness", "destination": "/apps/blog/free-apps-for-mental-wellness", "permanent": true },
+    { "source": "/blog/how-to-sleep-better", "destination": "/apps/blog/how-to-sleep-better", "permanent": true }
   ]
 }
