@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Spark Lab — Wellness Tips, Mindfulness & Daily Inspiration</title>
+  <meta name="description" content="The Spark Lab blog — wellness tips, mindfulness habits, daily inspiration, and the story behind our free apps. Real talk for real life.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.wearesparklab.com/apps/blog">
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/blog-star.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --border: #1e1e2e;
+      --accent: #f5c842;
+      --accent2: #ff6b6b;
+      --text: #e8e8f0;
+      --muted: #7070a0;
+      --card-bg: #0f0f18;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: color 0.2s;
+      letter-spacing: 0.03em;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* HERO */
+    .blog-hero {
+      padding: 6rem 2rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .blog-hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(245,200,66,0.1);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .blog-hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .blog-hero h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+
+    .blog-hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    /* FEATURED POST */
+    .featured-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      text-decoration: none;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .featured-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .featured-img {
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .featured-content {
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .post-category {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .featured-content h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .featured-content p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .post-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+    .read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .read-more:hover { gap: 0.8rem; }
+
+    /* GRID POSTS */
+    .posts-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .post-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1.2rem;
+      overflow: hidden;
+      text-decoration: none;
+      transition: border-color 0.3s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-card:hover {
+      border-color: rgba(245,200,66,0.4);
+      transform: translateY(-4px);
+    }
+
+    .post-card-img {
+      height: 160px;
+      overflow: hidden;
+    }
+
+    .post-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .post-card-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 0.7rem;
+      flex: 1;
+    }
+
+    .post-card p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    /* NEWSLETTER */
+    .newsletter {
+      max-width: 900px;
+      margin: 0 auto 6rem;
+      padding: 0 2rem;
+    }
+
+    .newsletter-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .newsletter h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .newsletter h2 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+
+    .newsletter p { color: var(--muted); font-size: 0.95rem; }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .newsletter-form input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 0.9rem 1.2rem;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .newsletter-form input:focus { border-color: var(--accent); }
+    .newsletter-form input::placeholder { color: var(--muted); }
+
+    .newsletter-form button {
+      background: var(--accent);
+      color: #0a0a0f;
+      border: none;
+      border-radius: 0.75rem;
+      padding: 0.9rem 1.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .newsletter-form button:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .blog-hero, .featured-section, .posts-section {
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .featured-section { animation-delay: 0.1s; }
+    .posts-section { animation-delay: 0.2s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-img { min-height: 200px; }
+      .newsletter-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+  <nav>
+    <a href="/apps" class="nav-logo">✦ Spark Lab</a>
+    <ul class="nav-links">
+      <li><a href="/apps">Home</a></li>
+      <li><a href="https://quotes.wearesparklab.com">Spark Quotes</a></li>
+      <li><a href="https://walks.wearesparklab.com">Spark Walk</a></li>
+      <li><a href="/apps/blog" class="active">Blog</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="blog-hero">
+    <span class="blog-hero-tag">✦ The Spark Lab Blog</span>
+    <h1>Real talk for<br><em>real wellness</em></h1>
+    <p>Honest tips on daily habits, mental wellness, movement, and living lighter — written by real people, for real life.</p>
+  </section>
+
+  <!-- FEATURED POST -->
+  <section class="featured-section">
+    <p class="section-label">Featured</p>
+    <a href="/apps/blog/why-daily-walk-changes-everything" class="featured-card">
+      <div class="featured-img"><picture><source srcset="/assets/walk-hero.webp" type="image/webp"><img src="/assets/walk-hero.jpg" alt="Woman walking outdoors in natural light"></picture></div>
+      <div class="featured-content">
+        <p class="post-category">✦ Movement</p>
+        <h2>Why a 10-Minute Walk Changes More Than You Think</h2>
+        <p>You don't need a gym, a plan, or even motivation. You just need your shoes and 10 minutes. Here's the science — and the honest truth — behind the simplest habit that actually sticks.</p>
+        <div class="post-meta">
+          <span>📅 May 2025</span>
+          <span>⏱ 4 min read</span>
+        </div>
+        <br>
+        <span class="read-more">Read post →</span>
+      </div>
+    </a>
+  </section>
+
+  <!-- POSTS GRID -->
+  <section class="posts-section">
+    <p class="section-label">Latest posts</p>
+    <div class="posts-grid">
+
+      <a href="/apps/blog/how-to-sleep-better" class="post-card">
+        <div class="post-card-img"><img src="/assets/card-sleep.png" alt="How to actually sleep better without buying anything"></div>
+        <div class="post-card-body">
+          <p class="post-category">✦ Wellness</p>
+          <h3>How to Actually Sleep Better (Without Buying Anything)</h3>
+          <p>No £200 pillow, no tracking ring. The small, free, science-backed things that genuinely improve sleep.</p>
+          <div class="post-meta">
+            <span>⏱ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/apps/blog/how-to-stop-waiting-until-you-feel-ready" class="post-card">
+        <div class="post-card-img"><picture><source srcset="/assets/card-ready.webp" type="image/webp"><img src="/assets/card-ready.png" alt="How to stop waiting until you feel ready"></picture></div>
+        <div class="post-card-body">
+          <p class="post-category">✦ Mindset</p>
+          <h3>How to Stop Waiting Until You Feel Ready</h3>
+          <p>The "ready" feeling rarely arrives. Here's why waiting for confidence first keeps you stuck — and what actually gets you moving.</p>
+          <div class="post-meta">
+            <span>⏱ 4 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/apps/blog/the-5-minute-reset" class="post-card">
+        <div class="post-card-img"><picture><source srcset="/assets/card-apps1.webp" type="image/webp"><img src="/assets/card-apps1.png" alt="The 5-minute reset — what to do when your day goes sideways"></picture></div>
+        <div class="post-card-body">
+          <p class="post-category">✦ Wellness</p>
+          <h3>The 5-Minute Reset: What to Do When Your Day Goes Sideways</h3>
+          <p>A small, kind, actually doable thing you can do right now — no outfit change, no supplement, no willpower required.</p>
+          <div class="post-meta">
+            <span>⏱ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/apps/blog/5-things-that-happen-when-you-walk-every-day" class="post-card">
+        <div class="post-card-img"><picture><source srcset="/assets/card-walk-every-day.webp" type="image/webp"><img src="/assets/card-walk-every-day.png" alt="Woman walking in a park with health benefit icons including BDNF, serotonin, heart rate and sleep"></picture></div>
+        <div class="post-card-body">
+          <p class="post-category">✦ Movement</p>
+          <h3>5 Things That Happen to Your Body When You Walk Every Day</h3>
+          <p>Your brain chemistry, stress levels, metabolism, heart, and sleep — all of them shift. Here's exactly how.</p>
+          <div class="post-meta">
+            <span>⏱ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/apps/blog/digital-wellness-habits-without-willpower" class="post-card">
+        <div class="post-card-img"><picture><source srcset="/assets/card-digital-wellness.webp" type="image/webp"><img src="/assets/card-digital-wellness.jpg" alt="Digital wellness habits that don't require willpower"></picture></div>
+        <div class="post-card-body">
+          <p class="post-category">✦ Habits</p>
+          <h3>Digital Wellness Habits That Don't Require Willpower</h3>
+          <p>Simple digital wellness habits that stick by reducing decisions, not demanding more discipline.</p>
+          <div class="post-meta">
+            <span>⏱ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/apps/blog/5-quotes-that-actually-help" class="post-card">
+        <div class="post-card-img"><picture><source srcset="/assets/card-quotes.webp" type="image/webp"><img src="/assets/card-quotes.jpg" alt="5 motivational quotes that actually help on hard days"></picture></div>
+        <div class="post-card-body">
+          <p class="post-category">✦ Mindset</p>
+          <h3>5 Motivational Quotes That Actually Help on Hard Days</h3>
+          <p>Not the ones on mugs. The ones that land differently when life is heavy.</p>
+          <div class="post-meta">
+            <span>⏱ 3 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/apps/blog/morning-routine-without-the-pressure" class="post-card">
+        <div class="post-card-img"><picture><source srcset="/assets/card-morning.webp" type="image/webp"><img src="/assets/card-morning.jpg" alt="A morning routine that doesn't need to be perfect"></picture></div>
+        <div class="post-card-body">
+          <p class="post-category">✦ Habits</p>
+          <h3>A Morning Routine That Doesn't Need to Be Perfect</h3>
+          <p>Forget the 5am cold showers. Here's what actually works for real mornings with real responsibilities.</p>
+          <div class="post-meta">
+            <span>⏱ 5 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/apps/blog/free-apps-for-mental-wellness" class="post-card">
+        <div class="post-card-img"><picture><source srcset="/assets/card-apps.webp" type="image/webp"><img src="/assets/card-apps.jpg" alt="Free apps that actually support your mental wellness"></picture></div>
+        <div class="post-card-body">
+          <p class="post-category">✦ Tools</p>
+          <h3>Free Apps That Actually Support Your Mental Wellness</h3>
+          <p>No subscriptions, no paywalls. Just tools that gently help without demanding your time.</p>
+          <div class="post-meta">
+            <span>⏱ 4 min read</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="newsletter-inner">
+      <div>
+        <h2>Get your weekly<br><em>spark of good</em></h2>
+        <p>One short email, every week. A quote, a habit tip, and something to make your day a little lighter. No spam. Unsubscribe anytime.</p>
+      </div>
+      <div class="newsletter-form">
+        <input type="email" id="newsletter-email" placeholder="your@email.com">
+        <button type="button" id="newsletter-btn" onclick="handleSignup()">
+          Send me the spark ✦
+        </button>
+        <p id="newsletter-msg" style="display:none; font-size:0.85rem; margin-top:0.5rem;"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© Spark Lab · Free motivational quotes app & mindful walking app · Built with 💛 &nbsp;·&nbsp; <a href="/apps">Home</a> &nbsp;·&nbsp; <a href="/privacy">Privacy</a></p>
+  </footer>
+
+<script>
+async function handleSignup() {
+  const emailInput = document.getElementById('newsletter-email');
+  const btn = document.getElementById('newsletter-btn');
+  const msg = document.getElementById('newsletter-msg');
+  const email = emailInput.value.trim();
+  if (!email) return;
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  msg.style.display = 'none';
+  try {
+    const res = await fetch(
+      'https://misscaetano.app.n8n.cloud/webhook/sparklab-subscribe',
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) }
+    );
+    const data = await res.json();
+    msg.style.display = 'block';
+    if (data.success) {
+      msg.style.color = '#f5c842';
+      msg.textContent = data.message || "You're in! Check your inbox.";
+      emailInput.value = '';
+    } else {
+      msg.style.color = '#ff6b6b';
+      msg.textContent = data.message || 'Something went wrong. Please try again.';
+    }
+  } catch (e) {
+    msg.style.display = 'block';
+    msg.style.color = '#ff6b6b';
+    msg.textContent = 'Could not connect. Please try again shortly.';
+  }
+  btn.textContent = 'Send me the spark ✦';
+  btn.disabled = false;
+}
+document.getElementById('newsletter-email')
+  .addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSignup(); });
+</script>
+</body>
+</html>
