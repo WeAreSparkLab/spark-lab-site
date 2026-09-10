@@ -3,6 +3,12 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".",
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "wearesparklab.com" }],
+      "destination": "https://www.wearesparklab.com/:path*",
+      "permanent": true
+    },
     { "source": "/privacy.html", "destination": "/privacy" },
     { "source": "/studio", "destination": "/", "permanent": true },
     { "source": "/blog/why-daily-walk-changes-everything", "destination": "/apps/blog/why-daily-walk-changes-everything", "permanent": true },
