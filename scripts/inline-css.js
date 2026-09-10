@@ -17,7 +17,7 @@ const ROOT = path.resolve(__dirname, '..');
 
 // page (relative to repo root) -> ordered list of CSS files to inline
 const TARGETS = [
-  { page: 'studio/index.html', css: ['styles.css', 'studio/studio.css'] },
+  { page: 'index.html', css: ['styles.css', 'studio/studio.css'] },
 ];
 
 const START = /<!--\s*inline-css:start[\s\S]*?-->/;
