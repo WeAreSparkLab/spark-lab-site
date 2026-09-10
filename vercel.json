@@ -3,6 +3,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".",
   "redirects": [
-    { "source": "/privacy.html", "destination": "/privacy" }
+    { "source": "/privacy.html", "destination": "/privacy" },
+    { "source": "/studio", "destination": "/", "permanent": true }
   ]
 }
