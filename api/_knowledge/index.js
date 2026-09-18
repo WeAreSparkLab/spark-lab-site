@@ -14,9 +14,11 @@
 // =============================================================================
 
 const willowLane = require("./willow-lane-massage.js");
+const elmfieldFootClinic = require("./elmfield-foot-clinic.js");
 
 const CLIENTS = {
   "willow-lane": willowLane,
+  "elmfield-foot-clinic": elmfieldFootClinic,
   // "roots-reflexology": require("./roots-reflexology.js"),
 };
 
