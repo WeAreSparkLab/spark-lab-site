@@ -17,16 +17,29 @@
   // Which client this widget is for (data-client on #tmRoot; defaults server-side).
   var client = root.getAttribute("data-client") || "";
 
+  // The first question's options are business-specific (a massage studio and a
+  // foot clinic aren't "bothered" by the same things), so they can be overridden
+  // per page via data-bothering-options — a JSON array of strings on #tmRoot.
+  // Falls back to the original massage-studio wording if absent/invalid, so the
+  // homepage demo (which sets no such attribute) is unaffected.
+  var DEFAULT_BOTHERING = ["Tension or pain", "Stress", "Pregnancy-related", "Not sure"];
+  function botheringOptions() {
+    var raw = root.getAttribute("data-bothering-options");
+    if (!raw) return DEFAULT_BOTHERING;
+    try {
+      var parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length && parsed.every(function (s) { return typeof s === "string"; })) {
+        return parsed;
+      }
+    } catch (e) {}
+    return DEFAULT_BOTHERING;
+  }
+
   var QUESTIONS = [
     {
       key: "bothering",
-      q: "What's bothering you?",
-      options: [
-        { label: "Tension or pain" },
-        { label: "Stress" },
-        { label: "Pregnancy-related" },
-        { label: "Not sure" },
-      ],
+      q: root.getAttribute("data-bothering-question") || "What's bothering you?",
+      options: botheringOptions().map(function (label) { return { label: label }; }),
     },
     {
       key: "firstTime",
