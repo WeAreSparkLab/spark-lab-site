@@ -1218,6 +1218,75 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   }
 }
 
+/* --- Pricing / packages ------------------------------------------------------ */
+.st-tiers {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: stretch;
+}
+.st-tier {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 24px;
+}
+.st-tier.is-popular {
+  border-color: var(--st-accent-2);
+  box-shadow: 0 6px 24px rgba(0, 229, 255, 0.12);
+}
+.st-tier-badge {
+  position: absolute;
+  top: -12px;
+  left: 24px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--st-accent-2);
+  color: #0a0c1a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.st-tier h3 {
+  font-size: clamp(18px, 2.4vw, 22px);
+  color: var(--st-ink);
+  margin: 0 0 10px;
+}
+.st-tier-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 0 0 14px;
+  color: var(--st-ink);
+}
+.st-tier-amount {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.st-tier-per {
+  font-size: 13px;
+  color: var(--st-muted);
+}
+.st-tier-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #d8def5;
+  margin: 0 0 22px;
+  flex: 1;
+}
+.st-tier .btn {
+  text-align: center;
+  justify-content: center;
+}
+@media (max-width: 860px) {
+  .st-tiers {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}
+
 /* --- Testimonial (built to hold ONE quote well) --------------------------- */
 .st-testimonial {
   position: relative;
@@ -3000,7 +3069,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
       {
         "@type": "Question",
         "name": "What does the assistant cost to run?",
-        "acceptedAnswer": { "@type": "Answer", "text": "It's £99 to set up and £25/mo, which covers running it on your site. There's nothing else to pay or manage on your end." }
+        "acceptedAnswer": { "@type": "Answer", "text": "The assistants come in three monthly plans. Foundations is £97/month and covers the booking assistant, service matcher and FAQ answerer. Momentum is £197/month and adds the no-show saver, review collector and review responder. Full Practice is £397/month and includes all eight assistants, adding the intake summariser and content helper. There's nothing else to pay or manage on your end." }
       },
       {
         "@type": "Question",
@@ -3097,9 +3166,9 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
           </ul>
           <div class="st-offer-foot">
             <p class="st-price">
-              <span class="st-from">from</span> £25/mo
+              Bundled into three plans, <span class="st-from">from</span> £97/month
             </p>
-            <p style="margin:6px 0 0;font-size:13px;color:var(--st-muted)">The content helper has no setup fee — heavier builds are quoted individually.</p>
+            <p style="margin:6px 0 0;font-size:13px;color:var(--st-muted)"><a href="#packages">See the plans below →</a></p>
             <p style="margin:12px 0 0;">
               <a class="btn btn-ghost" href="#assistants">Try them live →</a>
             </p>
@@ -3135,7 +3204,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
           <div class="st-roi-result-label">Potential lost revenue</div>
           <div class="st-roi-amount" id="roiLostRevenue">£455/mo</div>
           <div class="st-roi-compare">
-            A booking assistant costs <strong>£25/mo</strong> — that's a
+            The Foundations plan (booking assistant plus two more) is <strong>£97/mo</strong> — that's a
             <span class="st-roi-multiple" id="roiMultiple">18x</span> return if it catches even a quarter of that.
           </div>
           <a class="btn btn-primary" href="#assistants">Try the booking assistant →</a>
@@ -3692,6 +3761,46 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 
     <hr class="st-divider">
 
+    <!-- PRICING / PACKAGES -->
+    <section id="packages" class="container st-section">
+      <h2>Packages</h2>
+      <p class="st-sub">
+        Pick the assistants that fit how you work. Each plan is monthly, and you can move up as you grow.
+      </p>
+
+      <div class="st-tiers">
+        <article class="st-tier glass">
+          <h3>Foundations</h3>
+          <p class="st-tier-price"><span class="st-tier-amount">£97</span><span class="st-tier-per">/month</span></p>
+          <p class="st-tier-desc">The essentials that answer clients while you work: a booking assistant to take
+            enquiries, a service matcher to point people to the right treatment, and an FAQ answerer for the
+            questions you get every day.</p>
+          <a class="btn btn-primary" href="#contact">Get started</a>
+        </article>
+
+        <article class="st-tier is-popular glass">
+          <span class="st-tier-badge">Most popular</span>
+          <h3>Momentum</h3>
+          <p class="st-tier-price"><span class="st-tier-amount">£197</span><span class="st-tier-per">/month</span></p>
+          <p class="st-tier-desc">Everything in Foundations, plus the assistants that protect and grow your
+            reputation: a no-show saver, a review collector to gather 5-star reviews, and a review responder to
+            reply to every one.</p>
+          <a class="btn btn-primary" href="#contact">Get started</a>
+        </article>
+
+        <article class="st-tier glass">
+          <h3>Full Practice</h3>
+          <p class="st-tier-price"><span class="st-tier-amount">£397</span><span class="st-tier-per">/month</span></p>
+          <p class="st-tier-desc">All eight assistants, working together. Adds an intake summariser to prep you
+            for every new client, and a content helper that writes your social posts, so the whole practice
+            runs with far less admin.</p>
+          <a class="btn btn-primary" href="#contact">Get started</a>
+        </article>
+      </div>
+    </section>
+
+    <hr class="st-divider">
+
     <!-- FAQ -->
     <section class="container st-section">
       <h2>Questions</h2>
@@ -3716,7 +3825,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
         </details>
         <details>
           <summary>What does the assistant cost to run?</summary>
-          <p>It's £99 to set up and £25/mo, which covers running it on your site. There's nothing else to pay or manage on your end.</p>
+          <p>The assistants come in three monthly plans. <strong>Foundations</strong> is £97/month and covers the booking assistant, service matcher and FAQ answerer. <strong>Momentum</strong> is £197/month and adds the no-show saver, review collector and review responder. <strong>Full Practice</strong> is £397/month and includes all eight assistants, adding the intake summariser and content helper. There's nothing else to pay or manage on your end — <a href="#packages">see the plans</a>.</p>
         </details>
         <details>
           <summary>How long does it take?</summary>
@@ -3786,7 +3895,7 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
 
     // ROI calculator: missed enquiries -> potential lost revenue
     (function () {
-      var ASSISTANT_COST = 25; // £/mo, matches the booking assistant price above
+      var ASSISTANT_COST = 97; // £/mo, matches the Foundations plan price in #packages
       var WEEKS_PER_MONTH = 4.33;
 
       var enquiriesEl = document.getElementById('roiEnquiries');
