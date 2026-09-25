@@ -669,6 +669,75 @@ a.st-portfolio-card:hover .st-portfolio-link .arrow {
   }
 }
 
+/* --- Pricing / packages ------------------------------------------------------ */
+.st-tiers {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: stretch;
+}
+.st-tier {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 24px;
+}
+.st-tier.is-popular {
+  border-color: var(--st-accent-2);
+  box-shadow: 0 6px 24px rgba(0, 229, 255, 0.12);
+}
+.st-tier-badge {
+  position: absolute;
+  top: -12px;
+  left: 24px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--st-accent-2);
+  color: #0a0c1a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.st-tier h3 {
+  font-size: clamp(18px, 2.4vw, 22px);
+  color: var(--st-ink);
+  margin: 0 0 10px;
+}
+.st-tier-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 0 0 14px;
+  color: var(--st-ink);
+}
+.st-tier-amount {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.st-tier-per {
+  font-size: 13px;
+  color: var(--st-muted);
+}
+.st-tier-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #d8def5;
+  margin: 0 0 22px;
+  flex: 1;
+}
+.st-tier .btn {
+  text-align: center;
+  justify-content: center;
+}
+@media (max-width: 860px) {
+  .st-tiers {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}
+
 /* --- Testimonial (built to hold ONE quote well) --------------------------- */
 .st-testimonial {
   position: relative;
