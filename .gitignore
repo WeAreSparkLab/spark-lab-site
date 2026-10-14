@@ -1,4 +1,10 @@
-﻿node_modules/
+node_modules/
 .env.local
 .env
 .vercel/
+
+# Secrets, dependencies
+.env.*
+!.env.example
+*.pem
+*.key
