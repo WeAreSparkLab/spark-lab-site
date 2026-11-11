@@ -75,6 +75,7 @@ function selectBiz(id, { focusPanel = true } = {}) {
     panelBody.append(cta); panelBody.scrollTop = 0;
     $('#panelCount').textContent = `${ids.indexOf(selectedBiz) + 1} of ${ids.length}`;
     panel.style.animation = 'none'; void panel.offsetWidth; panel.style.animation = '';
+    if (mobile.matches) $('#heroStage').scrollIntoView({ behavior: smooth, block: 'start' });
     if (focusPanel) $('#panelClose').focus({ preventScroll: true });
   }
   if (stage?.station === 'worlds') stage.focus(selectedBiz);
@@ -125,7 +126,11 @@ function pickChallenge(btn, first) {
   showAsst(first || list[0]);
 }
 challenges.forEach(b => {
-  b.addEventListener('click', () => pickChallenge(b));
+  b.addEventListener('click', () => {
+    pickChallenge(b);
+    // on phones the assistant panel is below the list, so take the visitor to it
+    if (mobile.matches) $('#console').scrollIntoView({ behavior: smooth, block: 'start' });
+  });
   b.addEventListener('pointerenter', () => { if (stage?.station === 'studio') stage.hover(b.dataset.assts.split(' ')[0]); });
   b.addEventListener('pointerleave', () => { if (stage?.station === 'studio') stage.hover(null); });
 });
@@ -176,7 +181,18 @@ function safeArea(station, mode) {
     // sit the worlds in the open lower part of the section, arriving as it scrolls into view
     return { cx: .5, cy: Math.min(1.8, Math.max(.56, (r.bottom - H * .34) / H)), w: .94, h: .42 };
   }
-  if (mode === 'focus') return mobile.matches ? { cx: .5, cy: .26, w: .9, h: .26 } : { cx: .36, cy: .54, w: .5, h: .6 };
+  if (mobile.matches) {
+    if (mode === 'focus') {
+      // the strip between the back button and the information panel
+      const top = (nav.offsetHeight + 60) / H, pr = panel.getBoundingClientRect();
+      const bottom = (pr.height ? pr.top - 10 : H * .5) / H;
+      return { cx: .5, cy: (top + bottom) / 2, w: .92, h: Math.max(.12, bottom - top) };
+    }
+    // overview: the model sits in its own block below the copy and moves with the page
+    const r = $('#heroStage').getBoundingClientRect();
+    return { cx: .5, cy: (r.top + r.height * .5) / H, w: .98, h: r.height / H * .9 };
+  }
+  if (mode === 'focus') return { cx: .36, cy: .54, w: .5, h: .6 };
   const top = (heroCopy.offsetTop + heroCopy.offsetHeight) / H + (mobile.matches ? .1 : .04);
   const bottom = mobile.matches ? heroFoot.offsetTop / H - .02 : .9;
   const t = Math.min(top, bottom - .22);
@@ -203,6 +219,7 @@ async function start3d() {
       hosts: { worlds: $('#heroStage'), studio: studioStage },
       onPick: (id, station) => (station === 'studio' ? pickTerminal(id) : selectBiz(id)),
       onHover: (id, station) => { if (station === 'studio') studioStage.classList.toggle('is-hot', !!id); else hoverBiz(id); },
+      narrow: () => mobile.matches,
       onProgress: p => { $('#loaderBar').style.width = p * 100 + '%'; },
     });
     requestAnimationFrame(() => { body.classList.add('is-ready'); loader.classList.add('is-done'); });
@@ -242,10 +259,10 @@ function onScroll() {
       lastStation = best; stage.setStation(best);
       if (best === 'worlds' && selectedBiz) stage.focus(selectedBiz);
     }
-    stage.setScroll(best === 'worlds' && !reduceMotion ? Math.min(1, y / H) : 0);
+    stage.setScroll(best === 'worlds' && !reduceMotion && !mobile.matches ? Math.min(1, y / H) : 0);
     stage.poke();
   }
-  if (!selectedBiz) heroCopy.style.opacity = String(1 - Math.min(1, y / (H * .5)));
+  if (!selectedBiz) heroCopy.style.opacity = mobile.matches ? '' : String(1 - Math.min(1, y / (H * .5)));
 
   let current = null;
   for (const [a, el] of navTargets) if (el && el.getBoundingClientRect().top < H * .45) current = a;

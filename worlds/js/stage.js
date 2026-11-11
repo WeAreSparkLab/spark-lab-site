@@ -8,7 +8,7 @@ import { makeMaterials } from './materials.js';
 const damp = (a, b, k, dt) => a + (b - a) * (1 - Math.exp(-k * dt));
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
-export async function createStage({ canvas, reduceMotion, compact, safeArea, labels, hosts, onPick, onHover, onProgress = () => {} }) {
+export async function createStage({ canvas, reduceMotion, compact, safeArea, labels, hosts, onPick, onHover, onProgress = () => {}, narrow = () => false }) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   let dpr = Math.min(window.devicePixelRatio || 1, compact ? 1.5 : 1.75);
   renderer.setPixelRatio(dpr);
@@ -113,6 +113,7 @@ export async function createStage({ canvas, reduceMotion, compact, safeArea, lab
     camera.setViewOffset(W, H, -cur.ox * W, -cur.oy * H, W, H);
     scene.fog.near = cur.dist * .9; scene.fog.far = cur.dist * 2.8;   // haze stays behind the subject at any zoom
     world.follow(cur.tx, cur.tz);
+    world.showStudio(!(station === 'worlds' && narrow()));
 
     for (const [id, v] of hl) {
       const target = id === focusId ? 1 : id === hoverId ? .7 : 0;
