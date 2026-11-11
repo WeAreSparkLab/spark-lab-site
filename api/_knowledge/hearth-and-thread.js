@@ -40,6 +40,7 @@ module.exports = {
     { q: "Can I click and collect?", a: "Yes, call the shop, pay over the phone and pick up the same day." },
     { q: "Do you wrap gifts?", a: "Yes, free gift wrapping on anything bought in the shop." },
     { q: "Do you take card payments?", a: "Yes, card and contactless; cash is welcome too." },
+    { q: "Can I return something?", a: "Yes, unused items can be returned within 30 days with a receipt for a refund or exchange. Candles need to be unburnt." },
   ],
 
   tone: "Warm, thoughtful and a little bit enthusiastic, like a shopkeeper who loves what they stock. Ask what the gift is for and their budget if it helps.",
