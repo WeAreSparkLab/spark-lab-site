@@ -126,6 +126,9 @@ function pickChallenge(btn, first) {
     t.addEventListener('click', () => showAsst(id));
     return t;
   }) : []));
+  $('#consoleStep').innerHTML = list.length > 1
+    ? `<span>2</span>There are ${list.length} assistants for this. Tap one, then try it below`
+    : '<span>2</span>Try the assistant below';
   showAsst(first || list[0]);
 }
 challenges.forEach(b => {
@@ -276,7 +279,7 @@ addEventListener('resize', onScroll);
 onScroll();
 
 /* ---------- reveal on scroll ---------- */
-const revealEls = $$('.section-head, .biz, .stack, .layer, .scenario, .steps li, .challenges, .console, .sim-inputs, .sim-visual, .sim-results, .browser, .case-text > *, .gallery a, .price-start, .price-add, .faq-list, .letter > *, .finale-copy > *');
+const revealEls = $$('.section-head, .biz, .stack, .layer, .scenario, .steps li, .challenges, .console, .sim-inputs, .sim-visual, .sim-results, .browser, .case-text > *, .gallery a, .price-start, .price-add, .price-steps, .questions, .letter > *, .finale-copy > *');
 if ('IntersectionObserver' in window && !reduceMotion) {
   const io = new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -7% 0px' });
   revealEls.forEach((el, i) => { el.classList.add('reveal'); el.style.transitionDelay = `${(i % 4) * 70}ms`; io.observe(el); });
