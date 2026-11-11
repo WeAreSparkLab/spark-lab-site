@@ -2,6 +2,12 @@
   "cleanUrls": true,
   "buildCommand": "npm run build",
   "outputDirectory": ".",
+  "headers": [
+    {
+      "source": "/worlds/vendor/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }]
+    }
+  ],
   "redirects": [
     {
       "source": "/:path*",

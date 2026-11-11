@@ -17,7 +17,8 @@ const ROOT = path.resolve(__dirname, '..');
 
 // page (relative to repo root) -> ordered list of CSS files to inline
 const TARGETS = [
-  { page: 'index.html', css: ['styles.css', 'studio/studio.css'] },
+  { page: 'index.html', css: ['worlds/styles.css'] },                    // SparkLab Worlds homepage
+  { page: 'legacy/index.html', css: ['styles.css', 'studio/studio.css'] }, // previous homepage, kept at /legacy
 ];
 
 const START = /<!--\s*inline-css:start[\s\S]*?-->/;

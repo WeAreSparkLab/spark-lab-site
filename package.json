@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "node scripts/inline-css.js"
+    "build": "node scripts/build-widget-css.js && node scripts/inline-css.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",

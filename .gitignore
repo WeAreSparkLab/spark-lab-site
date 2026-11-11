@@ -1,4 +1,8 @@
 node_modules/
+
+# Local design prototypes and dev servers (never deployed)
+design-lab-*/
+_devserver.js
 .env.local
 .env
 .vercel/

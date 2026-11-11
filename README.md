@@ -48,6 +48,9 @@ All variables in `.env.example` are server-side only. On Vercel, set them under 
 ## Project layout
 
 ```
+index.html    Homepage ("SparkLab Worlds"): interactive 3D scene, assistant studio, simulator
+worlds/       Homepage styles, scripts and vendored three.js (demo-widgets.css is generated)
+legacy/       The previous homepage, kept at /legacy (noindex)
 api/          Serverless AI endpoints (+ _knowledge/ client configs, _lib/ rate limiting)
 studio/       Studio page, assistant widget and concept demos
 apps/         App showcase and blog
