@@ -59,7 +59,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--plum-deep); }
-body { margin: 0; color: var(--plum); font: 400 1rem/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { margin: 0; color: var(--plum); font: 400 1rem/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; overflow-x: clip; }   /* clip, unlike hidden, doesn't stop sticky elements from pinning */
 img { max-width: 100%; display: block; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; padding: 0; }
 ul, ol { list-style: none; }
@@ -653,9 +653,11 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
   .biz-body { grid-template-columns: 1fr; padding-left: 4px; }
   .biz-body ul { grid-template-columns: 1fr; grid-column: auto; grid-row: auto; gap: 14px; }
   .stack-wrap, .case, .letter, .concepts-head, .formulas > div { grid-template-columns: 1fr; }
-  .stack { height: 330px; }
-  .stack { position: relative; top: auto; }
-  .plate { width: min(230px, 58vw); } .plate-2 { --z: 110px; } .plate-3 { --z: 220px; } .plate-2.is-on { --z: 58px; } .plate-3.is-on { --z: 116px; }
+  /* phones: a compact card stack that stays pinned under the menu while the switches scroll beneath it */
+  .stack { position: sticky; top: var(--nav-h); z-index: 3; height: 200px; margin: 0 calc(-1 * var(--gutter)) 4px;
+    background: linear-gradient(var(--ivory) 82%, rgba(247, 243, 237, 0)); }
+  .plate { width: min(160px, 42vw); top: 62%; border-radius: 12px; }
+  .plate-2 { --z: 62px; } .plate-3 { --z: 124px; } .plate-2.is-on { --z: 36px; } .plate-3.is-on { --z: 72px; }
   .steps, .promises, .gallery, .doors, .primer dl, .price-steps { grid-template-columns: 1fr; }
   .price-steps { gap: 22px; }
   .price-steps::before { left: 22px; right: auto; top: 22px; bottom: 22px; width: 2px; height: auto; background: linear-gradient(var(--lavender), var(--purple)); }
@@ -929,7 +931,6 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
         </header>
 
         <div class="stack-wrap">
-          <div class="stack-col">
           <div class="stack" id="stack" aria-hidden="true">
             <div class="plate plate-3" data-layer="automation">
               <svg viewBox="0 0 200 120"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="46" cy="60" r="12"/><circle cx="104" cy="32" r="12"/><circle cx="104" cy="88" r="12"/><circle cx="160" cy="60" r="12"/><path d="M57 54l36-17M57 66l36 17M115 37l35 18M115 83l35-18"/></g></svg>
@@ -940,7 +941,6 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
             <div class="plate plate-1 is-on" data-layer="website">
               <svg viewBox="0 0 200 120"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="24" y="18" width="152" height="84" rx="8"/><path d="M24 36h152"/><circle cx="36" cy="27" r="2.5"/><circle cx="46" cy="27" r="2.5"/><path d="M40 54h60M40 66h44M40 78h52" stroke-linecap="round"/><rect x="118" y="50" width="42" height="34" rx="4"/></g></svg>
             </div>
-          </div>
           </div>
 
           <div class="stack-side">
