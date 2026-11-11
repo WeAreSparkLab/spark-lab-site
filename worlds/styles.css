@@ -642,8 +642,10 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
   .price-start, .price-add { padding: 24px 16px; }
   /* the plan table fits a phone without sideways scrolling */
   .matrix { min-width: 0; table-layout: fixed; }
-  .matrix thead th:first-child, .matrix tbody th { width: 36%; }
-  .matrix thead th { padding: 26px 3px 12px; font-size: .66rem; letter-spacing: -.01em; }
+  .matrix thead th:first-child, .matrix tbody th { width: 30%; }
+  .matrix thead th { padding: 26px 3px 12px; font-size: .64rem; letter-spacing: 0; }
+  /* each plan name keeps to its own column, even with larger phone text */
+  .matrix .plan { display: block; line-height: 1.25; overflow-wrap: break-word; hyphens: auto; }
   .matrix thead b { font-size: 1.45rem; }
   .matrix thead small { font-size: .7rem; }
   .matrix thead i { font-size: .58rem; padding: 2px 7px; }
