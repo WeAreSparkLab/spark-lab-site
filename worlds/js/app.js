@@ -101,7 +101,11 @@ function setLayer(name, on) {
   $(`#scenario [data-needs="${name}"]`).classList.toggle('is-on', on);
   $(`[data-toggle="${name}"]`)?.setAttribute('aria-checked', String(on));
 }
-$$('.switch').forEach(sw => sw.addEventListener('click', () => setLayer(sw.dataset.toggle, sw.getAttribute('aria-checked') !== 'true')));
+$$('.switch').forEach(sw => sw.addEventListener('click', () => {
+  setLayer(sw.dataset.toggle, sw.getAttribute('aria-checked') !== 'true');
+  // make sure the story that just changed is in view, scrolling only as far as needed
+  requestAnimationFrame(() => $('.scenario').scrollIntoView({ behavior: smooth, block: 'nearest' }));
+}));
 $$('.layer').forEach(li => {
   const plate = $(`.plate[data-layer="${li.dataset.layer}"]`);
   li.addEventListener('pointerenter', () => plate.classList.add('is-hot'));
