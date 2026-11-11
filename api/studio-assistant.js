@@ -11,7 +11,10 @@
 // Hosting: Vercel serverless function at /api/studio-assistant. Secrets are read
 // from env vars only (never the front end):
 //   ANTHROPIC_API_KEY        — Anthropic key (existing)
-//   SPARKLAB_LEAD_WEBHOOK     — n8n webhook the lead is POSTed to (NEW)
+//   RESEND_API_KEY           — Resend key; leads are emailed straight to Sara (primary)
+//   LEAD_EMAIL_FROM          — optional sender, must be on a domain verified in Resend
+//   LEAD_EMAIL_TO            — optional recipient (defaults to support@wearesparklab.com)
+//   SPARKLAB_LEAD_WEBHOOK    — optional n8n webhook, also sent the lead when set
 //
 // Endpoint: POST /api/studio-assistant   body: { messages: [{role, content}] }
 // =============================================================================
@@ -98,28 +101,76 @@ LEAD CAPTURE — this is how Sara actually hears about a visitor. When ANY of th
 Guardrails: only discuss SparkLab and its services. Never invent features. Never give a firm quote. If you can't answer something specific, capture the enquiry rather than guess.`;
 }
 
-// --- POST the captured lead to the n8n webhook -------------------------------
-async function postLead(input) {
-  const url = process.env.SPARKLAB_LEAD_WEBHOOK;
-  if (!url) {
-    console.error("SPARKLAB_LEAD_WEBHOOK is not set — lead could not be delivered.");
+// --- Deliver the captured lead ------------------------------------------------
+// Two independent routes, tried together. The lead counts as delivered if EITHER
+// succeeds, so a stopped n8n instance can no longer lose an enquiry.
+//   1. Email straight to Sara via Resend   (RESEND_API_KEY)        — primary
+//   2. n8n webhook → Gmail → Notion        (SPARKLAB_LEAD_WEBHOOK) — optional extra
+const DELIVERY_TIMEOUT_MS = 7000;
+const oneLine = (v) => String(v ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, 500);
+
+async function emailLead(lead) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return { ok: false, skipped: true };
+  const env = process.env.VERCEL_ENV || "development";
+  const tag = env === "production" ? "" : `[${env}] `;
+  const email = oneLine(lead.email);
+  const lines = [
+    `Name: ${oneLine(lead.name)}`,
+    `Email: ${email}`,
+    `Business: ${oneLine(lead.business_name) || "(not given)"}`,
+    `Type: ${oneLine(lead.business_type) || "(not given)"}`,
+    `Wellness/beauty: ${lead.in_niche === true ? "yes" : lead.in_niche === false ? "no" : "(not stated)"}`,
+    "",
+    `What they need: ${oneLine(lead.enquiry_summary)}`,
+    "",
+    `Sent by the website enquiry assistant (${env}) at ${new Date().toISOString()}.`,
+    "Reply to this email to answer them directly.",
+  ];
+  const body = {
+    from: process.env.LEAD_EMAIL_FROM || "SparkLab website <enquiries@wearesparklab.com>",
+    to: [process.env.LEAD_EMAIL_TO || FALLBACK_EMAIL],
+    subject: `${tag}New website enquiry: ${oneLine(lead.name) || "unknown"}${lead.business_name ? ` (${oneLine(lead.business_name)})` : ""}`.slice(0, 200),
+    text: lines.join("\n"),
+  };
+  if (/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)) body.reply_to = email;
+  try {
+    const r = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(DELIVERY_TIMEOUT_MS),
+    });
+    if (!r.ok) console.error("Lead email (Resend) returned non-OK status:", r.status, (await r.text()).slice(0, 300));
+    return { ok: r.ok };
+  } catch (err) {
+    console.error("Lead email (Resend) failed:", err?.message || err);
     return { ok: false };
   }
+}
+
+async function webhookLead(lead) {
+  const url = process.env.SPARKLAB_LEAD_WEBHOOK;
+  if (!url) return { ok: false, skipped: true };
   try {
     const r = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(input),
+      body: JSON.stringify(lead),
+      signal: AbortSignal.timeout(DELIVERY_TIMEOUT_MS),
     });
-    if (!r.ok) {
-      console.error("Lead webhook returned non-OK status:", r.status);
-      return { ok: false };
-    }
-    return { ok: true };
+    if (!r.ok) console.error("Lead webhook returned non-OK status:", r.status);
+    return { ok: r.ok };
   } catch (err) {
     console.error("Lead webhook POST failed:", err?.message || err);
     return { ok: false };
   }
+}
+
+async function postLead(input) {
+  const [email, webhook] = await Promise.all([emailLead(input), webhookLead(input)]);
+  if (email.skipped && webhook.skipped) console.error("Neither RESEND_API_KEY nor SPARKLAB_LEAD_WEBHOOK is set — lead could not be delivered.");
+  return { ok: email.ok || webhook.ok };
 }
 
 // --- Handler -----------------------------------------------------------------
