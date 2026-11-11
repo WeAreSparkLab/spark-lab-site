@@ -59,7 +59,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--plum-deep); }
-body { margin: 0; color: var(--plum); font: 400 1rem/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { margin: 0; color: var(--plum); font: 400 1rem/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; overflow-x: clip; }   /* clip, unlike hidden, doesn't stop sticky elements from pinning */
 img { max-width: 100%; display: block; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; padding: 0; }
 ul, ol { list-style: none; }
@@ -370,7 +370,8 @@ body.is-ready .label { opacity: 1; }
 .facts dt { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--lav-light); font-weight: 500; }
 .facts dd { font-size: .9rem; line-height: 1.5; color: #D9D1E0; margin-top: 3px; }
 .demo { padding-top: 18px; border-top: 1px dashed var(--line-dark); }
-.demo-plain { display: flex; }
+.demo-plain { display: flex; flex-direction: column; align-items: flex-start; }
+.demo-plain .your-turn { align-self: stretch; }
 .demo-foot { margin-top: 12px; font-size: .84rem; color: var(--muted-dark); }
 .demo-foot a { color: var(--lav-light); }
 .glass { background: rgba(247, 243, 237, .045); border: 1px solid var(--line-dark); border-radius: 18px; }
@@ -563,7 +564,9 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .doors .door-main small { color: var(--muted); }
 .contact-alt { margin-top: 20px; font-size: .92rem; color: var(--muted-dark); }
 .contact-alt a { color: var(--ivory); text-underline-offset: 4px; }
-.footer { margin-top: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 26px 0 30px; font-size: .84rem; color: var(--muted-dark); }
+/* the footer stays at the very bottom; the floating buttons lift above it (see --lift below) */
+.footer { margin-top: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 26px 0 30px; font-size: .84rem; color: var(--muted-dark);
+  text-shadow: 0 1px 2px rgba(34, 28, 43, .9), 0 0 12px rgba(34, 28, 43, .8); }   /* readable over the 3D model */
 .footer a { text-underline-offset: 4px; }
 
 /* the real floating enquiry chat keeps its own layout; just keep it above the page */
@@ -579,6 +582,8 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   transition: opacity .4s var(--ease), transform .4s var(--ease), visibility 0s .4s, background-color .3s; }
 .to-top.is-shown { opacity: 1; visibility: visible; transform: none; transition: opacity .4s var(--ease), transform .4s var(--ease), background-color .3s; }
 .to-top:hover { background: var(--purple); }
+/* when the footer scrolls into view, both floating buttons rise to sit just above it */
+.to-top, .sl-fab { translate: 0 calc(-1 * var(--lift, 0px)); }
 .to-top-arrow { font: 600 1.15rem/1 var(--sans); color: var(--lav-light); }
 body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { opacity: 0; visibility: hidden; }
 
@@ -651,9 +656,11 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
   .biz-body { grid-template-columns: 1fr; padding-left: 4px; }
   .biz-body ul { grid-template-columns: 1fr; grid-column: auto; grid-row: auto; gap: 14px; }
   .stack-wrap, .case, .letter, .concepts-head, .formulas > div { grid-template-columns: 1fr; }
-  .stack { height: 330px; }
-  .stack { position: relative; top: auto; }
-  .plate { width: min(230px, 58vw); } .plate-2 { --z: 110px; } .plate-3 { --z: 220px; } .plate-2.is-on { --z: 58px; } .plate-3.is-on { --z: 116px; }
+  /* phones: a compact card stack that stays pinned under the menu while the switches scroll beneath it */
+  .stack { position: sticky; top: var(--nav-h); z-index: 3; height: 200px; margin: 0 calc(-1 * var(--gutter)) 4px;
+    background: linear-gradient(var(--ivory) 82%, rgba(247, 243, 237, 0)); }
+  .plate { width: min(160px, 42vw); top: 62%; border-radius: 12px; }
+  .plate-2 { --z: 62px; } .plate-3 { --z: 124px; } .plate-2.is-on { --z: 36px; } .plate-3.is-on { --z: 72px; }
   .steps, .promises, .gallery, .doors, .primer dl, .price-steps { grid-template-columns: 1fr; }
   .price-steps { gap: 22px; }
   .price-steps::before { left: 22px; right: auto; top: 22px; bottom: 22px; width: 2px; height: auto; background: linear-gradient(var(--lavender), var(--purple)); }
@@ -859,7 +866,7 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
             <summary><span class="biz-no">01</span><span class="biz-name">The salon</span><span class="biz-sector">Hair &amp; beauty</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're busy making someone feel their best. Your website can help answer enquiries while you focus on your client.</blockquote>
-              <div class="picture"><h4>Picture this</h4><p>It's 8pm and you're finishing a colour. Someone finds your website, asks whether you do balayage and how much it is, and gets an answer straight from your price list, with a link to book. The next morning they're in your diary, and a reminder goes out to them the day before.</p></div>
+              <div class="picture"><h4>Picture this</h4><p>It's 8pm and you're finishing a colour. Someone finds your website and asks the chat assistant on it whether you do balayage and how much it costs. The assistant answers straight from your price list and gives them a link to book. The next morning they're in your diary, and an automatic reminder goes out to them the day before.</p></div>
               <ul>
                 <li><strong>Website</strong> A site that shows your work, lists what you offer and what it costs, and is wired into the booking system you already use.</li>
                 <li><strong>AI assistant</strong> A booking assistant that answers the questions you get every day, at any hour, using only the details you've given it.</li>
@@ -871,7 +878,7 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
             <summary><span class="biz-no">02</span><span class="biz-name">The wellness studio</span><span class="biz-sector">Wellbeing</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're mid-session, giving someone your full attention. Your website can quietly help the next person find the right treatment.</blockquote>
-              <div class="picture"><h4>Picture this</h4><p>Someone new isn't sure whether they need a massage or reflexology. Instead of emailing and waiting for you to finish, they answer two gentle questions on your website and are pointed to the session that suits them. Before they arrive, you get a short note of anything on their form worth checking.</p></div>
+              <div class="picture"><h4>Picture this</h4><p>Someone new isn't sure whether they need a massage or reflexology. Instead of emailing and waiting for you to finish, they use a short guide on your website: it asks them two gentle questions and suggests the session that suits them. Before they arrive, you get a short summary of their intake form, with anything worth checking pointed out.</p></div>
               <ul>
                 <li><strong>Website</strong> A calm, one-page site in your own voice, with booking built in, so people can book while you're with a client.</li>
                 <li><strong>AI assistant</strong> A service matcher that asks two or three gentle questions and points an unsure visitor to the right session.</li>
@@ -883,7 +890,7 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
             <summary><span class="biz-no">03</span><span class="biz-name">The café</span><span class="biz-sector">Food &amp; drink</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're serving customers, not sitting at a computer. Let your digital tools handle the everyday questions.</blockquote>
-              <div class="picture"><h4>Picture this</h4><p>Saturday lunchtime, queue out of the door. Meanwhile three people online want to know if you're dog-friendly, whether you have vegan options and if you take bookings for eight. Each gets an answer from the details you've provided, so nobody has to ring and you don't have to stop serving.</p></div>
+              <div class="picture"><h4>Picture this</h4><p>Saturday lunchtime, queue out of the door. Meanwhile three people online want to know if you're dog-friendly, whether you have vegan options and if you take bookings for eight. The chat assistant on your website answers each of them from the details you've given it, so nobody has to ring and you don't have to stop serving.</p></div>
               <ul>
                 <li><strong>Website</strong> Where you are, when you're open and what's on the menu, laid out clearly and easy to read on a phone.</li>
                 <li><strong>AI assistant</strong> An FAQ answerer for the things people always ask: opening hours, dietary options, dogs, group tables.</li>
@@ -895,7 +902,7 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
             <summary><span class="biz-no">04</span><span class="biz-name">The shop</span><span class="biz-sector">Independent retail</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're on the shop floor: wrapping, restocking, chatting. Your website can keep the lights on after you've locked up.</blockquote>
-              <div class="picture"><h4>Picture this</h4><p>After you've closed, someone asks whether you stock a particular candle. They get an answer from what you've told it, or, if it isn't sure, the question is passed to you rather than guessed. On Monday morning, a draft post about your new arrivals is waiting for you to check and share.</p></div>
+              <div class="picture"><h4>Picture this</h4><p>After you've closed, someone asks the chat assistant on your website whether you stock a particular candle. The assistant answers from the information you've given it. If it isn't sure, it passes the question on to you instead of guessing. On Monday morning, a draft social media post about your new arrivals is waiting for you to check and share.</p></div>
               <ul>
                 <li><strong>Website</strong> A proper home for your story and your stock, with the practical details people look for before they visit.</li>
                 <li><strong>AI assistant</strong> Answers to "do you have…?" and "are you open on…?" based on what you've told it, never guesses.</li>
@@ -907,7 +914,7 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
             <summary><span class="biz-no">05</span><span class="biz-name">The workshop</span><span class="biz-sector">Trades</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>Your hands are busy. Your website can still be there when someone needs you.</blockquote>
-              <div class="picture"><h4>Picture this</h4><p>You're up a ladder when a homeowner looks for a joiner. Your website shows them your recent work, and the chat takes down what they need, where they are and how to reach them. When you're back down, the job details are in your inbox, ready for a call back.</p></div>
+              <div class="picture"><h4>Picture this</h4><p>You're up a ladder when a homeowner looks for a joiner. Your website shows them your recent work, and the chat assistant on it takes down what they need, where they are and how to reach them. When you're back down, the job details are in your inbox, ready for a call back.</p></div>
               <ul>
                 <li><strong>Website</strong> A clear showcase of what you do and where you work, with enquiries sent straight to your inbox, WhatsApp or phone.</li>
                 <li><strong>AI assistant</strong> An enquiry chat that takes down the useful details while you're up a ladder, so you can call back prepared.</li>
@@ -927,7 +934,6 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
         </header>
 
         <div class="stack-wrap">
-          <div class="stack-col">
           <div class="stack" id="stack" aria-hidden="true">
             <div class="plate plate-3" data-layer="automation">
               <svg viewBox="0 0 200 120"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="46" cy="60" r="12"/><circle cx="104" cy="32" r="12"/><circle cx="104" cy="88" r="12"/><circle cx="160" cy="60" r="12"/><path d="M57 54l36-17M57 66l36 17M115 37l35 18M115 83l35-18"/></g></svg>
@@ -938,7 +944,6 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
             <div class="plate plate-1 is-on" data-layer="website">
               <svg viewBox="0 0 200 120"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="24" y="18" width="152" height="84" rx="8"/><path d="M24 36h152"/><circle cx="36" cy="27" r="2.5"/><circle cx="46" cy="27" r="2.5"/><path d="M40 54h60M40 66h44M40 78h52" stroke-linecap="round"/><rect x="118" y="50" width="42" height="34" rx="4"/></g></svg>
             </div>
-          </div>
           </div>
 
           <div class="stack-side">

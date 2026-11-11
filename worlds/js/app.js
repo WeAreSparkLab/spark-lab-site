@@ -246,7 +246,8 @@ else if (pref() === 'off') set3d(false);
 else if (document.readyState === 'complete') setTimeout(start3d, 60); else addEventListener('load', () => setTimeout(start3d, 60), { once: true });
 
 /* ---------- scroll: choose the station, theme the nav ---------- */
-const toTop = $('#toTop');
+const toTop = $('#toTop'), footer = $('.footer');
+let lastLift = -1;
 $$('[data-to-top]').forEach(a => a.addEventListener('click', e => {
   e.preventDefault();
   scrollTo({ top: 0, behavior: smooth });
@@ -280,6 +281,10 @@ function onScroll() {
     stage.poke();
   }
   if (!selectedBiz) heroCopy.style.opacity = mobile.matches ? '' : String(1 - Math.min(1, y / (H * .5)));
+
+  // lift the floating buttons above the footer once it scrolls into view
+  const lift = Math.max(0, Math.round(H - footer.getBoundingClientRect().top));
+  if (lift !== lastLift) { lastLift = lift; root.style.setProperty('--lift', lift + 'px'); }
 
   // back-to-top appears once the visitor is well down the page
   const shown = y > H * 2.5;
