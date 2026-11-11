@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Still Water Studio | Massage &amp; Reflexology, Aylsham</title>
-<meta name="description" content="A concept website by SparkLab for an invented holistic therapy studio, with a 3D look around and live AI assistants.">
+<meta name="description" content="A concept website by SparkLab for an invented holistic therapy studio, with a 3D scene and live AI assistants.">
 <!-- CONCEPT BUILD by SparkLab. Still Water Studio is an invented business: name, address,
      phone (Ofcom drama range) and prices are made up. The assistants use
      api/_knowledge/still-water-studio.js, which mirrors the copy on this page. -->
@@ -32,6 +32,7 @@
 </head>
 <body data-hours='{"1":[[10,18]],"3":[[10,20]],"4":[[10,18]],"5":[[9,15]],"6":[[9,13]]}'>
 <div class="concept-note"><strong>Concept build.</strong> Still Water Studio is an invented business. This is a demo by <a href="https://www.wearesparklab.com/#work">SparkLab</a> of what a site like this can do, so nothing here can be booked.</div>
+<canvas class="scene3d" data-scene="wellness" data-label="" aria-hidden="true"></canvas>
 
 <header class="top">
   <div class="wrap">
@@ -55,15 +56,7 @@
         <div class="facts"><span class="open-badge">Opening hours</span></div>
       </div>
 
-      <div class="c3d" data-island="wellness" aria-label="A 3D model of the studio. Drag to turn it, or use the numbered buttons.">
-        <canvas aria-hidden="true"></canvas>
-        <span class="c3d-hint">Drag to look around · tap a number</span>
-        <button class="c3d-spot" type="button" data-at="inside" data-title="The treatment room" data-text="One warm room with a heated couch, low light and soft music, which you can turn off if you prefer quiet.">1</button>
-        <button class="c3d-spot" type="button" data-at="door" data-title="A step-free way in" data-text="Along the paved garden path from Millgate. The studio is single-storey and the couch lowers.">2</button>
-        <button class="c3d-spot" type="button" data-at="water" data-title="The garden" data-text="Arrive a few minutes early and sit by the water with a cup of herbal tea before your session.">3</button>
-        <button class="c3d-spot" type="button" data-at="garden" data-title="Parking" data-text="Free parking on Millgate, or the Buttlands car park five minutes' walk away.">4</button>
-        <div class="c3d-card" hidden><h3></h3><p></p><button class="c3d-close" type="button" aria-label="Close">×</button></div>
-      </div>
+      <div class="stage3d" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -100,38 +93,21 @@
   <section class="section alt" id="ask">
     <div class="wrap">
       <div class="head reveal">
-        <p class="eyebrow">Ask, any time</p>
-        <h2>Help while Mira is with a client</h2>
-        <p>Three live AI assistants, set up with this studio's treatments, hours and safety notes only.</p>
+        <p class="eyebrow">Before you book</p>
+        <h2>Find your treatment, and anything else you'd like to know</h2>
+        <p>Mira is often with a client, so the studio's assistant is here whenever you have a question.</p>
       </div>
       <div class="agents">
         <div class="agent reveal">
-          <span class="agent-tag">Treatment matcher</span>
           <h3>Which treatment suits you?</h3>
           <p>Two quick questions, then one suggestion to start with.</p>
           <div class="tm" id="tmRoot" data-client="still-water-studio" role="group" aria-label="Find your treatment"
             data-bothering-question="What would you like help with?"
             data-bothering-options='["Tight neck and shoulders", "Stress or poor sleep", "Aches and knots", "Just a treat"]'></div>
-          <p class="agent-note">Demo only. Not medical advice.</p>
+          <p class="agent-note">A guide to help you choose, not medical advice.</p>
         </div>
         <div class="agent reveal">
-          <span class="agent-tag">Booking assistant</span>
-          <h3>Questions before you book</h3>
-          <p>Prices, what to wear, pregnancy, gift vouchers.</p>
-          <div class="chat" data-client="still-water-studio" data-greeting="Hello, I'm Still Water Studio's booking assistant. Ask me about treatments, prices, what to expect or how to book.">
-            <div class="chat-log" id="chatLog" aria-live="polite"></div>
-            <div class="chat-chips" id="chatChips">
-              <button class="chat-chip" type="button" data-q="I've never had a massage. Which should I book?">I've never had a massage</button>
-              <button class="chat-chip" type="button" data-q="Can I have a massage while pregnant?">Pregnancy</button>
-              <button class="chat-chip" type="button" data-q="When are you open on Wednesdays?">Wednesday hours</button>
-            </div>
-            <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your question</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask a question…"><button id="chatSend" type="submit">Send</button></form>
-          </div>
-          <p class="agent-note">Demo only: answers come from this invented studio's details.</p>
-        </div>
-        <div class="agent reveal">
-          <span class="agent-tag">FAQ answerer</span>
-          <h3>Quick answers</h3>
+          <h3>Good to know</h3>
           <div class="faq" id="faqRoot" data-client="still-water-studio" data-questions='["What should I wear?", "Is the studio accessible?", "Do you sell gift vouchers?"]'></div>
         </div>
       </div>
@@ -169,10 +145,27 @@
   </div>
 </footer>
 
+<!-- the site's chat assistant (answers from api/_knowledge/still-water-studio.js) -->
+<div class="helper">
+  <button class="helper-fab" type="button" aria-expanded="false" aria-controls="helperPanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-5 4V5a1 1 0 0 1 1-1z"/></svg>Ask a question</button>
+  <div class="helper-panel chat" id="helperPanel" role="dialog" aria-label="Chat with Still Water Studio" hidden data-client="still-water-studio" data-greeting="Hello, I'm Still Water Studio's assistant. Ask me about treatments, prices, what to expect or how to book.">
+    <div class="helper-head"><i aria-hidden="true"></i><div><b>Still Water Studio</b><span>Studio assistant · here any time</span></div><button class="helper-close" type="button" aria-label="Close chat">×</button></div>
+    <div class="helper-body">
+      <div class="chat-log" id="chatLog" aria-live="polite"></div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chat-chip" type="button" data-q="I've never had a massage. Which should I book?">I've never had a massage</button>
+        <button class="chat-chip" type="button" data-q="Can I have a massage while pregnant?">Pregnancy</button>
+        <button class="chat-chip" type="button" data-q="When are you open on Wednesdays?">Wednesday hours</button>
+      </div>
+      <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your message</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask a question…"><button id="chatSend" type="submit">Send</button></form>
+    </div>
+  </div>
+</div>
+
 <script src="/studio/concepts/kit/concept.js" defer></script>
 <script src="/studio/assistant.js?v=3" defer></script>
 <script src="/studio/treatment-matcher.js?v=3" defer></script>
 <script src="/studio/faq-answerer.js?v=3" defer></script>
-<script type="module" src="/worlds/js/island.js"></script>
+<script type="module" src="/studio/concepts/kit/scene3d.js"></script>
 </body>
 </html>

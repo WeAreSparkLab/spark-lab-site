@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Larder &amp; Loaf | Café &amp; Bakery, Magdalen Street, Norwich</title>
-<meta name="description" content="A concept website by SparkLab for an invented café and bakery, with a 3D look around and live AI assistants.">
+<meta name="description" content="A concept website by SparkLab for an invented café and bakery, with a 3D scene and live AI assistants.">
 <!-- CONCEPT BUILD by SparkLab. Larder & Loaf is an invented business: name, address,
      phone (Ofcom drama range), menu and prices are made up. The assistants use
      api/_knowledge/larder-and-loaf.js, which mirrors the copy on this page. -->
@@ -32,6 +32,7 @@
 </head>
 <body data-hours='{"1":[[8,16]],"2":[[8,16]],"3":[[8,16]],"4":[[8,16]],"5":[[8,16]],"6":[[8.5,16]],"0":[[9,14]]}'>
 <div class="concept-note"><strong>Concept build.</strong> Larder &amp; Loaf is an invented café. This is a demo by <a href="https://www.wearesparklab.com/#work">SparkLab</a> of what a site like this can do, so nothing here can be ordered.</div>
+<canvas class="scene3d" data-scene="cafe" data-label="" aria-hidden="true"></canvas>
 
 <header class="top">
   <div class="wrap">
@@ -50,20 +51,12 @@
         <p class="lead">Baked here from 6am, served from 8. Brunch until the kitchen closes, cakes all day, dogs and pushchairs welcome, and a terrace under the lights when the weather's kind.</p>
         <div class="cta">
           <a class="btn" href="#menu">See the menu</a>
-          <a class="btn ghost" href="#ask">Ask a question</a>
+          <a class="btn ghost" href="#ask" data-open-chat>Ask a question</a>
         </div>
         <div class="facts"><span class="open-badge">Opening hours</span></div>
       </div>
 
-      <div class="c3d" data-island="cafe" aria-label="A 3D model of the café. Drag to turn it, or use the numbered buttons.">
-        <canvas aria-hidden="true"></canvas>
-        <span class="c3d-hint">Drag to look around · tap a number</span>
-        <button class="c3d-spot" type="button" data-at="inside" data-title="The counter" data-text="Bakes come out at 8am, and the day's loaves are on the shelf behind the till until they sell out.">1</button>
-        <button class="c3d-spot" type="button" data-at="door" data-title="Step-free, pushchair-friendly" data-text="Wide door, room by the window tables, and an accessible toilet with baby changing.">2</button>
-        <button class="c3d-spot" type="button" data-at="terrace" data-title="The terrace" data-text="Four tables under festoon lights. Dogs are welcome out here and inside, with water bowls by the door.">3</button>
-        <button class="c3d-spot" type="button" data-at="garden" data-title="Bikes and parking" data-text="Bike racks outside; pay-and-display at Anglia Square, two minutes' walk.">4</button>
-        <div class="c3d-card" hidden><h3></h3><p></p><button class="c3d-close" type="button" aria-label="Close">×</button></div>
-      </div>
+      <div class="stage3d" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -98,30 +91,18 @@
   <section class="section" id="ask">
     <div class="wrap">
       <div class="head reveal">
-        <p class="eyebrow">Ask us</p>
-        <h2>Answers while we're pulling shots</h2>
-        <p>Two live AI assistants that only know what this café has told them: the menu, hours, dogs, allergies and cakes.</p>
+        <p class="eyebrow">Good to know</p>
+        <h2>Before you pop in</h2>
+        <p>Dogs, pushchairs, allergies, Wi-Fi: the things people ask us most.</p>
       </div>
       <div class="agents">
         <div class="agent reveal">
-          <span class="agent-tag">Café assistant</span>
-          <h3>Ask about the menu</h3>
-          <p>Gluten-free options, big tables, celebration cakes.</p>
-          <div class="chat" data-client="larder-and-loaf" data-greeting="Hi! I'm the Larder & Loaf assistant. Ask me about the menu, opening times, tables for a group or ordering a cake.">
-            <div class="chat-log" id="chatLog" aria-live="polite"></div>
-            <div class="chat-chips" id="chatChips">
-              <button class="chat-chip" type="button" data-q="What gluten-free options do you have?">Gluten-free options?</button>
-              <button class="chat-chip" type="button" data-q="Can I book a table for eight on Saturday?">Table for eight</button>
-              <button class="chat-chip" type="button" data-q="How do I order a birthday cake?">Birthday cake</button>
-            </div>
-            <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your question</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask about the café…"><button id="chatSend" type="submit">Send</button></form>
-          </div>
-          <p class="agent-note">Demo only: answers come from this invented café's details.</p>
+          <div class="faq" id="faqRoot" data-client="larder-and-loaf" data-safety="off" data-intro="Ask anything, or tap a question below." data-placeholder="e.g. Are dogs allowed inside?" data-questions='["Are dogs welcome?", "Do you have vegan and gluten-free options?", "Do you do takeaway?"]'></div>
         </div>
         <div class="agent reveal">
-          <span class="agent-tag">FAQ answerer</span>
-          <h3>Before you pop in</h3>
-          <div class="faq" id="faqRoot" data-client="larder-and-loaf" data-safety="off" data-intro="Quick answers before you visit: ask anything, or tap a question below." data-placeholder="e.g. Are dogs allowed inside?" data-questions='["Are dogs welcome?", "Do you have vegan and gluten-free options?", "Do you do takeaway?"]'></div>
+          <h3>Planning something?</h3>
+          <p>A table for six or more, a birthday cake, or a question about the menu. Our assistant answers straight away, even when we're busy at the counter.</p>
+          <button class="btn" type="button" data-open-chat>Chat with us</button>
         </div>
       </div>
     </div>
@@ -155,9 +136,26 @@
   </div>
 </footer>
 
+<!-- the site's chat assistant (answers from api/_knowledge/larder-and-loaf.js) -->
+<div class="helper">
+  <button class="helper-fab" type="button" aria-expanded="false" aria-controls="helperPanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-5 4V5a1 1 0 0 1 1-1z"/></svg>Chat with us</button>
+  <div class="helper-panel chat" id="helperPanel" role="dialog" aria-label="Chat with Larder & Loaf" hidden data-client="larder-and-loaf" data-greeting="Hi! I'm the Larder & Loaf assistant. Ask me about the menu, opening times, tables for a group or ordering a cake.">
+    <div class="helper-head"><i aria-hidden="true"></i><div><b>Larder & Loaf</b><span>Café assistant · answers any time</span></div><button class="helper-close" type="button" aria-label="Close chat">×</button></div>
+    <div class="helper-body">
+      <div class="chat-log" id="chatLog" aria-live="polite"></div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chat-chip" type="button" data-q="What gluten-free options do you have?">Gluten-free options?</button>
+        <button class="chat-chip" type="button" data-q="Can I book a table for eight on Saturday?">Table for eight</button>
+        <button class="chat-chip" type="button" data-q="How do I order a birthday cake?">Birthday cake</button>
+      </div>
+      <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your message</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask about the café…"><button id="chatSend" type="submit">Send</button></form>
+    </div>
+  </div>
+</div>
+
 <script src="/studio/concepts/kit/concept.js" defer></script>
 <script src="/studio/assistant.js?v=3" defer></script>
 <script src="/studio/faq-answerer.js?v=3" defer></script>
-<script type="module" src="/worlds/js/island.js"></script>
+<script type="module" src="/studio/concepts/kit/scene3d.js"></script>
 </body>
 </html>
