@@ -246,6 +246,13 @@ else if (pref() === 'off') set3d(false);
 else if (document.readyState === 'complete') setTimeout(start3d, 60); else addEventListener('load', () => setTimeout(start3d, 60), { once: true });
 
 /* ---------- scroll: choose the station, theme the nav ---------- */
+const toTop = $('#toTop');
+$$('[data-to-top]').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  scrollTo({ top: 0, behavior: smooth });
+  history.replaceState(null, '', location.pathname + location.search);
+  $('.brand').focus({ preventScroll: true });     // keep keyboard users at the top too
+}));
 const windows = $$('.window'), sheets = $$('.sheet'), navTargets = $$('.nav-links a[href^="#"]').map(a => [a, $(a.getAttribute('href'))]);
 let ticking = false, lastStation = 'worlds';
 function onScroll() {
@@ -273,6 +280,10 @@ function onScroll() {
     stage.poke();
   }
   if (!selectedBiz) heroCopy.style.opacity = mobile.matches ? '' : String(1 - Math.min(1, y / (H * .5)));
+
+  // back-to-top appears once the visitor is well down the page
+  const shown = y > H * 2.5;
+  if (toTop.classList.contains('is-shown') !== shown) { toTop.classList.toggle('is-shown', shown); toTop.tabIndex = shown ? 0 : -1; }
 
   let current = null;
   for (const [a, el] of navTargets) if (el && el.getBoundingClientRect().top < H * .45) current = a;
