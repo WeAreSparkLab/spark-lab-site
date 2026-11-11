@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Alder Joinery | Bespoke Joinery, Dereham</title>
-<meta name="description" content="A concept website by SparkLab for an invented joinery workshop, with a 3D look around, a cost guide and live AI assistants.">
+<meta name="description" content="A concept website by SparkLab for an invented joinery workshop, with a 3D scene, a cost guide and live AI assistants.">
 <!-- CONCEPT BUILD by SparkLab. Alder Joinery is an invented business: name, address,
      phone (Ofcom drama range) and prices are made up. The assistants use
      api/_knowledge/alder-joinery.js, which mirrors the copy on this page. -->
@@ -37,6 +37,7 @@
 </head>
 <body data-hours='{"1":[[7.5,17.5]],"2":[[7.5,17.5]],"3":[[7.5,17.5]],"4":[[7.5,17.5]],"5":[[7.5,17.5]]}'>
 <div class="concept-note"><strong>Concept build.</strong> Alder Joinery is an invented workshop. This is a demo by <a href="https://www.wearesparklab.com/#work">SparkLab</a> of what a site like this can do, so nothing here can be ordered.</div>
+<canvas class="scene3d" data-scene="workshop" data-label="" aria-hidden="true"></canvas>
 
 <header class="top">
   <div class="wrap">
@@ -55,20 +56,12 @@
         <p class="lead">Fitted alcove units, wardrobes, staircases and kitchens, made in our Dereham workshop by Tom and a team of three, and fitted in homes within about 30 miles.</p>
         <div class="cta">
           <a class="btn" href="#guide">Get a rough cost</a>
-          <a class="btn ghost" href="#ask">Ask a question</a>
+          <a class="btn ghost" href="#ask" data-open-chat>Ask a question</a>
         </div>
         <div class="facts"><span class="open-badge">Opening hours</span><span class="chip">5-year guarantee</span></div>
       </div>
 
-      <div class="c3d" data-island="workshop" aria-label="A 3D model of the workshop. Drag to turn it, or use the numbered buttons.">
-        <canvas aria-hidden="true"></canvas>
-        <span class="c3d-hint">Drag to look around · tap a number</span>
-        <button class="c3d-spot" type="button" data-at="inside" data-title="The workshop" data-text="Everything is cut, jointed and finished here, so it arrives at your door ready to fit in days, not weeks.">1</button>
-        <button class="c3d-spot" type="button" data-at="timber" data-title="The timber store" data-text="Oak and tulipwood, kept dry and settled for weeks before it's used, so doors don't move once they're hung.">2</button>
-        <button class="c3d-spot" type="button" data-at="bench" data-title="The bench" data-text="Drawers and doors are fitted by hand at the bench before they leave, so every gap is even.">3</button>
-        <button class="c3d-spot" type="button" data-at="door" data-title="Visit by appointment" data-text="Come and see work in progress; ring first so someone's free to show you round.">4</button>
-        <div class="c3d-card" hidden><h3></h3><p></p><button class="c3d-close" type="button" aria-label="Close">×</button></div>
-      </div>
+      <div class="stage3d" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -127,19 +120,9 @@
           <a class="btn" href="tel:01632960634" style="margin-top:16px">Book a free home visit</a>
         </form>
         <div class="agent reveal">
-          <span class="agent-tag">Enquiry assistant</span>
-          <h3>Ask about your project</h3>
-          <p>What's possible, how long it takes, what to have ready for the home visit.</p>
-          <div class="chat" data-client="alder-joinery" data-greeting="Hi, I'm the Alder Joinery enquiry assistant. Tell me what you'd like made and I'll explain how it works and roughly what it starts from.">
-            <div class="chat-log" id="chatLog" aria-live="polite"></div>
-            <div class="chat-chips" id="chatChips">
-              <button class="chat-chip" type="button" data-q="Can you build wardrobes under a sloping ceiling?">Wardrobes under a slope?</button>
-              <button class="chat-chip" type="button" data-q="How far ahead are you booked up?">How soon can you start?</button>
-              <button class="chat-chip" type="button" data-q="What do I need for a quote?">What do you need for a quote?</button>
-            </div>
-            <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your question</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Describe your project…"><button id="chatSend" type="submit">Send</button></form>
-          </div>
-          <p class="agent-note">Demo only: answers come from this invented workshop's details. It never gives a firm quote.</p>
+          <h3>Talk it through</h3>
+          <p>Not sure what's possible in your space, or how long it would take? Our assistant can explain how a project works and what to have ready for the home visit. It never gives a firm quote; Tom does that after measuring up.</p>
+          <button class="btn" type="button" data-open-chat>Ask about your project</button>
         </div>
       </div>
     </div>
@@ -148,12 +131,11 @@
   <section class="section" id="ask">
     <div class="wrap">
       <div class="head reveal">
-        <p class="eyebrow">Quick answers</p>
+        <p class="eyebrow">Questions</p>
         <h2>Before you call</h2>
       </div>
       <div class="agent reveal" style="max-width:720px">
-        <span class="agent-tag">FAQ answerer</span>
-        <div class="faq" id="faqRoot" data-client="alder-joinery" data-safety="off" data-intro="Insurance, guarantees, small jobs, painting: ask anything, or tap a question." data-placeholder="e.g. Are you insured?" data-questions='["Is the home visit free?", "Are you insured?", "Do you take on small jobs?"]' style="margin-top:12px"></div>
+        <div class="faq" id="faqRoot" data-client="alder-joinery" data-safety="off" data-intro="Insurance, guarantees, small jobs, painting: ask anything, or tap a question." data-placeholder="e.g. Are you insured?" data-questions='["Is the home visit free?", "Are you insured?", "Do you take on small jobs?"]'></div>
       </div>
     </div>
   </section>
@@ -185,9 +167,26 @@
   </div>
 </footer>
 
+<!-- the site's chat assistant (answers from api/_knowledge/alder-joinery.js) -->
+<div class="helper">
+  <button class="helper-fab" type="button" aria-expanded="false" aria-controls="helperPanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-5 4V5a1 1 0 0 1 1-1z"/></svg>Ask about a project</button>
+  <div class="helper-panel chat" id="helperPanel" role="dialog" aria-label="Chat with Alder Joinery" hidden data-client="alder-joinery" data-greeting="Hi, I'm the Alder Joinery assistant. Tell me what you'd like made and I'll explain how it works and roughly what it starts from.">
+    <div class="helper-head"><i aria-hidden="true"></i><div><b>Alder Joinery</b><span>Workshop assistant · answers any time</span></div><button class="helper-close" type="button" aria-label="Close chat">×</button></div>
+    <div class="helper-body">
+      <div class="chat-log" id="chatLog" aria-live="polite"></div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chat-chip" type="button" data-q="Can you build wardrobes under a sloping ceiling?">Wardrobes under a slope?</button>
+        <button class="chat-chip" type="button" data-q="How far ahead are you booked up?">How soon can you start?</button>
+        <button class="chat-chip" type="button" data-q="What do I need for a quote?">What do you need for a quote?</button>
+      </div>
+      <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your message</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Describe your project…"><button id="chatSend" type="submit">Send</button></form>
+    </div>
+  </div>
+</div>
+
 <script src="/studio/concepts/kit/concept.js" defer></script>
 <script src="/studio/assistant.js?v=3" defer></script>
 <script src="/studio/faq-answerer.js?v=3" defer></script>
-<script type="module" src="/worlds/js/island.js"></script>
+<script type="module" src="/studio/concepts/kit/scene3d.js"></script>
 </body>
 </html>

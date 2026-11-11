@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Fern &amp; Foil | Hair &amp; Beauty, Unthank Road, Norwich</title>
-<meta name="description" content="A concept website by SparkLab for an invented hair and beauty salon, with a 3D look around and live AI assistants.">
+<meta name="description" content="A concept website by SparkLab for an invented hair and beauty salon, with a 3D scene and live AI assistants.">
 <!-- CONCEPT BUILD by SparkLab. Fern & Foil is an invented business: name, address,
      phone (Ofcom drama range) and prices are made up. The assistants use
      api/_knowledge/fern-and-foil.js, which mirrors the copy on this page. -->
@@ -30,6 +30,7 @@
 </head>
 <body data-hours='{"2":[[9,17.5]],"3":[[9,17.5]],"4":[[9,20]],"5":[[9,18]],"6":[[8.5,16]]}'>
 <div class="concept-note"><strong>Concept build.</strong> Fern &amp; Foil is an invented salon. This is a demo by <a href="https://www.wearesparklab.com/#work">SparkLab</a> of what a site like this can do, so nothing here can be booked.</div>
+<canvas class="scene3d" data-scene="salon" data-label="Fern & Foil" aria-hidden="true"></canvas>
 
 <header class="top">
   <div class="wrap">
@@ -47,7 +48,7 @@
         <h1>Feel looked after, <em>start to finish.</em></h1>
         <p class="lead">A friendly salon on Unthank Road for cuts, colour, balayage, brows and gel nails. Six stylists, late nights on Thursdays, and a proper cup of tea while you wait.</p>
         <div class="cta">
-          <a class="btn" href="#ask">Ask the booking assistant</a>
+          <a class="btn" href="tel:01632960241">Book an appointment</a>
           <a class="btn ghost" href="#services">See prices</a>
         </div>
         <div class="facts"><span class="open-badge">Opening hours</span></div>
@@ -58,15 +59,7 @@
         </div>
       </div>
 
-      <div class="c3d" data-island="salon" data-mood="day" aria-label="A 3D model of the salon. Drag to turn it, or use the numbered buttons.">
-        <canvas aria-hidden="true"></canvas>
-        <span class="c3d-hint">Drag to look around · tap a number</span>
-        <button class="c3d-spot" type="button" data-at="inside" data-title="The salon floor" data-text="Six chairs by big windows, so colour is checked in daylight. Every appointment starts with a quick chat about how you really wear your hair.">1</button>
-        <button class="c3d-spot" type="button" data-at="door" data-title="Step-free entrance" data-text="Straight in from the pavement at 84 Unthank Road, with a seat by the door if you're a little early.">2</button>
-        <button class="c3d-spot" type="button" data-at="water" data-title="The calm corner" data-text="Brows and gel nails happen in the quieter half of the salon, away from the hairdryers.">3</button>
-        <button class="c3d-spot" type="button" data-at="garden" data-title="Parking nearby" data-text="Two-hour free parking on the side streets, and the number 25 bus stops right outside.">4</button>
-        <div class="c3d-card" hidden><h3></h3><p></p><button class="c3d-close" type="button" aria-label="Close">×</button></div>
-      </div>
+      <div class="stage3d" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -98,34 +91,20 @@
   <section class="section" id="ask">
     <div class="wrap">
       <div class="head reveal">
-        <p class="eyebrow">Ask us anything</p>
-        <h2>Two assistants, answering while the team is busy</h2>
-        <p>Both are live AI, set up with this salon's real prices, hours and policies, and nothing else.</p>
+        <p class="eyebrow">Not sure what to book?</p>
+        <h2>Find the right service in two taps</h2>
+        <p>Tell us what you'd like done and we'll point you to the best place to start.</p>
       </div>
       <div class="agents">
         <div class="agent reveal">
-          <span class="agent-tag">Booking assistant</span>
-          <h3>Questions before you book</h3>
-          <p>Prices, patch tests, parking, how long balayage takes. Type a question or tap one below.</p>
-          <div class="chat" data-client="fern-and-foil" data-greeting="Hi! I'm the booking assistant for Fern & Foil. Ask me about prices, patch tests, opening hours or how to book.">
-            <div class="chat-log" id="chatLog" aria-live="polite"></div>
-            <div class="chat-chips" id="chatChips">
-              <button class="chat-chip" type="button" data-q="How much is balayage and how long does it take?">How much is balayage?</button>
-              <button class="chat-chip" type="button" data-q="Do I need a patch test?">Do I need a patch test?</button>
-              <button class="chat-chip" type="button" data-q="Are you open late any evenings?">Are you open late?</button>
-            </div>
-            <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your question</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask about a service…"><button id="chatSend" type="submit">Send</button></form>
-          </div>
-          <p class="agent-note">Demo only: answers come from this invented salon's details.</p>
-        </div>
-        <div class="agent reveal">
-          <span class="agent-tag">Service matcher</span>
-          <h3>Not sure what to book?</h3>
-          <p>Answer two quick questions and it suggests the right service to start with.</p>
           <div class="tm" id="tmRoot" data-client="fern-and-foil" role="group" aria-label="Find your service"
             data-bothering-question="What would you like done?"
             data-bothering-options='["A fresh cut", "Brighter or new colour", "Grey coverage", "Brows or nails"]'></div>
-          <p class="agent-note">Demo only: suggestions come from this invented salon's services.</p>
+        </div>
+        <div class="agent reveal">
+          <h3>Got a question?</h3>
+          <p>Prices, patch tests, parking, how long balayage takes. Our assistant answers straight away, any time of day, even when we're mid-colour.</p>
+          <button class="btn" type="button" data-open-chat>Chat with us</button>
         </div>
       </div>
     </div>
@@ -162,9 +141,26 @@
   </div>
 </footer>
 
+<!-- the site's chat assistant (answers from api/_knowledge/fern-and-foil.js) -->
+<div class="helper">
+  <button class="helper-fab" type="button" aria-expanded="false" aria-controls="helperPanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-5 4V5a1 1 0 0 1 1-1z"/></svg>Chat with us</button>
+  <div class="helper-panel chat" id="helperPanel" role="dialog" aria-label="Chat with Fern & Foil" hidden data-client="fern-and-foil" data-greeting="Hi! I'm the Fern & Foil assistant. Ask me about prices, patch tests, opening hours or how to book.">
+    <div class="helper-head"><i aria-hidden="true"></i><div><b>Fern & Foil</b><span>Salon assistant · answers any time</span></div><button class="helper-close" type="button" aria-label="Close chat">×</button></div>
+    <div class="helper-body">
+      <div class="chat-log" id="chatLog" aria-live="polite"></div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chat-chip" type="button" data-q="How much is balayage and how long does it take?">How much is balayage?</button>
+        <button class="chat-chip" type="button" data-q="Do I need a patch test?">Do I need a patch test?</button>
+        <button class="chat-chip" type="button" data-q="Are you open late any evenings?">Are you open late?</button>
+      </div>
+      <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your message</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask about a service…"><button id="chatSend" type="submit">Send</button></form>
+    </div>
+  </div>
+</div>
+
 <script src="/studio/concepts/kit/concept.js" defer></script>
 <script src="/studio/assistant.js?v=3" defer></script>
 <script src="/studio/treatment-matcher.js?v=3" defer></script>
-<script type="module" src="/worlds/js/island.js"></script>
+<script type="module" src="/studio/concepts/kit/scene3d.js"></script>
 </body>
 </html>

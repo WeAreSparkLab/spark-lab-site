@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Hearth &amp; Thread | Home &amp; Gifts, Holt</title>
-<meta name="description" content="A concept website by SparkLab for an invented home and gift shop, with a 3D look around and live AI assistants.">
+<meta name="description" content="A concept website by SparkLab for an invented home and gift shop, with a 3D scene and live AI assistants.">
 <!-- CONCEPT BUILD by SparkLab. Hearth & Thread is an invented business: name, address,
      phone (Ofcom drama range), makers and prices are made up. The assistants use
      api/_knowledge/hearth-and-thread.js, which mirrors the copy on this page. -->
@@ -37,6 +37,7 @@
 </head>
 <body data-hours='{"1":[[9.5,17]],"2":[[9.5,17]],"3":[[9.5,17]],"4":[[9.5,17]],"5":[[9.5,17]],"6":[[9.5,17]],"0":[[11,16]]}'>
 <div class="concept-note"><strong>Concept build.</strong> Hearth &amp; Thread is an invented shop. This is a demo by <a href="https://www.wearesparklab.com/#work">SparkLab</a> of what a site like this can do, so nothing here can be bought.</div>
+<canvas class="scene3d" data-scene="shop" data-label="" aria-hidden="true"></canvas>
 
 <header class="top">
   <div class="wrap">
@@ -54,21 +55,13 @@
         <h1>Made nearby, <em>chosen with care.</em></h1>
         <p class="lead">Stoneware from three Norfolk potters, soy candles poured down the road, washed linen and cards by local illustrators. Free gift wrapping on everything.</p>
         <div class="cta">
-          <a class="btn" href="#ask">Find a gift</a>
+          <a class="btn" href="#ask" data-open-chat>Help me find a gift</a>
           <a class="btn ghost" href="#shop">Browse the shop</a>
         </div>
         <div class="facts"><span class="open-badge">Opening hours</span></div>
       </div>
 
-      <div class="c3d" data-island="shop" aria-label="A 3D model of the shop. Drag to turn it, or use the numbered buttons.">
-        <canvas aria-hidden="true"></canvas>
-        <span class="c3d-hint">Drag to look around · tap a number</span>
-        <button class="c3d-spot" type="button" data-at="inside" data-title="Inside the shop" data-text="Shelves by maker, so you can see a potter's whole range together. Everything can be gift-wrapped while you wait.">1</button>
-        <button class="c3d-spot" type="button" data-at="vitrines" data-title="This month's window" data-text="New stoneware from the kiln and the winter candle scents, refreshed on the first Saturday of each month.">2</button>
-        <button class="c3d-spot" type="button" data-at="door" data-title="Room to browse" data-text="Step-free, with space to turn a wheelchair or pushchair between the tables.">3</button>
-        <button class="c3d-spot" type="button" data-at="sign" data-title="Local delivery" data-text="Free within 10 miles of Holt on orders over £40, usually within two working days.">4</button>
-        <div class="c3d-card" hidden><h3></h3><p></p><button class="c3d-close" type="button" aria-label="Close">×</button></div>
-      </div>
+      <div class="stage3d" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -114,30 +107,18 @@
   <section class="section alt" id="ask">
     <div class="wrap">
       <div class="head reveal">
-        <p class="eyebrow">Ask us</p>
-        <h2>A shop assistant that never closes</h2>
-        <p>Two live AI assistants, set up with this shop's ranges, prices and delivery details only.</p>
+        <p class="eyebrow">Help &amp; delivery</p>
+        <h2>Delivery, returns and wrapping</h2>
+        <p>Quick answers, whenever you need them.</p>
       </div>
       <div class="agents">
         <div class="agent reveal">
-          <span class="agent-tag">Shop assistant</span>
-          <h3>Help me find a gift</h3>
-          <p>Tell it who it's for and your budget.</p>
-          <div class="chat" data-client="hearth-and-thread" data-greeting="Hello! I'm the Hearth & Thread shop assistant. Tell me who you're buying for and roughly what you'd like to spend, and I'll suggest a few ideas.">
-            <div class="chat-log" id="chatLog" aria-live="polite"></div>
-            <div class="chat-chips" id="chatChips">
-              <button class="chat-chip" type="button" data-q="I need a housewarming gift for about £40.">Housewarming, about £40</button>
-              <button class="chat-chip" type="button" data-q="Something small for a teacher, under £20?">Teacher gift, under £20</button>
-              <button class="chat-chip" type="button" data-q="Can you deliver to Cromer?">Deliver to Cromer?</button>
-            </div>
-            <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your question</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Who's the gift for?"><button id="chatSend" type="submit">Send</button></form>
-          </div>
-          <p class="agent-note">Demo only: suggestions come from this invented shop's ranges.</p>
+          <div class="faq" id="faqRoot" data-client="hearth-and-thread" data-safety="off" data-intro="Ask anything, or tap a question below." data-placeholder="e.g. Can I return a gift?" data-questions='["Do you deliver?", "Can I click and collect?", "Do you wrap gifts?"]'></div>
         </div>
         <div class="agent reveal">
-          <span class="agent-tag">FAQ answerer</span>
-          <h3>Delivery, returns, wrapping</h3>
-          <div class="faq" id="faqRoot" data-client="hearth-and-thread" data-safety="off" data-intro="Quick answers about delivery, returns and the shop: ask anything, or tap a question." data-placeholder="e.g. Can I return a gift?" data-questions='["Do you deliver?", "Can I click and collect?", "Do you wrap gifts?"]'></div>
+          <h3>Stuck for a gift?</h3>
+          <p>Tell our shop assistant who it's for and roughly what you'd like to spend, and it will suggest a few things from the shelves.</p>
+          <button class="btn" type="button" data-open-chat>Help me find a gift</button>
         </div>
       </div>
     </div>
@@ -170,6 +151,23 @@
   </div>
 </footer>
 
+<!-- the site's chat assistant (answers from api/_knowledge/hearth-and-thread.js) -->
+<div class="helper">
+  <button class="helper-fab" type="button" aria-expanded="false" aria-controls="helperPanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-5 4V5a1 1 0 0 1 1-1z"/></svg>Gift ideas</button>
+  <div class="helper-panel chat" id="helperPanel" role="dialog" aria-label="Chat with Hearth & Thread" hidden data-client="hearth-and-thread" data-greeting="Hello! I'm the Hearth & Thread shop assistant. Tell me who you're buying for and roughly what you'd like to spend, and I'll suggest a few ideas.">
+    <div class="helper-head"><i aria-hidden="true"></i><div><b>Hearth & Thread</b><span>Shop assistant · here any time</span></div><button class="helper-close" type="button" aria-label="Close chat">×</button></div>
+    <div class="helper-body">
+      <div class="chat-log" id="chatLog" aria-live="polite"></div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chat-chip" type="button" data-q="I need a housewarming gift for about £40.">Housewarming, about £40</button>
+        <button class="chat-chip" type="button" data-q="Something small for a teacher, under £20?">Teacher gift, under £20</button>
+        <button class="chat-chip" type="button" data-q="Can you deliver to Cromer?">Deliver to Cromer?</button>
+      </div>
+      <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your message</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Who's the gift for?"><button id="chatSend" type="submit">Send</button></form>
+    </div>
+  </div>
+</div>
+
 <script>
   // gift-box picker: show what goes in the chosen box
   (function () {
@@ -189,6 +187,6 @@
 <script src="/studio/concepts/kit/concept.js" defer></script>
 <script src="/studio/assistant.js?v=3" defer></script>
 <script src="/studio/faq-answerer.js?v=3" defer></script>
-<script type="module" src="/worlds/js/island.js"></script>
+<script type="module" src="/studio/concepts/kit/scene3d.js"></script>
 </body>
 </html>
