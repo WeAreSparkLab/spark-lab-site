@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Larder &amp; Loaf | Café &amp; Bakery, Magdalen Street, Norwich</title>
+<meta name="description" content="A concept website by SparkLab for an invented café and bakery, with a 3D look around and live AI assistants.">
+<!-- CONCEPT BUILD by SparkLab. Larder & Loaf is an invented business: name, address,
+     phone (Ofcom drama range), menu and prices are made up. The assistants use
+     api/_knowledge/larder-and-loaf.js, which mirrors the copy on this page. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,500;1,400&family=Instrument+Sans:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/studio/concepts/kit/concept.css">
+<style>
+  :root {
+    --bg: #FBF4EA; --paper: #FFFAF3; --ink: #3A2418; --muted: #7A5E4E; --line: rgba(58, 36, 24, .14);
+    --accent: #B4532A; --accent-ink: #FFFFFF; --soft: #F4E4D3; --stage: #2E2235; --stage-ink: #FBEFE4;
+    --display: "DM Serif Display", Georgia, serif; --body: "Work Sans", system-ui, sans-serif; --radius: 14px;
+  }
+  .hero h1 { font-weight: 400; font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: 1.02; }
+  .hero h1 em { font-style: italic; }
+  .head h2, .card h3, .agent h3, .brand { font-weight: 400; }
+  .card .meta { color: var(--accent); }
+  .ticker { overflow: hidden; background: var(--ink); color: var(--soft); padding: 12px 0; font-family: var(--display); font-size: 1.15rem; white-space: nowrap; }
+  .ticker span { display: inline-block; padding-left: 100%; animation: tick 28s linear infinite; }
+  @keyframes tick { to { transform: translateX(-100%); } }
+  @media (prefers-reduced-motion: reduce) { .ticker span { animation: none; padding-left: var(--gutter); } }
+</style>
+<script type="importmap">{ "imports": { "three": "/worlds/vendor/three.module.min.js" } }</script>
+</head>
+<body data-hours='{"1":[[8,16]],"2":[[8,16]],"3":[[8,16]],"4":[[8,16]],"5":[[8,16]],"6":[[8.5,16]],"0":[[9,14]]}'>
+<div class="concept-note"><strong>Concept build.</strong> Larder &amp; Loaf is an invented café. This is a demo by <a href="https://www.wearesparklab.com/#work">SparkLab</a> of what a site like this can do, so nothing here can be ordered.</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Larder &amp; Loaf</a>
+    <nav aria-label="Sections"><a href="#menu">Menu</a><a href="#ask">Ask</a><a href="#visit">Find us</a></nav>
+    <a class="btn small" href="tel:01632960458">Call the café</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Café · Bakery · Magdalen Street</p>
+        <h1>Sourdough, brunch <em>and a proper flat white.</em></h1>
+        <p class="lead">Baked here from 6am, served from 8. Brunch until the kitchen closes, cakes all day, dogs and pushchairs welcome, and a terrace under the lights when the weather's kind.</p>
+        <div class="cta">
+          <a class="btn" href="#menu">See the menu</a>
+          <a class="btn ghost" href="#ask">Ask a question</a>
+        </div>
+        <div class="facts"><span class="open-badge">Opening hours</span></div>
+      </div>
+
+      <div class="c3d" data-island="cafe" aria-label="A 3D model of the café. Drag to turn it, or use the numbered buttons.">
+        <canvas aria-hidden="true"></canvas>
+        <span class="c3d-hint">Drag to look around · tap a number</span>
+        <button class="c3d-spot" type="button" data-at="inside" data-title="The counter" data-text="Bakes come out at 8am, and the day's loaves are on the shelf behind the till until they sell out.">1</button>
+        <button class="c3d-spot" type="button" data-at="door" data-title="Step-free, pushchair-friendly" data-text="Wide door, room by the window tables, and an accessible toilet with baby changing.">2</button>
+        <button class="c3d-spot" type="button" data-at="terrace" data-title="The terrace" data-text="Four tables under festoon lights. Dogs are welcome out here and inside, with water bowls by the door.">3</button>
+        <button class="c3d-spot" type="button" data-at="garden" data-title="Bikes and parking" data-text="Bike racks outside; pay-and-display at Anglia Square, two minutes' walk.">4</button>
+        <div class="c3d-card" hidden><h3></h3><p></p><button class="c3d-close" type="button" aria-label="Close">×</button></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true"><span>Today's loaves: country sourdough · seeded rye · rosemary focaccia &nbsp;·&nbsp; Pre-order by 2pm for tomorrow &nbsp;·&nbsp; Celebration cakes with three days' notice</span></div>
+
+  <section class="section alt" id="menu">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">The menu</p>
+        <h2>Simple food, made here</h2>
+        <p>There's always a vegan brunch dish and a gluten-free cake. Our kitchen handles gluten, nuts and dairy, so please tell us about allergies when you order.</p>
+      </div>
+      <div class="tabs" data-tabs="#menuCards" role="group" aria-label="Filter the menu">
+        <button type="button" data-show="all" aria-pressed="true">Everything</button>
+        <button type="button" data-show="brunch" aria-pressed="false">Brunch</button>
+        <button type="button" data-show="drinks" aria-pressed="false">Coffee &amp; cake</button>
+        <button type="button" data-show="bakery" aria-pressed="false">To take home</button>
+        <button type="button" data-show="vegan" aria-pressed="false">Vegan</button>
+      </div>
+      <div class="cards" id="menuCards">
+        <article class="card" data-cat="brunch"><h3>Shakshuka</h3><p class="meta">£11.50</p><p>Baked eggs in spiced tomato, with yoghurt, herbs and toasted sourdough.</p></article>
+        <article class="card" data-cat="brunch vegan"><h3>Full veggie (can be vegan)</h3><p class="meta">£12.50</p><p>Mushrooms, beans, roast tomato, greens, potato rösti and sourdough.</p></article>
+        <article class="card" data-cat="brunch"><h3>Sourdough toastie</h3><p class="meta">£8.50</p><p>Cheddar, leek and mustard, or ham and Swiss, with house pickles.</p></article>
+        <article class="card" data-cat="drinks"><h3>Coffee</h3><p class="meta">£2.80 – £3.90</p><p>Locally roasted; oat, soya and dairy milk at no extra cost.</p></article>
+        <article class="card" data-cat="drinks vegan"><h3>Cakes of the day</h3><p class="meta">£3.50 – £5</p><p>Baked that morning, always one gluten-free and one vegan.</p></article>
+        <article class="card" data-cat="bakery vegan"><h3>Sourdough loaves</h3><p class="meta">£4.50 – £5.50</p><p>Country loaf, seeded rye and focaccia. Pre-order by 2pm for the next day.</p></article>
+        <article class="card" data-cat="bakery"><h3>Celebration cakes</h3><p class="meta">from £32 · serves 12</p><p>Sponge or chocolate layer cake with a message on top, with three days' notice.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ask">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">Ask us</p>
+        <h2>Answers while we're pulling shots</h2>
+        <p>Two live AI assistants that only know what this café has told them: the menu, hours, dogs, allergies and cakes.</p>
+      </div>
+      <div class="agents">
+        <div class="agent reveal">
+          <span class="agent-tag">Café assistant</span>
+          <h3>Ask about the menu</h3>
+          <p>Gluten-free options, big tables, celebration cakes.</p>
+          <div class="chat" data-client="larder-and-loaf" data-greeting="Hi! I'm the Larder & Loaf assistant. Ask me about the menu, opening times, tables for a group or ordering a cake.">
+            <div class="chat-log" id="chatLog" aria-live="polite"></div>
+            <div class="chat-chips" id="chatChips">
+              <button class="chat-chip" type="button" data-q="What gluten-free options do you have?">Gluten-free options?</button>
+              <button class="chat-chip" type="button" data-q="Can I book a table for eight on Saturday?">Table for eight</button>
+              <button class="chat-chip" type="button" data-q="How do I order a birthday cake?">Birthday cake</button>
+            </div>
+            <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your question</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask about the café…"><button id="chatSend" type="submit">Send</button></form>
+          </div>
+          <p class="agent-note">Demo only: answers come from this invented café's details.</p>
+        </div>
+        <div class="agent reveal">
+          <span class="agent-tag">FAQ answerer</span>
+          <h3>Before you pop in</h3>
+          <div class="faq" id="faqRoot" data-client="larder-and-loaf" data-safety="off" data-intro="Quick answers before you visit: ask anything, or tap a question below." data-placeholder="e.g. Are dogs allowed inside?" data-questions='["Are dogs welcome?", "Do you have vegan and gluten-free options?", "Do you do takeaway?"]'></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="visit">
+    <div class="wrap visit">
+      <div class="reveal">
+        <p class="eyebrow">Find us</p>
+        <h2 style="font-size:clamp(1.9rem,3.8vw,2.9rem);margin:10px 0 18px">112 Magdalen Street</h2>
+        <div class="address">
+          <p>112 Magdalen Street, Norwich, NR3</p>
+          <p>Step-free entrance and accessible toilet. Bike racks outside; pay-and-display at Anglia Square.</p>
+          <p><a class="btn" href="tel:01632960458" style="margin-top:8px">Call 01632 960458</a></p>
+        </div>
+      </div>
+      <ul class="hours reveal" aria-label="Opening hours">
+        <li data-day="1 2 3 4 5"><span>Monday – Friday</span><span>8am – 4pm</span></li>
+        <li data-day="6"><span>Saturday</span><span>8:30am – 4pm</span></li>
+        <li data-day="0"><span>Sunday (brunch only)</span><span>9am – 2pm</span></li>
+        <li><span>Kitchen closes</span><span>2:30pm (3pm Sat)</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© <span data-year>2026</span> Larder &amp; Loaf (an invented business)</span>
+    <span>A concept website by <a href="https://www.wearesparklab.com">SparkLab</a></span>
+  </div>
+</footer>
+
+<script src="/studio/concepts/kit/concept.js" defer></script>
+<script src="/studio/assistant.js?v=3" defer></script>
+<script src="/studio/faq-answerer.js?v=3" defer></script>
+<script type="module" src="/worlds/js/island.js"></script>
+</body>
+</html>

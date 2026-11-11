@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Still Water Studio | Massage &amp; Reflexology, Aylsham</title>
+<meta name="description" content="A concept website by SparkLab for an invented holistic therapy studio, with a 3D look around and live AI assistants.">
+<!-- CONCEPT BUILD by SparkLab. Still Water Studio is an invented business: name, address,
+     phone (Ofcom drama range) and prices are made up. The assistants use
+     api/_knowledge/still-water-studio.js, which mirrors the copy on this page. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=Newsreader:ital,wght@0,500;1,400&family=Instrument+Sans:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/studio/concepts/kit/concept.css">
+<style>
+  :root {
+    --bg: #F6F2EA; --paper: #FFFDF8; --ink: #2E3A33; --muted: #66726A; --line: rgba(46, 58, 51, .13);
+    --accent: #4E7A64; --accent-ink: #FFFFFF; --soft: #E7EEE6; --stage: #33263C; --stage-ink: #F2EEF4;
+    --display: "Cormorant Garamond", Georgia, serif; --body: "Nunito Sans", system-ui, sans-serif; --radius: 22px;
+  }
+  .hero h1 { font-weight: 500; font-size: clamp(2.6rem, 6vw, 4.6rem); }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .head h2, .card h3, .agent h3 { font-weight: 600; }
+  .promise { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .promise div { padding: 22px; border-radius: var(--radius); background: var(--soft); }
+  .promise b { display: block; font-family: var(--display); font-size: 1.4rem; font-weight: 600; margin-bottom: 4px; }
+  .promise span { color: var(--muted); font-size: .92rem; }
+  @media (max-width: 760px) { .promise { grid-template-columns: 1fr; } }
+</style>
+<script type="importmap">{ "imports": { "three": "/worlds/vendor/three.module.min.js" } }</script>
+</head>
+<body data-hours='{"1":[[10,18]],"3":[[10,20]],"4":[[10,18]],"5":[[9,15]],"6":[[9,13]]}'>
+<div class="concept-note"><strong>Concept build.</strong> Still Water Studio is an invented business. This is a demo by <a href="https://www.wearesparklab.com/#work">SparkLab</a> of what a site like this can do, so nothing here can be booked.</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Still Water</a>
+    <nav aria-label="Sections"><a href="#treatments">Treatments</a><a href="#ask">Ask</a><a href="#visit">Visit</a></nav>
+    <a class="btn small" href="tel:01632960373">Call or text</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Massage · Reflexology · Facials · Aylsham</p>
+        <h1>Time out, <em>at your own pace.</em></h1>
+        <p class="lead">A quiet garden studio at the back of 9 Millgate, run by one therapist, Mira. One client at a time, no rush, and nothing you'll hear but the garden.</p>
+        <div class="cta">
+          <a class="btn" href="#ask">Find the right treatment</a>
+          <a class="btn ghost" href="#treatments">Treatments &amp; prices</a>
+        </div>
+        <div class="facts"><span class="open-badge">Opening hours</span></div>
+      </div>
+
+      <div class="c3d" data-island="wellness" aria-label="A 3D model of the studio. Drag to turn it, or use the numbered buttons.">
+        <canvas aria-hidden="true"></canvas>
+        <span class="c3d-hint">Drag to look around · tap a number</span>
+        <button class="c3d-spot" type="button" data-at="inside" data-title="The treatment room" data-text="One warm room with a heated couch, low light and soft music, which you can turn off if you prefer quiet.">1</button>
+        <button class="c3d-spot" type="button" data-at="door" data-title="A step-free way in" data-text="Along the paved garden path from Millgate. The studio is single-storey and the couch lowers.">2</button>
+        <button class="c3d-spot" type="button" data-at="water" data-title="The garden" data-text="Arrive a few minutes early and sit by the water with a cup of herbal tea before your session.">3</button>
+        <button class="c3d-spot" type="button" data-at="garden" data-title="Parking" data-text="Free parking on Millgate, or the Buttlands car park five minutes' walk away.">4</button>
+        <div class="c3d-card" hidden><h3></h3><p></p><button class="c3d-close" type="button" aria-label="Close">×</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="treatments">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">Treatments</p>
+        <h2>Five treatments, done properly</h2>
+        <p>Before a first visit Mira sends a short health form, so the session can be planned around you.</p>
+      </div>
+      <div class="tabs" data-tabs="#treatCards" role="group" aria-label="Filter treatments">
+        <button type="button" data-show="all" aria-pressed="true">All</button>
+        <button type="button" data-show="massage" aria-pressed="false">Massage</button>
+        <button type="button" data-show="calm" aria-pressed="false">Gentle &amp; calming</button>
+      </div>
+      <div class="cards" id="treatCards">
+        <article class="card" data-cat="massage"><h3>Back, neck &amp; shoulders</h3><p class="meta">30 min · £32</p><p>A focused massage for tight shoulders and desk necks.</p></article>
+        <article class="card" data-cat="massage calm"><h3>Full body massage</h3><p class="meta">60 min · £55</p><p>Slow, calming full-body massage with warm oil. Good for a first visit.</p></article>
+        <article class="card" data-cat="massage"><h3>Deep tissue massage</h3><p class="meta">60 min · £60</p><p>Firmer, slower work for knots and stubborn tension.</p></article>
+        <article class="card" data-cat="calm"><h3>Reflexology</h3><p class="meta">50 min · £45</p><p>Gentle pressure on the feet; deeply relaxing, fully clothed apart from your feet.</p></article>
+        <article class="card" data-cat="calm"><h3>Calm facial</h3><p class="meta">45 min · £48</p><p>Cleanse, gentle massage and mask with natural products, plus a scalp massage.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap promise reveal">
+      <div><b>One client at a time</b><span>No waiting room and no one in the next room.</span></div>
+      <div><b>Your pressure, your pace</b><span>Change anything or stop at any point.</span></div>
+      <div><b>Vouchers for a year</b><span>For any treatment or amount.</span></div>
+    </div>
+  </section>
+
+  <section class="section alt" id="ask">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">Ask, any time</p>
+        <h2>Help while Mira is with a client</h2>
+        <p>Three live AI assistants, set up with this studio's treatments, hours and safety notes only.</p>
+      </div>
+      <div class="agents">
+        <div class="agent reveal">
+          <span class="agent-tag">Treatment matcher</span>
+          <h3>Which treatment suits you?</h3>
+          <p>Two quick questions, then one suggestion to start with.</p>
+          <div class="tm" id="tmRoot" data-client="still-water-studio" role="group" aria-label="Find your treatment"
+            data-bothering-question="What would you like help with?"
+            data-bothering-options='["Tight neck and shoulders", "Stress or poor sleep", "Aches and knots", "Just a treat"]'></div>
+          <p class="agent-note">Demo only. Not medical advice.</p>
+        </div>
+        <div class="agent reveal">
+          <span class="agent-tag">Booking assistant</span>
+          <h3>Questions before you book</h3>
+          <p>Prices, what to wear, pregnancy, gift vouchers.</p>
+          <div class="chat" data-client="still-water-studio" data-greeting="Hello, I'm Still Water Studio's booking assistant. Ask me about treatments, prices, what to expect or how to book.">
+            <div class="chat-log" id="chatLog" aria-live="polite"></div>
+            <div class="chat-chips" id="chatChips">
+              <button class="chat-chip" type="button" data-q="I've never had a massage. Which should I book?">I've never had a massage</button>
+              <button class="chat-chip" type="button" data-q="Can I have a massage while pregnant?">Pregnancy</button>
+              <button class="chat-chip" type="button" data-q="When are you open on Wednesdays?">Wednesday hours</button>
+            </div>
+            <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your question</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask a question…"><button id="chatSend" type="submit">Send</button></form>
+          </div>
+          <p class="agent-note">Demo only: answers come from this invented studio's details.</p>
+        </div>
+        <div class="agent reveal">
+          <span class="agent-tag">FAQ answerer</span>
+          <h3>Quick answers</h3>
+          <div class="faq" id="faqRoot" data-client="still-water-studio" data-questions='["What should I wear?", "Is the studio accessible?", "Do you sell gift vouchers?"]'></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="visit">
+    <div class="wrap visit">
+      <div class="reveal">
+        <p class="eyebrow">Visit</p>
+        <h2 style="font-size:clamp(1.9rem,3.8vw,2.9rem);margin:10px 0 18px">The Garden Studio, Millgate</h2>
+        <div class="address">
+          <p>9 Millgate, Aylsham, NR11</p>
+          <p>Through the side gate and along the paved path; step-free all the way. Free parking on Millgate.</p>
+          <p><a class="btn" href="tel:01632960373" style="margin-top:8px">Call or text 01632 960373</a></p>
+        </div>
+      </div>
+      <ul class="hours reveal" aria-label="Opening hours">
+        <li data-day="1"><span>Monday</span><span>10am – 6pm</span></li>
+        <li data-day="2"><span>Tuesday</span><span>Closed</span></li>
+        <li data-day="3"><span>Wednesday</span><span>10am – 8pm</span></li>
+        <li data-day="4"><span>Thursday</span><span>10am – 6pm</span></li>
+        <li data-day="5"><span>Friday</span><span>9am – 3pm</span></li>
+        <li data-day="6"><span>Saturday</span><span>9am – 1pm</span></li>
+        <li data-day="0"><span>Sunday</span><span>Closed</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© <span data-year>2026</span> Still Water Studio (an invented business)</span>
+    <span>A concept website by <a href="https://www.wearesparklab.com">SparkLab</a></span>
+  </div>
+</footer>
+
+<script src="/studio/concepts/kit/concept.js" defer></script>
+<script src="/studio/assistant.js?v=3" defer></script>
+<script src="/studio/treatment-matcher.js?v=3" defer></script>
+<script src="/studio/faq-answerer.js?v=3" defer></script>
+<script type="module" src="/worlds/js/island.js"></script>
+</body>
+</html>
