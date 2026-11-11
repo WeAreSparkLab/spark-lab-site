@@ -431,8 +431,17 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 /* ---------- about ---------- */
 .letter { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.4fr); gap: clamp(30px, 7vw, 110px); padding-top: clamp(30px, 4vw, 60px); border-top: 1px solid var(--line); }
 .letter-side h2 { margin-top: 14px; }
-.monogram { width: 92px; height: 92px; margin: 34px 0 16px; border-radius: 50%; display: grid; place-items: center; background: var(--plum); color: var(--lav-light); box-shadow: 0 0 0 8px rgba(160, 120, 180, .14); }
-.monogram svg { width: 38px; height: 38px; }
+.portrait { width: min(100%, 300px); height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; margin: 30px 0 18px; border-radius: 999px 999px 20px 20px;
+  box-shadow: 0 0 0 8px rgba(160, 120, 180, .14), 0 30px 60px -30px rgba(48, 40, 60, .55); }
+.worth { margin-top: clamp(40px, 6vw, 72px); padding: clamp(24px, 3vw, 40px); border-radius: 24px; background: var(--ivory-2); }
+.worth ul { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 20px; }
+.worth li { font-size: .93rem; line-height: 1.55; color: #4B4357; padding-top: 14px; border-top: 2px solid var(--lavender); }
+.worth b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.18rem; line-height: 1.25; color: var(--plum); margin-bottom: 6px; }
+.flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 0 0 20px; counter-reset: f; }
+.flow li { counter-increment: f; font-size: .8rem; line-height: 1.4; color: #D9D1E0; padding: 10px 12px; border-radius: 12px; background: rgba(247, 243, 237, .05); border: 1px solid var(--line-dark); }
+.flow b { display: block; font-weight: 600; color: var(--ivory); margin-bottom: 3px; }
+.flow b::before { content: counter(f) ". "; color: var(--lav-light); }
+@media (max-width: 980px) { .worth ul { grid-template-columns: 1fr 1fr; } .flow { grid-template-columns: 1fr 1fr; } }
 .letter-meta { font-size: .86rem; color: var(--muted); line-height: 1.7; }
 .letter-body p { font-size: 1.14rem; line-height: 1.7; color: #453D52; max-width: 38rem; margin-bottom: 18px; }
 .letter-body .first { font-family: var(--serif); font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.25; color: var(--plum); letter-spacing: -.01em; }

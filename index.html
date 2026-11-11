@@ -470,8 +470,17 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 /* ---------- about ---------- */
 .letter { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.4fr); gap: clamp(30px, 7vw, 110px); padding-top: clamp(30px, 4vw, 60px); border-top: 1px solid var(--line); }
 .letter-side h2 { margin-top: 14px; }
-.monogram { width: 92px; height: 92px; margin: 34px 0 16px; border-radius: 50%; display: grid; place-items: center; background: var(--plum); color: var(--lav-light); box-shadow: 0 0 0 8px rgba(160, 120, 180, .14); }
-.monogram svg { width: 38px; height: 38px; }
+.portrait { width: min(100%, 300px); height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; margin: 30px 0 18px; border-radius: 999px 999px 20px 20px;
+  box-shadow: 0 0 0 8px rgba(160, 120, 180, .14), 0 30px 60px -30px rgba(48, 40, 60, .55); }
+.worth { margin-top: clamp(40px, 6vw, 72px); padding: clamp(24px, 3vw, 40px); border-radius: 24px; background: var(--ivory-2); }
+.worth ul { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 20px; }
+.worth li { font-size: .93rem; line-height: 1.55; color: #4B4357; padding-top: 14px; border-top: 2px solid var(--lavender); }
+.worth b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.18rem; line-height: 1.25; color: var(--plum); margin-bottom: 6px; }
+.flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 0 0 20px; counter-reset: f; }
+.flow li { counter-increment: f; font-size: .8rem; line-height: 1.4; color: #D9D1E0; padding: 10px 12px; border-radius: 12px; background: rgba(247, 243, 237, .05); border: 1px solid var(--line-dark); }
+.flow b { display: block; font-weight: 600; color: var(--ivory); margin-bottom: 3px; }
+.flow b::before { content: counter(f) ". "; color: var(--lav-light); }
+@media (max-width: 980px) { .worth ul { grid-template-columns: 1fr 1fr; } .flow { grid-template-columns: 1fr 1fr; } }
 .letter-meta { font-size: .86rem; color: var(--muted); line-height: 1.7; }
 .letter-body p { font-size: 1.14rem; line-height: 1.7; color: #453D52; max-width: 38rem; margin-bottom: 18px; }
 .letter-body .first { font-family: var(--serif); font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.25; color: var(--plum); letter-spacing: -.01em; }
@@ -850,6 +859,16 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
           <li><span>2</span><div><h3>You see it live first</h3><p>You get a link and try it out. If it's not right, we fix it. Only then do you decide.</p></div></li>
           <li><span>3</span><div><h3>It goes live on your domain</h3><p>Wired into your booking system, or sending enquiries straight to you if you don't have one.</p></div></li>
         </ol>
+
+        <div class="worth" aria-labelledby="worth-title">
+          <h3 id="worth-title">Why it's worth it</h3>
+          <ul>
+            <li><b>Catch enquiries while your hands are full.</b> Mid-job, mid-appointment, up a ladder: the assistant answers the questions you'd otherwise miss, and books people in.</li>
+            <li><b>Look credible when people Google you.</b> A tidy, professional site that loads fast and reads well builds trust before they ever message you.</li>
+            <li><b>Stop losing bookings to a slow inbox.</b> People decide quickly. A reply in the moment is the difference between a booking and a missed one.</li>
+            <li><b>Spend less time on admin.</b> Updates, hosting and the fiddly bits are handled, so you can get on with the actual work.</li>
+          </ul>
+        </div>
       </section>
     </div>
 
@@ -973,6 +992,12 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <div><dt>What to try</dt><dd>Walk through a reminder and a cancellation to see the messages it writes.</dd></div>
               <div><dt>Made yours</dt><dd>Written in your tone, around your own cancellation policy. No hard sell.</dd></div>
             </dl>
+            <ol class="flow" aria-label="How the no-show saver works">
+              <li><b>Reminder sent</b>A friendly nudge goes out before the appointment.</li>
+              <li><b>Cancellation spotted</b>If someone cancels or doesn't confirm, it knows straight away.</li>
+              <li><b>Warm win-back sent</b>A message asks if they'd like to rebook. No hard sell.</li>
+              <li><b>Slot filled</b>The gap gets picked up instead of sitting empty.</li>
+            </ol>
             <div class="demo">
               <p class="st-demo-note"><strong>Demo.</strong> "Willow Lane Massage" is a fictional business used only for this demonstration.</p>
               <div class="rc glass" id="nsRoot" data-client="willow-lane" role="group" aria-label="No-show saver"></div>
@@ -1287,7 +1312,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
           <div class="letter-side">
             <p class="eyebrow">The person behind SparkLab</p>
             <h2 id="about-title">Hello, <em>I'm Sara.</em></h2>
-            <div class="monogram" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.5c.5 5.6 2.4 8.3 9 10.5-6.6 2.2-8.5 4.9-9 10.5-.5-5.6-2.4-8.3-9-10.5 6.6-2.2 8.5-4.9 9-10.5z"/></svg></div>
+            <img class="portrait" src="/assets/Sara.webp" width="1600" height="1600" loading="lazy" alt="Sara, the person behind SparkLab, smiling at the camera">
             <p class="letter-meta">Independent · Norwich-based<br>Working with small businesses wherever they are</p>
           </div>
           <div class="letter-body">
