@@ -300,6 +300,8 @@ export function build(M, { compact = false } = {}) {
     },
     // keep the shadow-casting light centred on whatever the camera is looking at
     follow(x, z) { sun.target.position.set(x, 0, z); sun.position.set(x - 22, 24, z + 20); },
+    // phones: the studio platform would sit behind the hero buttons, so it is only shown in its own section
+    showStudio(v) { islands.studio.visible = v; bridges.forEach(br => { if (br.b === islands.studio || br.a === islands.studio) br.g.visible = v; }); },
     // 0 = dusk, 1 = first light (used for the closing section)
     setMood(v) {
       sun.color.lerpColors(dusk.sun, dawn.sun, v); sun.intensity = 2.5 + v * 1.4;

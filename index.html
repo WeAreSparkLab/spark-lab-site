@@ -200,7 +200,40 @@ body.is-ready .label { opacity: 1; }
 .panel-body .p-sector { font-size: .76rem; letter-spacing: .16em; text-transform: uppercase; color: var(--purple); font-weight: 500; }
 .panel-body h3 { font-size: 2rem; margin-top: 8px; }
 .panel-body blockquote { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.28rem; line-height: 1.36; margin-top: 16px; padding-left: 16px; border-left: 2px solid var(--lavender); }
-.panel-body ul { margin-top: 18px; }
+.panel-body ul { margin-top: 6px; }
+.panel-body .p-head { margin-top: 22px; font: 500 .72rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+/* "Picture this": a concrete moment in that business's day */
+.picture { margin-top: 18px; padding: 16px 18px; border-radius: 16px; background: var(--ivory-2); }
+.picture h4 { font: 600 .7rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--purple); margin-bottom: 8px; }
+.picture p { font-size: .93rem; line-height: 1.55; color: #453D52; }
+.panel-body .picture { background: rgba(160, 120, 180, .1); }
+
+/* "New to this?": plain-English explanations of the three services */
+.primer { margin-bottom: 26px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
+.primer { border-color: rgba(105, 76, 145, .35); box-shadow: 0 10px 30px -22px rgba(48, 40, 60, .5); transition: border-color .3s, box-shadow .3s; }
+.primer:hover { border-color: var(--purple); box-shadow: 0 14px 34px -20px rgba(105, 76, 145, .55); }
+.primer summary { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 16px 20px; cursor: pointer; list-style: none; font-size: .98rem; color: #453D52; }
+.primer summary::-webkit-details-marker { display: none; }
+.primer summary span { font-family: var(--serif); font-size: 1.25rem; color: var(--plum); }
+/* an obvious button, so people can see there is more to read */
+.primer-cta { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: 999px;
+  background: var(--purple); color: #fff; font: 600 .86rem/1 var(--sans); white-space: nowrap; transition: background-color .3s; }
+.primer-cta i { font-style: normal; }
+.primer-cta::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .35s var(--ease); }
+.primer summary:hover .primer-cta { background: var(--plum); }
+.primer .less, .primer[open] .more { display: none; }
+.primer[open] .less { display: inline; }
+.primer[open] .primer-cta { background: transparent; color: var(--purple); box-shadow: inset 0 0 0 1.5px var(--purple); }
+.primer[open] .primer-cta::after { transform: translateY(2px) rotate(-135deg); }
+.primer dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 2px 20px 20px; }
+.primer dt { font-family: var(--serif); font-size: 1.15rem; color: var(--plum); margin-bottom: 4px; padding-top: 12px; border-top: 2px solid var(--lavender); }
+.primer dd { font-size: .92rem; line-height: 1.55; color: #4B4357; }
+.primer-panel { margin: 20px 0 0; }
+.primer-panel summary { padding: 13px 16px; font-size: .86rem; }
+.primer-panel .primer-cta { margin-left: 0; min-height: 36px; font-size: .8rem; }
+.primer-panel summary span { font-size: 1.05rem; }
+.primer-panel dl { grid-template-columns: 1fr; gap: 12px; padding: 0 16px 16px; }
 .panel-body li { padding: 13px 0; border-top: 1px solid var(--line); font-size: .95rem; line-height: 1.5; color: #4B4357; }
 .panel-body li strong { display: block; font-weight: 600; font-size: .84rem; color: var(--plum); margin-bottom: 2px; }
 .panel-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
@@ -237,20 +270,22 @@ body.is-ready .label { opacity: 1; }
 .biz-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: clamp(20px, 4vw, 64px); padding: 4px 4px 34px calc(3.4rem + 16px); }
 .biz[open] .biz-body { animation: rise .6s var(--ease) both; }
 .biz-body blockquote { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 1.4rem; line-height: 1.34; }
-.biz-body ul { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; grid-column: 2; grid-row: 1 / span 2; }
+.biz-body ul { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; grid-column: 2; grid-row: 1 / span 3; align-content: start; }
+.biz-body .picture { grid-column: 1; margin-top: 0; }
 .biz-body li { font-size: .93rem; line-height: 1.5; color: #4B4357; padding-top: 12px; border-top: 2px solid var(--lavender); }
 .biz-body li strong { display: block; font-weight: 600; font-size: .82rem; letter-spacing: .04em; color: var(--plum); margin-bottom: 4px; }
 .biz-show { justify-self: start; align-self: end; background: none; border: 0; padding: 0; color: var(--purple); font-weight: 500; font-size: .92rem; text-decoration: underline; text-underline-offset: 5px; }
 
 /* services: three stacked plates */
-.stack-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(28px, 6vw, 90px); align-items: center; }
-.stack { position: relative; height: 470px; perspective: 1600px; }
-.plate { position: absolute; left: 50%; top: 56%; width: min(330px, 62vw); aspect-ratio: 5 / 3; margin: 0; border-radius: 18px; color: rgba(48, 40, 60, .3);
+.stack-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(28px, 6vw, 90px); align-items: start; }
+/* the plates stay in view beside the switches as you scroll through them */
+.stack { position: sticky; top: calc(var(--nav-h) + 80px); height: 340px; perspective: 1600px; }
+.plate { position: absolute; left: 50%; top: 60%; width: min(260px, 62vw); aspect-ratio: 5 / 3; margin: 0; border-radius: 18px; color: rgba(48, 40, 60, .3);
   transform: translate(-50%, -50%) rotateX(58deg) rotateZ(-38deg) translateZ(var(--z)); transform-style: preserve-3d;
   border: 1.5px dashed rgba(48, 40, 60, .26); background: rgba(48, 40, 60, .02);
   transition: transform 1s var(--ease), background-color .6s, border-color .6s, box-shadow .8s, color .6s, opacity .6s; }
 .plate svg { width: 100%; height: 100%; padding: 8%; }
-.plate-1 { --z: 0px; } .plate-2 { --z: 150px; } .plate-3 { --z: 300px; }
+.plate-1 { --z: 0px; } .plate-2 { --z: 115px; } .plate-3 { --z: 230px; }
 .plate.is-on { border: 1px solid rgba(255, 255, 255, .5); }
 .plate-1.is-on { background: linear-gradient(135deg, #E4DACB, #D2C6B4); color: var(--plum);
   box-shadow: -1px 1px 0 #B9AD9B, -2px 2px 0 #B9AD9B, -3px 3px 0 #B4A896, -4px 4px 0 #B4A896, -5px 5px 0 #AFA391, -6px 6px 0 #AFA391, -7px 7px 0 #FFD9A4, -8px 8px 0 #3A2F4B, -9px 9px 0 #3A2F4B, -10px 10px 0 #3A2F4B, -11px 11px 0 #3A2F4B, -40px 46px 50px rgba(48, 40, 60, .32); }
@@ -260,24 +295,22 @@ body.is-ready .label { opacity: 1; }
   box-shadow: -1px 1px 0 #7E5B92, -2px 2px 0 #7E5B92, -3px 3px 0 #7E5B92, -4px 4px 0 #FFE7C4, -5px 5px 0 #7E5B92, -6px 6px 0 #7E5B92, -30px 34px 40px rgba(48, 40, 60, .28); }
 .plate.is-hot { border-color: var(--purple); }
 .layers { display: grid; gap: 4px; }
-.layer { padding: 20px 0; border-top: 1px solid var(--line); opacity: .62; transition: opacity .5s; }
+.layer { padding: 14px 0; border-top: 1px solid var(--line); opacity: .62; transition: opacity .5s; }
 .layer.is-on { opacity: 1; }
 .layer-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.layer h3 { font-size: 1.7rem; }
-.layer p { margin-top: 8px; color: #4B4357; max-width: 34rem; }
+.layer h3 { font-size: 1.45rem; }
+.layer p { margin-top: 4px; color: #4B4357; max-width: 34rem; font-size: .93rem; line-height: 1.5; }
 .layer-state { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--purple); }
 .switch { width: 52px; height: 30px; border-radius: 999px; border: 1px solid var(--line); background: var(--ivory-2); position: relative; flex: none; transition: background-color .35s, border-color .35s; }
 .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(48, 40, 60, .3); transition: transform .4s var(--ease); }
 .switch[aria-checked="true"] { background: var(--purple); border-color: var(--purple); }
 .switch[aria-checked="true"]::after { transform: translateX(22px); }
-.scenario { margin-top: 22px; padding: 24px 26px; border-radius: 20px; background: var(--plum); color: var(--ivory); }
-.scenario-label { font-family: var(--serif); font-style: italic; font-size: 1.25rem; color: var(--lav-light); }
-.scenario ol { margin-top: 10px; display: grid; }
-.scenario li { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .6s var(--ease), opacity .5s, padding .6s var(--ease); font-size: .95rem; color: #E6DFEC; padding-left: 20px; position: relative; }
-.scenario li > span { overflow: hidden; }
-.scenario li.is-on { grid-template-rows: 1fr; opacity: 1; padding-top: 6px; padding-bottom: 6px; }
-.scenario li::before { content: ""; position: absolute; left: 2px; top: 15px; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); opacity: 0; transition: opacity .4s; }
-.scenario li.is-on::before { opacity: 1; }
+.scenario { margin-top: 10px; padding: 18px 22px; border-radius: 20px; background: var(--plum); color: var(--ivory); scroll-margin-bottom: 24px; }
+.scenario-label { font-family: var(--serif); font-style: italic; font-size: 1.2rem; color: var(--lav-light); }
+.scenario ol { margin-top: 8px; display: grid; gap: 8px; }
+.scenario li { display: none; font-size: .93rem; line-height: 1.5; color: #E6DFEC; padding-left: 20px; position: relative; }
+.scenario li.is-on { display: block; animation: rise .5s var(--ease) both; }
+.scenario li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: clamp(48px, 7vw, 90px); padding-top: 36px; border-top: 1px solid var(--line); }
 .steps li { display: flex; gap: 16px; }
 .steps li > span { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--lavender); color: var(--purple); font-family: var(--serif); }
@@ -305,10 +338,24 @@ body.is-ready .label { opacity: 1; }
 .no-3d .studio-grid { grid-template-columns: minmax(250px, 340px) minmax(0, 1fr); }
 .console { border-radius: 24px; border: 1px solid var(--line-dark); background: rgba(34, 28, 43, .82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 40px 90px -40px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .06); min-height: 560px; overflow: hidden; }
-.console-tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 14px; border-bottom: 1px solid var(--line-dark); }
+.console-tabs { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 18px 16px; border-bottom: 1px solid var(--line-dark); }
+/* numbered prompts that walk a visitor through the studio */
+.step-label { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; font-size: .9rem; font-weight: 500; color: var(--ivory); }
+.step-label span { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--lav-light); color: var(--plum-deep); font: 600 .82rem/1 var(--sans); }
+.step-label-console { padding: 16px 18px 10px; margin: 0; }
+/* "Your turn": step-by-step instructions right above each live demo */
+.your-turn { margin: 0 0 16px; padding: 16px 18px; border-radius: 16px; border: 1px solid rgba(201, 169, 218, .45); background: rgba(201, 169, 218, .1); }
+.yt-head { font-family: var(--serif); font-size: 1.15rem; color: var(--ivory); margin-bottom: 8px; }
+.yt-head::after { content: " ↓"; color: var(--lav-light); }
+.your-turn ol { counter-reset: yt; display: grid; gap: 8px; }
+.your-turn li { counter-increment: yt; position: relative; padding-left: 32px; font-size: .92rem; line-height: 1.5; color: #E6DFEC; }
+.your-turn li::before { content: counter(yt); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--lav-light); color: var(--lav-light); font: 600 .74rem/1 var(--sans); }
+.your-turn b { color: var(--ivory); font-weight: 600; }
 .console-tabs:empty { display: none; }
-.console-tabs button { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line-dark); background: transparent; font-size: .86rem; color: var(--muted-dark); transition: background-color .3s, color .3s; }
+.console-tabs button { min-height: 46px; padding: 0 20px; border-radius: 999px; border: 1px solid rgba(247, 243, 237, .35); background: rgba(247, 243, 237, .06); font-size: .95rem; font-weight: 500; color: var(--ivory); transition: background-color .3s, color .3s, border-color .3s; }
+.console-tabs button:hover { border-color: var(--lav-light); background: rgba(201, 169, 218, .14); }
 .console-tabs button[aria-selected="true"] { background: var(--lav-light); border-color: var(--lav-light); color: var(--plum-deep); }
+.console-tabs button[aria-selected="true"]::before { content: "✓ "; }
 .asst { padding: 24px 26px 26px; }
 .js .asst { animation: rise .55s var(--ease) both; }
 .asst + .asst { border-top: 1px solid var(--line-dark); }
@@ -457,15 +504,26 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .matrix td.y::before { width: 13px; height: 7px; border-radius: 0; background: none; border-left: 2px solid var(--purple); border-bottom: 2px solid var(--purple); transform: rotate(-45deg) translateY(-2px); }
 .matrix .pop { background: rgba(160, 120, 180, .1); }
 .matrix thead .pop { border-radius: 14px 14px 0 0; } .matrix tbody tr:last-child .pop { border-radius: 0 0 14px 14px; }
-.faq-list { margin-top: clamp(48px, 6vw, 80px); max-width: 52rem; }
-.faq-list h3 { margin-bottom: 16px; }
-.faq-list details { border-top: 1px solid var(--line); }
-.faq-list details:last-child { border-bottom: 1px solid var(--line); }
-.faq-list summary { padding: 18px 30px 18px 0; cursor: pointer; font-size: 1.05rem; font-weight: 500; list-style: none; position: relative; }
-.faq-list summary::-webkit-details-marker { display: none; }
-.faq-list summary::after { content: "+"; position: absolute; right: 4px; top: 14px; font: 300 1.5rem var(--serif); color: var(--purple); transition: transform .4s var(--ease); }
-.faq-list details[open] summary::after { transform: rotate(45deg); }
-.faq-list details p { padding: 0 0 20px; color: #4B4357; max-width: 44rem; }
+.questions { margin-top: clamp(72px, 9vw, 120px); max-width: 52rem; }
+.questions h3 { margin-bottom: 22px; }
+
+/* pricing as three numbered steps */
+.price-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: clamp(36px, 5vw, 56px); position: relative; counter-reset: none; }
+.price-steps::before { content: ""; position: absolute; left: 8%; right: 8%; top: 22px; height: 2px; background: linear-gradient(to right, var(--lavender), var(--purple)); opacity: .45; }
+.price-steps li { position: relative; padding: 0 6px; }
+.ps-num { position: relative; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--plum); color: var(--ivory); font: 400 1.3rem/1 var(--serif); box-shadow: 0 0 0 6px var(--ivory); }
+.ps-cost { margin-top: 18px; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--purple); }
+.ps-cost small { font-size: inherit; color: var(--muted); letter-spacing: .1em; }
+.price-steps h3 { font-size: 1.45rem; margin: 6px 0 8px; }
+.price-steps li > p:last-child { color: #4B4357; font-size: .95rem; max-width: 24rem; }
+.questions h3 { margin-bottom: 16px; }
+.questions details { border-top: 1px solid var(--line); }
+.questions details:last-child { border-bottom: 1px solid var(--line); }
+.questions summary { padding: 18px 30px 18px 0; cursor: pointer; font-size: 1.05rem; font-weight: 500; list-style: none; position: relative; }
+.questions summary::-webkit-details-marker { display: none; }
+.questions summary::after { content: "+"; position: absolute; right: 4px; top: 14px; font: 300 1.5rem var(--serif); color: var(--purple); transition: transform .4s var(--ease); }
+.questions details[open] summary::after { transform: rotate(45deg); }
+.questions details p { padding: 0 0 20px; color: #4B4357; max-width: 44rem; }
 
 /* ---------- about ---------- */
 .letter { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.4fr); gap: clamp(30px, 7vw, 110px); padding-top: clamp(30px, 4vw, 60px); border-top: 1px solid var(--line); }
@@ -514,6 +572,16 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .staging-note { position: fixed; left: 50%; top: 4px; transform: translateX(-50%); z-index: 70; width: max-content; max-width: min(60vw, 640px); padding: 4px 14px; border-radius: 999px; line-height: 1.3;
   background: var(--gold); color: var(--plum-deep); font-size: .76rem; font-weight: 500; text-align: center; box-shadow: 0 8px 24px rgba(0, 0, 0, .4); pointer-events: none; }
 
+/* back-to-top: bottom left, so it never sits on the chat button */
+.to-top { position: fixed; left: 20px; bottom: 20px; z-index: 50; display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 18px 0 14px; border-radius: 999px;
+  background: var(--plum); color: var(--ivory); border: 1px solid rgba(247, 243, 237, .25); text-decoration: none; font-size: .9rem; font-weight: 500;
+  box-shadow: 0 12px 30px -12px rgba(0, 0, 0, .55); opacity: 0; visibility: hidden; transform: translateY(12px);
+  transition: opacity .4s var(--ease), transform .4s var(--ease), visibility 0s .4s, background-color .3s; }
+.to-top.is-shown { opacity: 1; visibility: visible; transform: none; transition: opacity .4s var(--ease), transform .4s var(--ease), background-color .3s; }
+.to-top:hover { background: var(--purple); }
+.to-top-arrow { font: 600 1.15rem/1 var(--sans); color: var(--lav-light); }
+body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { opacity: 0; visibility: hidden; }
+
 /* reveal on scroll */
 .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
 .js .reveal.is-in { opacity: 1; transform: none; }
@@ -540,25 +608,38 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   .nav-contact { display: block; color: var(--lav-light); }
   .nav.menu-open { background: var(--plum-deep); color: var(--ivory); }
 
-  .hero { min-height: 600px; }
-  .hero-copy { left: 0; top: calc(var(--nav-h) + 14px); transform: none; width: auto; padding: 0 var(--gutter); text-align: left; }
-  h1 { font-size: clamp(2rem, 8.6vw, 2.7rem); }
-  .lead { margin: 14px 0 0; font-size: 1rem; }
-  .cta-row { justify-content: flex-start; margin-top: 18px; gap: 8px; }
-  .cta-row { flex-wrap: nowrap; }
-  .cta-row .btn { min-height: 44px; padding: 0 12px; font-size: .86rem; flex: 1 1 0; }
-  /* bottom offsets leave room for the live chat button */
-  .hero-foot { left: 0; right: 0; bottom: 66px; flex-direction: column; align-items: stretch; gap: 0; }
+  /* Phones: copy, model and business chips each get their own row, nothing overlaps. */
+  .hero { height: auto; min-height: 0; display: flex; flex-direction: column; padding-top: calc(var(--nav-h) + 18px); }
+  .hero-copy { position: relative; order: 1; left: auto; top: auto; transform: none; width: auto; padding: 0 var(--gutter); text-align: left; }
+  .hero-copy .eyebrow { font-size: .66rem; letter-spacing: .12em; margin-bottom: 12px; }
+  h1 { font-size: clamp(1.9rem, 8.2vw, 2.6rem); }
+  .lead { margin: 14px 0 0; font-size: 1rem; line-height: 1.55; }
+  .cta-row { justify-content: flex-start; flex-wrap: wrap; margin-top: 20px; gap: 10px; }
+  .cta-row .btn { min-height: 48px; padding: 0 18px; font-size: .95rem; flex: 1 1 auto; }
+  .hero-stage { position: relative; order: 2; inset: auto; height: clamp(300px, 50svh, 480px); margin-top: 8px; scroll-margin-top: var(--nav-h); }
+  .labels { display: none; }                      /* the chips below name every business */
+  .hero-foot { position: relative; order: 3; left: auto; right: auto; bottom: auto; flex-direction: column; align-items: stretch; gap: 0; padding: 4px 0 36px; }
+  .hero.is-focused .hero-copy { visibility: visible; opacity: 1; }
   .toggle3d { display: none; }
+  /* the live chat button: a small round button on phones, so it never covers content */
+  .sl-fab { right: 14px !important; bottom: 14px !important; width: 54px; height: 54px; padding: 0 !important; justify-content: center; }
+  .sl-fab .sl-fab-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .sl-fab::after { content: ""; width: 22px; height: 22px; background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 5h16a1 1 0 011 1v10a1 1 0 01-1 1H9l-5 4V6a1 1 0 011-1z'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 5h16a1 1 0 011 1v10a1 1 0 01-1 1H9l-5 4V6a1 1 0 011-1z'/%3E%3C/svg%3E") center / contain no-repeat; }
+  .sl-fab .sl-fab-dot { position: absolute; top: 9px; right: 9px; }
+  .to-top { left: 14px; bottom: 14px; width: 54px; height: 54px; min-height: 0; padding: 0; justify-content: center; }
+  .to-top span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  body:has(#panel:not([hidden])) .sl-fab, body:has(.nav-links.is-open) .sl-fab { display: none; }
   .price-flow > *, .sim-grid > * { min-width: 0; }
   .field3d .deck { width: min(250px, 62vw); }
   .rail { overflow-x: auto; padding: 4px var(--gutter); scrollbar-width: none; }
   .rail::-webkit-scrollbar { display: none; }
   .rail button { min-height: 44px; padding: 0 16px; }
   .toggle3d { align-self: center; min-height: 40px; }
-  .back { top: calc(var(--nav-h) + 8px); left: 12px; }
-  .hero.is-focused .hero-foot { display: none; }
-  .panel { position: fixed; inset: auto 8px 70px 8px; width: auto; top: auto; max-height: 54svh; animation-name: sheet-up; z-index: 45; }
+  .back { position: fixed; top: calc(var(--nav-h) + 10px); left: 12px; z-index: 46; }
+  .hero.is-focused .hero-foot { visibility: hidden; }
+  .panel { position: fixed; inset: auto 8px 8px 8px; width: auto; top: auto; max-height: 50svh; animation-name: sheet-up; z-index: 1001; }
   .panel-body { padding: 2px 20px 18px; }
   .panel-body h3 { font-size: 1.7rem; } .panel-body blockquote { font-size: 1.12rem; }
   @keyframes sheet-up { from { opacity: 0; transform: translateY(40px); } }
@@ -571,8 +652,16 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   .biz-body ul { grid-template-columns: 1fr; grid-column: auto; grid-row: auto; gap: 14px; }
   .stack-wrap, .case, .letter, .concepts-head, .formulas > div { grid-template-columns: 1fr; }
   .stack { height: 330px; }
+  .stack { position: relative; top: auto; }
   .plate { width: min(230px, 58vw); } .plate-2 { --z: 110px; } .plate-3 { --z: 220px; } .plate-2.is-on { --z: 58px; } .plate-3.is-on { --z: 116px; }
-  .steps, .promises, .gallery, .doors { grid-template-columns: 1fr; }
+  .steps, .promises, .gallery, .doors, .primer dl, .price-steps { grid-template-columns: 1fr; }
+  .price-steps { gap: 22px; }
+  .price-steps::before { left: 22px; right: auto; top: 22px; bottom: 22px; width: 2px; height: auto; background: linear-gradient(var(--lavender), var(--purple)); }
+  .price-steps li { padding: 0 0 0 64px; min-height: 46px; }
+  .ps-num { position: absolute; left: 0; top: 0; }
+  .ps-cost { margin-top: 4px; }
+  .step-label { font-size: .86rem; }
+  .biz-body .picture { grid-column: auto; }
   .studio-grid { grid-template-columns: 1fr; }
   .studio-view { height: 40svh; }
   .challenges { position: static; }
@@ -582,7 +671,17 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   .sim-grid { grid-template-columns: 1fr; }
   .field3d { height: 290px; }
   .browser { position: static; } .browser-view { height: 60svh; }
-  .price-start, .price-add { padding: 24px 20px; }
+  .price-start, .price-add { padding: 24px 16px; }
+  /* the plan table fits a phone without sideways scrolling */
+  .matrix { min-width: 0; table-layout: fixed; }
+  .matrix thead th:first-child, .matrix tbody th { width: 36%; }
+  .matrix thead th { padding: 26px 3px 12px; font-size: .66rem; letter-spacing: -.01em; }
+  .matrix thead b { font-size: 1.45rem; }
+  .matrix thead small { font-size: .7rem; }
+  .matrix thead i { font-size: .58rem; padding: 2px 7px; }
+  .matrix tbody th { font-size: .84rem; padding: 11px 4px 11px 0; line-height: 1.3; }
+  .matrix td { padding: 11px 2px; }
+  .console { scroll-margin-top: calc(var(--nav-h) + 10px); }
   .finale { padding-top: 90px; }
 }
 
@@ -745,11 +844,22 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
           <p class="section-lead">Every business runs differently, so there's no single package here. This is how the same three tools bend around five very different working days.</p>
         </header>
 
+        <details class="primer" id="primer">
+          <summary><span>New to this?</span> What a website, an AI assistant and automation actually do
+            <b class="primer-cta" aria-hidden="true"><i class="more">Read more</i><i class="less">Show less</i></b></summary>
+          <dl>
+            <div><dt>A website</dt><dd>Your shop window online. When someone hears about you or searches for what you do, it's where they find what you offer, what it costs, where you are and how to book or get in touch, at any time of day.</dd></div>
+            <div><dt>An AI assistant</dt><dd>A chat box on your website that answers customers' questions in plain, friendly language, using only the information you've given it: your services, prices, hours and policies. If it doesn't know something, it says so and passes the question to you.</dd></div>
+            <div><dt>Automation</dt><dd>Small jobs that happen by themselves once they're set up, like a reminder the day before an appointment or a thank-you message afterwards. You decide what gets sent, and when.</dd></div>
+          </dl>
+        </details>
+
         <div class="ledger" id="ledger">
           <details class="biz" name="biz" data-biz="salon" data-name="The salon" open>
             <summary><span class="biz-no">01</span><span class="biz-name">The salon</span><span class="biz-sector">Hair &amp; beauty</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're busy making someone feel their best. Your website can help answer enquiries while you focus on your client.</blockquote>
+              <div class="picture"><h4>Picture this</h4><p>It's 8pm and you're finishing a colour. Someone finds your website, asks whether you do balayage and how much it is, and gets an answer straight from your price list, with a link to book. The next morning they're in your diary, and a reminder goes out to them the day before.</p></div>
               <ul>
                 <li><strong>Website</strong> A site that shows your work, lists what you offer and what it costs, and is wired into the booking system you already use.</li>
                 <li><strong>AI assistant</strong> A booking assistant that answers the questions you get every day, at any hour, using only the details you've given it.</li>
@@ -761,6 +871,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
             <summary><span class="biz-no">02</span><span class="biz-name">The wellness studio</span><span class="biz-sector">Wellbeing</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're mid-session, giving someone your full attention. Your website can quietly help the next person find the right treatment.</blockquote>
+              <div class="picture"><h4>Picture this</h4><p>Someone new isn't sure whether they need a massage or reflexology. Instead of emailing and waiting for you to finish, they answer two gentle questions on your website and are pointed to the session that suits them. Before they arrive, you get a short note of anything on their form worth checking.</p></div>
               <ul>
                 <li><strong>Website</strong> A calm, one-page site in your own voice, with booking built in, so people can book while you're with a client.</li>
                 <li><strong>AI assistant</strong> A service matcher that asks two or three gentle questions and points an unsure visitor to the right session.</li>
@@ -772,6 +883,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
             <summary><span class="biz-no">03</span><span class="biz-name">The café</span><span class="biz-sector">Food &amp; drink</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're serving customers, not sitting at a computer. Let your digital tools handle the everyday questions.</blockquote>
+              <div class="picture"><h4>Picture this</h4><p>Saturday lunchtime, queue out of the door. Meanwhile three people online want to know if you're dog-friendly, whether you have vegan options and if you take bookings for eight. Each gets an answer from the details you've provided, so nobody has to ring and you don't have to stop serving.</p></div>
               <ul>
                 <li><strong>Website</strong> Where you are, when you're open and what's on the menu, laid out clearly and easy to read on a phone.</li>
                 <li><strong>AI assistant</strong> An FAQ answerer for the things people always ask: opening hours, dietary options, dogs, group tables.</li>
@@ -783,6 +895,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
             <summary><span class="biz-no">04</span><span class="biz-name">The shop</span><span class="biz-sector">Independent retail</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're on the shop floor: wrapping, restocking, chatting. Your website can keep the lights on after you've locked up.</blockquote>
+              <div class="picture"><h4>Picture this</h4><p>After you've closed, someone asks whether you stock a particular candle. They get an answer from what you've told it, or, if it isn't sure, the question is passed to you rather than guessed. On Monday morning, a draft post about your new arrivals is waiting for you to check and share.</p></div>
               <ul>
                 <li><strong>Website</strong> A proper home for your story and your stock, with the practical details people look for before they visit.</li>
                 <li><strong>AI assistant</strong> Answers to "do you have…?" and "are you open on…?" based on what you've told it, never guesses.</li>
@@ -794,6 +907,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
             <summary><span class="biz-no">05</span><span class="biz-name">The workshop</span><span class="biz-sector">Trades</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>Your hands are busy. Your website can still be there when someone needs you.</blockquote>
+              <div class="picture"><h4>Picture this</h4><p>You're up a ladder when a homeowner looks for a joiner. Your website shows them your recent work, and the chat takes down what they need, where they are and how to reach them. When you're back down, the job details are in your inbox, ready for a call back.</p></div>
               <ul>
                 <li><strong>Website</strong> A clear showcase of what you do and where you work, with enquiries sent straight to your inbox, WhatsApp or phone.</li>
                 <li><strong>AI assistant</strong> An enquiry chat that takes down the useful details while you're up a ladder, so you can call back prepared.</li>
@@ -813,6 +927,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
         </header>
 
         <div class="stack-wrap">
+          <div class="stack-col">
           <div class="stack" id="stack" aria-hidden="true">
             <div class="plate plate-3" data-layer="automation">
               <svg viewBox="0 0 200 120"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="46" cy="60" r="12"/><circle cx="104" cy="32" r="12"/><circle cx="104" cy="88" r="12"/><circle cx="160" cy="60" r="12"/><path d="M57 54l36-17M57 66l36 17M115 37l35 18M115 83l35-18"/></g></svg>
@@ -823,6 +938,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
             <div class="plate plate-1 is-on" data-layer="website">
               <svg viewBox="0 0 200 120"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="24" y="18" width="152" height="84" rx="8"/><path d="M24 36h152"/><circle cx="36" cy="27" r="2.5"/><circle cx="46" cy="27" r="2.5"/><path d="M40 54h60M40 66h44M40 78h52" stroke-linecap="round"/><rect x="118" y="50" width="42" height="34" rx="4"/></g></svg>
             </div>
+          </div>
           </div>
 
           <div class="stack-side">
@@ -882,6 +998,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 
       <div class="studio-grid">
         <div class="challenges" id="challenges" role="group" aria-label="Business challenges">
+          <p class="step-label"><span>1</span>Pick the one that sounds like you</p>
           <button type="button" data-assts="booking reply" aria-pressed="true"><span>01</span>I can't answer enquiries while I'm working</button>
           <button type="button" data-assts="faq" aria-pressed="false"><span>02</span>I answer the same questions every day</button>
           <button type="button" data-assts="leads" aria-pressed="false"><span>03</span>People browse my site, then disappear</button>
@@ -894,6 +1011,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
         <div class="studio-view" id="studioStage" aria-hidden="true"><p class="studio-hint">Each screen is an assistant. Drag to walk around.</p></div>
 
         <div class="console" id="console">
+          <p class="step-label step-label-console" id="consoleStep"><span>2</span>Try the assistant below</p>
           <div class="console-tabs" id="consoleTabs" role="tablist" aria-label="Assistants for this challenge"></div>
 
           <article class="asst" data-asst="booking" data-name="Booking assistant">
@@ -901,11 +1019,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <p class="asst-problem">Enquiries arrive while you're with a customer, and by the time you reply they've booked elsewhere.</p></header>
             <dl class="facts">
               <div><dt>What it does</dt><dd>Answers questions about services, prices, opening hours and location at any hour, then points people to your booking page.</dd></div>
-              <div><dt>Who it suits</dt><dd>Anyone who takes appointments: therapists, salons, clinics, tutors, groomers.</dd></div>
-              <div><dt>What to try</dt><dd>Ask it something a customer would, or tap one of the example questions.</dd></div>
-              <div><dt>Made yours</dt><dd>It runs on a knowledge file written for your business: your services, prices, policies and tone.</dd></div>
+              <div><dt>Who it's for</dt><dd>Anyone who takes appointments: therapists, salons, clinics, tutors, groomers.</dd></div>
+              <div><dt>Set up for your business</dt><dd>I write down your services, prices, opening hours and policies, and the assistant answers from those. You see it working before it goes live.</dd></div>
             </dl>
             <div class="demo">
+              <div class="your-turn"><p class="yt-head">Your turn: try it in three steps</p><ol><li>Tap one of the example questions in the chat below, or type your own question in the box at the bottom.</li><li>Press <b>Send</b>.</li><li>Read the reply. Ask a follow-up, just as a customer would.</li></ol></div>
               <p class="st-demo-note"><strong>Demo.</strong> "Willow Lane Massage" is a fictional business used only for this demonstration.</p>
               <div class="chat glass" data-client="willow-lane" role="region" aria-label="Booking assistant demo">
                 <div class="chat-head">
@@ -934,11 +1052,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <p class="asst-problem">Replying to enquiries is the job you do every day and never enjoy.</p></header>
             <dl class="facts">
               <div><dt>What it does</dt><dd>Drafts a reply to a customer enquiry in your voice, using only what you've told it.</dd></div>
-              <div><dt>Who it suits</dt><dd>Anyone who writes the same sort of reply again and again. This one is an early, self-serve prototype.</dd></div>
-              <div><dt>What to try</dt><dd>Describe your own business in a few lines, paste a typical enquiry and see the draft.</dd></div>
-              <div><dt>Made yours</dt><dd>Anything it doesn't know, like a price or an address, comes back as a blank for you to fill in, never a guess.</dd></div>
+              <div><dt>Who it's for</dt><dd>Anyone who writes the same sort of reply again and again. This one is an early, self-serve prototype.</dd></div>
+              <div><dt>Set up for your business</dt><dd>Anything it doesn't know, like a price or an address, comes back as a blank for you to fill in. It never guesses.</dd></div>
             </dl>
-            <div class="demo"><div class="rd glass" id="replyRoot" role="group" aria-label="Reply drafter"></div></div>
+            <div class="demo">
+              <div class="your-turn"><p class="yt-head">Your turn: try it in three steps</p><ol><li>Pick one of the example businesses, or describe your own in a few lines.</li><li>Paste in a message a customer might send you.</li><li>Press <b>Draft my reply</b> and read the draft.</li></ol></div><div class="rd glass" id="replyRoot" role="group" aria-label="Reply drafter"></div></div>
           </article>
 
           <article class="asst" data-asst="faq" data-name="FAQ answerer">
@@ -946,11 +1064,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <p class="asst-problem">The same handful of questions, every single day.</p></header>
             <dl class="facts">
               <div><dt>What it does</dt><dd>A light widget for a single service page. It answers practical "before you book" and "is this for me?" questions from your own FAQs.</dd></div>
-              <div><dt>Who it suits</dt><dd>Businesses whose customers want reassurance before they commit.</dd></div>
-              <div><dt>What to try</dt><dd>Pick a question, or ask your own.</dd></div>
-              <div><dt>Made yours</dt><dd>It doesn't quote prices or take bookings, and it knows to send anything it shouldn't answer straight to you.</dd></div>
+              <div><dt>Who it's for</dt><dd>Businesses whose customers want reassurance before they commit.</dd></div>
+              <div><dt>Set up for your business</dt><dd>It answers from your own FAQs. It won't quote prices or take bookings, and it passes anything it shouldn't answer to you.</dd></div>
             </dl>
             <div class="demo">
+              <div class="your-turn"><p class="yt-head">Your turn: try it in three steps</p><ol><li>Tap one of the questions below, or type your own in the box.</li><li>Press <b>Ask</b>.</li><li>Read the answer underneath.</li></ol></div>
               <p class="st-demo-note"><strong>Demo.</strong> "Willow Lane Massage" is a fictional business used only for this demonstration.</p>
               <div class="faq glass" id="faqRoot" data-client="willow-lane" role="group" aria-label="FAQ answerer"></div>
             </div>
@@ -961,11 +1079,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <p class="asst-problem">People look you up in the evening, mean to get in touch, and forget by morning.</p></header>
             <dl class="facts">
               <div><dt>What it does</dt><dd>Chats with visitors out of hours, answers what it can and takes their details so you can follow up.</dd></div>
-              <div><dt>Who it suits</dt><dd>Trades, studios and anyone who can't be at a screen during the working day.</dd></div>
-              <div><dt>What to try</dt><dd>It's SparkLab's own assistant, sitting in the corner of this page. Open it and ask about a website for your business.</dd></div>
-              <div><dt>Made yours</dt><dd>Leads go wherever you'll actually see them. On this page it's real: if you leave your details, they are sent to Sara.</dd></div>
+              <div><dt>Who it's for</dt><dd>Trades, studios and anyone who can't be at a screen during the working day.</dd></div>
+              <div><dt>Set up for your business</dt><dd>Leads go wherever you'll actually see them, such as your email inbox. On this page it's real: details you leave are sent to Sara.</dd></div>
             </dl>
-            <div class="demo demo-plain"><button class="btn btn-light" type="button" id="openLeadChat">Open the chat</button></div>
+            <div class="demo demo-plain">
+              <div class="your-turn"><p class="yt-head">Your turn: try it in three steps</p><ol><li>Press <b>Open the chat</b> below, or the round chat button in the corner of the screen.</li><li>Ask about a website for your business, as you would if you were enquiring.</li><li>If you'd like Sara to get back to you, leave your name and email in the chat.</li></ol></div><button class="btn btn-light" type="button" id="openLeadChat">Open the chat</button></div>
           </article>
 
           <article class="asst" data-asst="matcher" data-name="Service matcher">
@@ -973,11 +1091,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <p class="asst-problem">Visitors know they need <em>something</em>, but not which thing.</p></header>
             <dl class="facts">
               <div><dt>What it does</dt><dd>Asks two or three quick questions and recommends one service, with a short reason why.</dd></div>
-              <div><dt>Who it suits</dt><dd>Businesses with a list of services long enough to confuse a newcomer.</dd></div>
-              <div><dt>What to try</dt><dd>Answer as a first-time customer would.</dd></div>
-              <div><dt>Made yours</dt><dd>It only ever recommends from your own list of services.</dd></div>
+              <div><dt>Who it's for</dt><dd>Businesses with a list of services long enough to confuse a newcomer.</dd></div>
+              <div><dt>Set up for your business</dt><dd>It only ever suggests services from your own list.</dd></div>
             </dl>
             <div class="demo">
+              <div class="your-turn"><p class="yt-head">Your turn: try it in three steps</p><ol><li>Tap the answer that fits best for the first question.</li><li>Answer the next one or two questions the same way.</li><li>See which service it suggests, and why.</li></ol></div>
               <p class="st-demo-note"><strong>Demo.</strong> "Willow Lane Massage" is a fictional business used only for this demonstration.</p>
               <div class="tm glass" id="tmRoot" data-client="willow-lane" role="group" aria-label="Service matcher"></div>
             </div>
@@ -988,9 +1106,8 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <p class="asst-problem">An empty slot that someone else would gladly have taken.</p></header>
             <dl class="facts">
               <div><dt>What it does</dt><dd>Drafts a friendly reminder before each appointment and a warm message offering to rebook after a cancellation.</dd></div>
-              <div><dt>Who it suits</dt><dd>Anyone whose income depends on a full diary.</dd></div>
-              <div><dt>What to try</dt><dd>Walk through a reminder and a cancellation to see the messages it writes.</dd></div>
-              <div><dt>Made yours</dt><dd>Written in your tone, around your own cancellation policy. No hard sell.</dd></div>
+              <div><dt>Who it's for</dt><dd>Anyone whose income depends on a full diary.</dd></div>
+              <div><dt>Set up for your business</dt><dd>Written in your tone, around your own cancellation policy. No hard sell.</dd></div>
             </dl>
             <ol class="flow" aria-label="How the no-show saver works">
               <li><b>Reminder sent</b>A friendly nudge goes out before the appointment.</li>
@@ -999,6 +1116,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <li><b>Slot filled</b>The gap gets picked up instead of sitting empty.</li>
             </ol>
             <div class="demo">
+              <div class="your-turn"><p class="yt-head">Your turn: try it in three steps</p><ol><li>Press <b>Send a friendly reminder</b> to see the message a customer gets before their appointment.</li><li>Then try <b>They cancelled, win them back</b> to see the follow-up after a cancellation.</li><li>Nothing is really sent here. The demo just shows you the message.</li></ol></div>
               <p class="st-demo-note"><strong>Demo.</strong> "Willow Lane Massage" is a fictional business used only for this demonstration.</p>
               <div class="rc glass" id="nsRoot" data-client="willow-lane" role="group" aria-label="No-show saver"></div>
             </div>
@@ -1009,11 +1127,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <p class="asst-problem">Happy customers rarely think to leave a review.</p></header>
             <dl class="facts">
               <div><dt>What it does</dt><dd>Drafts a private "how did it go?" message after an appointment and invites happy customers to leave a review.</dd></div>
-              <div><dt>Who it suits</dt><dd>Local businesses that rely on word of mouth.</dd></div>
-              <div><dt>What to try</dt><dd>Play the customer and reply with a good or a not-so-good experience.</dd></div>
-              <div><dt>Made yours</dt><dd>Anyone who wasn't happy is flagged to you first, so you can put things right.</dd></div>
+              <div><dt>Who it's for</dt><dd>Local businesses that rely on word of mouth.</dd></div>
+              <div><dt>Set up for your business</dt><dd>Anyone who wasn't happy is flagged to you privately first, so you can put things right.</dd></div>
             </dl>
             <div class="demo">
+              <div class="your-turn"><p class="yt-head">Your turn: try it in three steps</p><ol><li>Press <b>Send review request</b> to see the message a customer gets after their visit.</li><li>Reply as the customer, choosing a happy or an unhappy answer.</li><li>See what happens next: happy customers are invited to leave a review, unhappy ones are flagged to you.</li></ol></div>
               <p class="st-demo-note"><strong>Demo.</strong> "Willow Lane Massage" is a fictional business used only for this demonstration.</p>
               <div class="rc glass" id="rcRoot" data-client="willow-lane" role="group" aria-label="Review collector"></div>
             </div>
@@ -1024,11 +1142,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <p class="asst-problem">Every review deserves a reply, and the awkward ones are the hardest to write.</p></header>
             <dl class="facts">
               <div><dt>What it does</dt><dd>Drafts a public reply to any review: warm on the good ones, calm and gracious on the difficult ones.</dd></div>
-              <div><dt>Who it suits</dt><dd>Anyone with a Google or Facebook page they don't have time to tend.</dd></div>
-              <div><dt>What to try</dt><dd>Paste a review, kind or otherwise, and read the draft.</dd></div>
-              <div><dt>Made yours</dt><dd>It drafts; you decide what gets posted.</dd></div>
+              <div><dt>Who it's for</dt><dd>Anyone with a Google or Facebook page they don't have time to tend.</dd></div>
+              <div><dt>Set up for your business</dt><dd>It only drafts. You decide what, if anything, gets posted.</dd></div>
             </dl>
             <div class="demo">
+              <div class="your-turn"><p class="yt-head">Your turn: try it in three steps</p><ol><li>Tap one of the example reviews (glowing, lukewarm or awkward), or paste in your own.</li><li>Press <b>Draft a reply</b>.</li><li>Read the suggested public reply.</li></ol></div>
               <p class="st-demo-note"><strong>Demo.</strong> "Willow Lane Massage" is a fictional business used only for this demonstration.</p>
               <div class="rc glass" id="rrRoot" data-client="willow-lane" role="group" aria-label="Review responder"></div>
             </div>
@@ -1039,11 +1157,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <p class="asst-problem">You meet a new client knowing only what you skimmed on a form five minutes ago.</p></header>
             <dl class="facts">
               <div><dt>What it does</dt><dd>Turns a messy intake form into a short brief: what they want, a plain summary and anything worth checking first.</dd></div>
-              <div><dt>Who it suits</dt><dd>Therapists, clinics and practitioners who take a form before a first visit.</dd></div>
-              <div><dt>What to try</dt><dd>Run the sample form and read the brief it produces.</dd></div>
-              <div><dt>Made yours</dt><dd>It flags anything matching your own "not suitable if" list. It never diagnoses.</dd></div>
+              <div><dt>Who it's for</dt><dd>Therapists, clinics and practitioners who take a form before a first visit.</dd></div>
+              <div><dt>Set up for your business</dt><dd>It flags anything on your own "not suitable if" list. It never diagnoses.</dd></div>
             </dl>
             <div class="demo">
+              <div class="your-turn"><p class="yt-head">Your turn: try it in three steps</p><ol><li>Tap one of the example customer forms, such as <b>Tight shoulders</b>.</li><li>Press <b>Summarise for me</b>.</li><li>Read the short brief, including anything worth checking first.</li></ol></div>
               <p class="st-demo-note"><strong>Demo.</strong> "Willow Lane Massage" is a fictional business used only for this demonstration.</p>
               <div class="rc glass" id="intakeRoot" data-client="willow-lane" role="group" aria-label="Intake summariser"></div>
             </div>
@@ -1054,11 +1172,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
               <p class="asst-problem">Posting on social media always falls to the bottom of the list.</p></header>
             <dl class="facts">
               <div><dt>What it does</dt><dd>Drafts batches of Instagram or Facebook captions for you to check, tweak and post.</dd></div>
-              <div><dt>Who it suits</dt><dd>Owners who know they should post more and never find the time.</dd></div>
-              <div><dt>What to try</dt><dd>Pick a topic and a platform and generate three sample captions.</dd></div>
-              <div><dt>Made yours</dt><dd>It learns from a few of your real captions, and avoids the words and claims you'd never use.</dd></div>
+              <div><dt>Who it's for</dt><dd>Owners who know they should post more and never find the time.</dd></div>
+              <div><dt>Set up for your business</dt><dd>It picks up your style from a few of your real posts, and avoids the words and claims you'd never use.</dd></div>
             </dl>
             <div class="demo">
+              <div class="your-turn"><p class="yt-head">Your turn: try it in three steps</p><ol><li>Choose a topic and a platform from the two drop-down lists.</li><li>Press <b>Generate 3 captions</b>.</li><li>Read the three draft posts. In real use you'd check and tweak them before posting.</li></ol></div>
               <p class="st-demo-note"><strong>Demo.</strong> "Willow Lane Massage" is a fictional business used only for this demonstration.</p>
               <div class="cg glass" id="cgRoot" data-mode="taster" data-count="3" data-client="willow-lane">
                 <p class="cg-intro">Pick a topic and platform, and generate 3 sample captions in the business’s voice.</p>
@@ -1253,12 +1371,33 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
         <header class="section-head">
           <p class="eyebrow">Pricing</p>
           <h2 id="pricing-title">Start with the website. <em>Add help when you want it.</em></h2>
-          <p class="section-lead">You see a working demo of your site before you spend a penny.</p>
+          <p class="section-lead">Three simple steps. You see a working demo of your site before you spend a penny, and the assistants are entirely optional.</p>
         </header>
+
+        <ol class="price-steps" aria-label="How it works, step by step">
+          <li>
+            <span class="ps-num">1</span>
+            <p class="ps-cost">Free</p>
+            <h3>Your demo</h3>
+            <p>Tell me a little about your business and I'll build a working demo of your site. Free to look at, no obligation.</p>
+          </li>
+          <li>
+            <span class="ps-num">2</span>
+            <p class="ps-cost">from £450 <small>+ £20/month</small></p>
+            <h3>Your website goes live</h3>
+            <p>Once you're happy, it goes live on your domain. Hosting, updates and small changes are looked after for you.</p>
+          </li>
+          <li>
+            <span class="ps-num">3</span>
+            <p class="ps-cost">Optional · from £97/month</p>
+            <h3>Add an assistant, if and when you want</h3>
+            <p>Pick a monthly plan whenever you're ready, or never. Starting with just the website is completely fine.</p>
+          </li>
+        </ol>
 
         <div class="price-flow">
           <article class="price-start">
-            <p class="step-tag">Start here</p>
+            <p class="step-tag">Step 2 · Your website</p>
             <h3>Website + care plan</h3>
             <p class="amount"><small>from</small> £450 <span>+ £20/month</span></p>
             <ul>
@@ -1271,7 +1410,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
           </article>
 
           <div class="price-add">
-            <p class="step-tag">Add when it suits · optional AI assistants, monthly</p>
+            <p class="step-tag">Step 3 · Optional · AI assistant plans, monthly</p>
             <div class="matrix-wrap">
               <table class="matrix">
                 <thead>
@@ -1296,7 +1435,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
           </div>
         </div>
 
-        <div class="faq-list">
+        <div class="questions">
           <h3>The things people usually ask first</h3>
           <details name="q"><summary>Do I need to be technical?</summary><p>Not at all. You don't touch any of the technical side. I handle the building, hosting and updates. You just tell me about your work.</p></details>
           <details name="q"><summary>Who hosts the website?</summary><p>I do, as part of the care plan. It stays online, secure and up to date without you having to think about it.</p></details>
@@ -1348,10 +1487,15 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
       </div>
       <footer class="footer">
         <p>© <span id="year">2026</span> SparkLab · Independent · Norwich-based</p>
-        <p><a href="/blog">Blog</a> · <a href="/apps">SparkLab apps</a> · <a href="/privacy">Privacy</a></p>
+        <p><a href="/blog">Blog</a> · <a href="/apps">SparkLab apps</a> · <a href="/privacy">Privacy</a> · <a href="#top" data-to-top>Back to top ↑</a></p>
       </footer>
     </section>
   </main>
+
+  <a class="to-top" id="toTop" href="#top" data-to-top aria-label="Back to the top of the page" tabindex="-1">
+    <b class="to-top-arrow" aria-hidden="true">↑</b>
+    <span>Back to top</span>
+  </a>
 
   <script type="module" src="/worlds/js/app.js"></script>
 </body>
