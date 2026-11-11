@@ -19,6 +19,12 @@ const elmfieldFootClinic = require("./elmfield-foot-clinic.js");
 const CLIENTS = {
   "willow-lane": willowLane,
   "elmfield-foot-clinic": elmfieldFootClinic,
+  // concept builds, one for each business in the homepage's 3D worlds (all fictional)
+  "fern-and-foil": require("./fern-and-foil.js"),
+  "still-water-studio": require("./still-water-studio.js"),
+  "larder-and-loaf": require("./larder-and-loaf.js"),
+  "hearth-and-thread": require("./hearth-and-thread.js"),
+  "alder-joinery": require("./alder-joinery.js"),
   // "roots-reflexology": require("./roots-reflexology.js"),
 };
 

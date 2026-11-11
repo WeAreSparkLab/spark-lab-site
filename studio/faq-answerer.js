@@ -29,6 +29,8 @@
   ];
   // A safety-minded starter is always offered — it's the "is this for me?" angle.
   var SAFETY_QUESTION = "Is there anyone this isn't suitable for?";
+  // a page can give its own fallback starters (JSON array in data-questions)
+  try { var own = JSON.parse(root.getAttribute("data-questions") || "null"); if (Array.isArray(own) && own.length) FALLBACK_QUESTIONS = own; } catch (e) { /* keep defaults */ }
 
   // --- Small DOM helpers -------------------------------------------------------
   function el(tag, className, text) {
@@ -43,6 +45,8 @@
   // fictional Willow Lane config so the demo stays truthful to what's shown.
   function fallbackAnswer(q) {
     var s = q.toLowerCase();
+    // other businesses (concept builds) get a plain fallback, never Willow Lane's answers
+    if (client) return "Sorry, I can't answer that right now. The best thing is to contact " + (businessName || "us") + " directly.";
     if (/pregnan|expecting|trimester/.test(s))
       return "Massage is offered from the second trimester onwards. In the first 12 weeks, or if you have any pregnancy concerns, it's best to check with your GP or midwife first.";
     if (/injur|hurt|pain|lump|surgery|unwell|fever|infection/.test(s))
@@ -66,7 +70,7 @@
 
   // --- Build the shell (intro + ask form + chips + answers list) ---------------
   function build() {
-    root.appendChild(el("p", "faq-intro", "Quick answers before you book — ask anything, or tap a question below."));
+    root.appendChild(el("p", "faq-intro", root.getAttribute("data-intro") || "Quick answers before you book — ask anything, or tap a question below."));
 
     formEl = el("form", "faq-form");
     formEl.setAttribute("autocomplete", "off");
@@ -77,7 +81,7 @@
     inputEl = el("input");
     inputEl.id = "faqInput";
     inputEl.type = "text";
-    inputEl.setAttribute("placeholder", "e.g. Is there parking nearby?");
+    inputEl.setAttribute("placeholder", root.getAttribute("data-placeholder") || "e.g. Is there parking nearby?");
     inputEl.setAttribute("maxlength", "300");
     sendEl = el("button", "faq-ask", "Ask");
     sendEl.type = "submit";
@@ -103,7 +107,7 @@
   function renderChips(questions) {
     while (chipsEl.firstChild) chipsEl.removeChild(chipsEl.firstChild);
     var qs = questions.slice(0, 4);
-    qs.push(SAFETY_QUESTION);
+    if (root.getAttribute("data-safety") !== "off") qs.push(SAFETY_QUESTION);
     qs.forEach(function (q) {
       var chip = el("button", "chat-chip", q);
       chip.type = "button";

@@ -220,6 +220,17 @@ const LINKS = [
   ['shop', [6, 0, -3.2], 'studio', [-8.6, 0, 5.9]],
 ];
 
+// One platform on its own (for the concept-build pages), with its trees and light spill.
+export function buildIsland(M, id) {
+  const strip = M.strip.clone(); strip.userData = { noShadow: true };
+  const lamp = M.ownLamp();
+  Kit.prototype.signBoard = M.metalDark;
+  const b = worlds[id](M, strip, lamp), g = b.K.build(), trees = [];
+  b.trees.forEach(([tx, ty, tz, h, seed]) => { const t = tree(M, h, seed, 1.1); t.position.set(tx, ty, tz); g.add(t); trees.push(t); });
+  const spill = glowPlane(7, 6, '#FFC98A', .34); spill.position.set(b.spill[0], .02, b.spill[1]); g.add(spill);
+  return { group: g, w: b.w, d: b.d, top: b.top, px: b.px, pz: b.pz, lamp, strip, trees };
+}
+
 export function build(M, { compact = false } = {}) {
   const root = new THREE.Group(), items = new Map(), lamps = [], trees = [], islands = {}, bridges = [];
 

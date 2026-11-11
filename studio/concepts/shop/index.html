@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Hearth &amp; Thread | Home &amp; Gifts, Holt</title>
+<meta name="description" content="A concept website by SparkLab for an invented home and gift shop, with a 3D look around and live AI assistants.">
+<!-- CONCEPT BUILD by SparkLab. Hearth & Thread is an invented business: name, address,
+     phone (Ofcom drama range), makers and prices are made up. The assistants use
+     api/_knowledge/hearth-and-thread.js, which mirrors the copy on this page. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Karla:wght@400;500;600;700&family=Newsreader:ital,wght@0,500;1,400&family=Instrument+Sans:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/studio/concepts/kit/concept.css">
+<style>
+  :root {
+    --bg: #F5F1F4; --paper: #FFFFFF; --ink: #2B2530; --muted: #6C6372; --line: rgba(43, 37, 48, .12);
+    --accent: #7B5C8E; --accent-ink: #FFFFFF; --soft: #ECE4F0; --stage: #2C2436; --stage-ink: #F4EEF7;
+    --display: "Libre Caslon Display", Georgia, serif; --body: "Karla", system-ui, sans-serif; --radius: 4px;
+  }
+  .hero h1 { font-size: clamp(2.7rem, 6.4vw, 5rem); line-height: 1; letter-spacing: -.02em; }
+  .hero h1 em { font-style: italic; }
+  .btn { border-radius: 2px; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; }
+  .boxes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .box { position: relative; padding: 26px 22px; border: 1.5px solid var(--line); background: var(--paper); cursor: pointer; text-align: left; transition: border-color .25s, transform .25s; }
+  .box:hover { transform: translateY(-3px); }
+  .box[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--soft); }
+  .box b { display: block; font-family: var(--display); font-size: 2.2rem; font-weight: 400; }
+  .box span { color: var(--muted); font-size: .92rem; }
+  .box-detail { margin-top: 16px; padding: 18px 20px; background: var(--soft); animation: rise .35s; }
+  .box-detail ul { margin-top: 8px; display: grid; gap: 4px; }
+  .box-detail li::before { content: "— "; color: var(--accent); }
+  @media (max-width: 680px) { .boxes { grid-template-columns: 1fr; } }
+</style>
+<script type="importmap">{ "imports": { "three": "/worlds/vendor/three.module.min.js" } }</script>
+</head>
+<body data-hours='{"1":[[9.5,17]],"2":[[9.5,17]],"3":[[9.5,17]],"4":[[9.5,17]],"5":[[9.5,17]],"6":[[9.5,17]],"0":[[11,16]]}'>
+<div class="concept-note"><strong>Concept build.</strong> Hearth &amp; Thread is an invented shop. This is a demo by <a href="https://www.wearesparklab.com/#work">SparkLab</a> of what a site like this can do, so nothing here can be bought.</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Hearth &amp; Thread</a>
+    <nav aria-label="Sections"><a href="#shop">The shop</a><a href="#gifts">Gift boxes</a><a href="#ask">Ask</a><a href="#visit">Visit</a></nav>
+    <a class="btn small" href="tel:01632960566">Call to reserve</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Home &amp; gifts · Chapel Yard, Holt</p>
+        <h1>Made nearby, <em>chosen with care.</em></h1>
+        <p class="lead">Stoneware from three Norfolk potters, soy candles poured down the road, washed linen and cards by local illustrators. Free gift wrapping on everything.</p>
+        <div class="cta">
+          <a class="btn" href="#ask">Find a gift</a>
+          <a class="btn ghost" href="#shop">Browse the shop</a>
+        </div>
+        <div class="facts"><span class="open-badge">Opening hours</span></div>
+      </div>
+
+      <div class="c3d" data-island="shop" aria-label="A 3D model of the shop. Drag to turn it, or use the numbered buttons.">
+        <canvas aria-hidden="true"></canvas>
+        <span class="c3d-hint">Drag to look around · tap a number</span>
+        <button class="c3d-spot" type="button" data-at="inside" data-title="Inside the shop" data-text="Shelves by maker, so you can see a potter's whole range together. Everything can be gift-wrapped while you wait.">1</button>
+        <button class="c3d-spot" type="button" data-at="vitrines" data-title="This month's window" data-text="New stoneware from the kiln and the winter candle scents, refreshed on the first Saturday of each month.">2</button>
+        <button class="c3d-spot" type="button" data-at="door" data-title="Room to browse" data-text="Step-free, with space to turn a wheelchair or pushchair between the tables.">3</button>
+        <button class="c3d-spot" type="button" data-at="sign" data-title="Local delivery" data-text="Free within 10 miles of Holt on orders over £40, usually within two working days.">4</button>
+        <div class="c3d-card" hidden><h3></h3><p></p><button class="c3d-close" type="button" aria-label="Close">×</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="shop">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">In the shop</p>
+        <h2>Five things we love to stock</h2>
+        <p>Call to reserve anything for three days, or for click and collect the same day.</p>
+      </div>
+      <div class="tabs" data-tabs="#shopCards" role="group" aria-label="Filter by price">
+        <button type="button" data-show="all" aria-pressed="true">Everything</button>
+        <button type="button" data-show="under20" aria-pressed="false">Under £20</button>
+        <button type="button" data-show="home" aria-pressed="false">For the home</button>
+        <button type="button" data-show="gift" aria-pressed="false">Easy gifts</button>
+      </div>
+      <div class="cards" id="shopCards">
+        <article class="card" data-cat="home gift under20"><h3>Handmade ceramics</h3><p class="meta">mugs from £18 · bowls from £24 · vases from £30</p><p>Stoneware by three Norfolk potters; every piece is slightly different.</p></article>
+        <article class="card" data-cat="home gift under20"><h3>Candles &amp; diffusers</h3><p class="meta">£12 – £34</p><p>Soy candles poured in Norfolk, in five seasonal scents.</p></article>
+        <article class="card" data-cat="home under20"><h3>Linen &amp; throws</h3><p class="meta">tea towels £14 · napkins £24 for four · throws from £65</p><p>Washed linen in soft colours and wool throws.</p></article>
+        <article class="card" data-cat="gift under20"><h3>Cards &amp; wrapping</h3><p class="meta">cards £3.50 · wrapping free</p><p>Cards by local illustrators, wrapped for free with anything you buy.</p></article>
+        <article class="card" data-cat="gift"><h3>Gift boxes</h3><p class="meta">£30 · £45 · £60</p><p>A boxed selection chosen to your budget, wrapped and ready to give.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="gifts">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">Gift boxes</p>
+        <h2>Pick a box, we'll fill it</h2>
+        <p>Choose a budget to see the kind of thing that goes in. We make it up while you wait, or to order by phone.</p>
+      </div>
+      <div class="boxes reveal" role="group" aria-label="Gift box sizes" id="boxes">
+        <button class="box" type="button" aria-pressed="false" data-items="A handmade mug|A small soy candle|A card, wrapped"><b>£30</b><span>The little one</span></button>
+        <button class="box" type="button" aria-pressed="true" data-items="A stoneware bowl|A large soy candle|Two linen napkins|A card, wrapped"><b>£45</b><span>The favourite</span></button>
+        <button class="box" type="button" aria-pressed="false" data-items="A stoneware vase|A reed diffuser|A linen tea towel and napkins|A card, wrapped"><b>£60</b><span>The generous one</span></button>
+      </div>
+      <div class="box-detail" id="boxDetail" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="section alt" id="ask">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">Ask us</p>
+        <h2>A shop assistant that never closes</h2>
+        <p>Two live AI assistants, set up with this shop's ranges, prices and delivery details only.</p>
+      </div>
+      <div class="agents">
+        <div class="agent reveal">
+          <span class="agent-tag">Shop assistant</span>
+          <h3>Help me find a gift</h3>
+          <p>Tell it who it's for and your budget.</p>
+          <div class="chat" data-client="hearth-and-thread" data-greeting="Hello! I'm the Hearth & Thread shop assistant. Tell me who you're buying for and roughly what you'd like to spend, and I'll suggest a few ideas.">
+            <div class="chat-log" id="chatLog" aria-live="polite"></div>
+            <div class="chat-chips" id="chatChips">
+              <button class="chat-chip" type="button" data-q="I need a housewarming gift for about £40.">Housewarming, about £40</button>
+              <button class="chat-chip" type="button" data-q="Something small for a teacher, under £20?">Teacher gift, under £20</button>
+              <button class="chat-chip" type="button" data-q="Can you deliver to Cromer?">Deliver to Cromer?</button>
+            </div>
+            <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your question</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Who's the gift for?"><button id="chatSend" type="submit">Send</button></form>
+          </div>
+          <p class="agent-note">Demo only: suggestions come from this invented shop's ranges.</p>
+        </div>
+        <div class="agent reveal">
+          <span class="agent-tag">FAQ answerer</span>
+          <h3>Delivery, returns, wrapping</h3>
+          <div class="faq" id="faqRoot" data-client="hearth-and-thread" data-safety="off" data-intro="Quick answers about delivery, returns and the shop: ask anything, or tap a question." data-placeholder="e.g. Can I return a gift?" data-questions='["Do you deliver?", "Can I click and collect?", "Do you wrap gifts?"]'></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="visit">
+    <div class="wrap visit">
+      <div class="reveal">
+        <p class="eyebrow">Visit</p>
+        <h2 style="font-size:clamp(1.9rem,3.8vw,2.9rem);margin:10px 0 18px">6 Chapel Yard, Holt</h2>
+        <div class="address">
+          <p>6 Chapel Yard, Holt, NR25</p>
+          <p>Step-free, with space to turn a wheelchair or pushchair. Albert Street car park is three minutes' walk.</p>
+          <p><a class="btn" href="tel:01632960566" style="margin-top:8px">Call 01632 960566</a></p>
+        </div>
+      </div>
+      <ul class="hours reveal" aria-label="Opening hours">
+        <li data-day="1 2 3 4 5 6"><span>Monday – Saturday</span><span>9:30am – 5pm</span></li>
+        <li data-day="0"><span>Sunday</span><span>11am – 4pm</span></li>
+        <li><span>Thursdays in December</span><span>until 7pm</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© <span data-year>2026</span> Hearth &amp; Thread (an invented business)</span>
+    <span>A concept website by <a href="https://www.wearesparklab.com">SparkLab</a></span>
+  </div>
+</footer>
+
+<script>
+  // gift-box picker: show what goes in the chosen box
+  (function () {
+    var row = document.getElementById("boxes"), out = document.getElementById("boxDetail");
+    function show(b) {
+      row.querySelectorAll(".box").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      out.innerHTML = "";
+      var h = document.createElement("strong"); h.textContent = b.querySelector("b").textContent + " box: what usually goes in"; out.appendChild(h);
+      var ul = document.createElement("ul");
+      b.getAttribute("data-items").split("|").forEach(function (t) { var li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+      out.appendChild(ul);
+    }
+    row.addEventListener("click", function (e) { var b = e.target.closest(".box"); if (b) show(b); });
+    show(row.querySelector('[aria-pressed="true"]'));
+  })();
+</script>
+<script src="/studio/concepts/kit/concept.js" defer></script>
+<script src="/studio/assistant.js?v=3" defer></script>
+<script src="/studio/faq-answerer.js?v=3" defer></script>
+<script type="module" src="/worlds/js/island.js"></script>
+</body>
+</html>

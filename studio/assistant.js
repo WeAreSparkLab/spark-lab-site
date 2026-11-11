@@ -125,11 +125,12 @@
     });
   }
 
-  // Friendly opening message from the sample business.
+  // Friendly opening message (a concept page can set its own with data-greeting).
   addMessage(
-    "Hi! I'm the booking assistant for " +
-      BUSINESS +
-      ". Ask me about treatments, prices, where we are, or booking in.",
+    (chatEl && chatEl.getAttribute("data-greeting")) ||
+      "Hi! I'm the booking assistant for " +
+        BUSINESS +
+        ". Ask me about treatments, prices, where we are, or booking in.",
     "bot"
   );
 })();

@@ -470,7 +470,9 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .review p { font-size: .9rem; color: var(--muted); }
 .concepts-head { margin-top: clamp(60px, 8vw, 110px); display: grid; grid-template-columns: 1fr 2fr; gap: 24px; align-items: baseline; padding-top: 26px; border-top: 1px solid var(--line); }
 .concepts-head p { color: var(--muted); max-width: 40rem; }
-.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 30px; }
+.gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 30px; }
+@media (max-width: 1100px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+.gallery .live { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: var(--plum); color: var(--ivory); font-size: .66rem; letter-spacing: .06em; vertical-align: 1px; }
 .gallery a { text-decoration: none; display: block; }
 .gallery picture { display: block; aspect-ratio: 10 / 7; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); margin-bottom: 14px; }
 .gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
@@ -869,7 +871,7 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
         </details>
 
         <div class="ledger" id="ledger">
-          <details class="biz" name="biz" data-biz="salon" data-name="The salon" open>
+          <details class="biz" name="biz" data-biz="salon" data-concept="/studio/concepts/salon" data-name="The salon" open>
             <summary><span class="biz-no">01</span><span class="biz-name">The salon</span><span class="biz-sector">Hair &amp; beauty</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're busy making someone feel their best. Your website can help answer enquiries while you focus on your client.</blockquote>
@@ -881,7 +883,7 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
               </ul>
             </div>
           </details>
-          <details class="biz" name="biz" data-biz="wellness" data-name="The wellness studio">
+          <details class="biz" name="biz" data-biz="wellness" data-concept="/studio/concepts/wellness-studio" data-name="The wellness studio">
             <summary><span class="biz-no">02</span><span class="biz-name">The wellness studio</span><span class="biz-sector">Wellbeing</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're mid-session, giving someone your full attention. Your website can quietly help the next person find the right treatment.</blockquote>
@@ -893,7 +895,7 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
               </ul>
             </div>
           </details>
-          <details class="biz" name="biz" data-biz="cafe" data-name="The café">
+          <details class="biz" name="biz" data-biz="cafe" data-concept="/studio/concepts/cafe" data-name="The café">
             <summary><span class="biz-no">03</span><span class="biz-name">The café</span><span class="biz-sector">Food &amp; drink</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're serving customers, not sitting at a computer. Let your digital tools handle the everyday questions.</blockquote>
@@ -905,7 +907,7 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
               </ul>
             </div>
           </details>
-          <details class="biz" name="biz" data-biz="shop" data-name="The shop">
+          <details class="biz" name="biz" data-biz="shop" data-concept="/studio/concepts/shop" data-name="The shop">
             <summary><span class="biz-no">04</span><span class="biz-name">The shop</span><span class="biz-sector">Independent retail</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>You're on the shop floor: wrapping, restocking, chatting. Your website can keep the lights on after you've locked up.</blockquote>
@@ -917,7 +919,7 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
               </ul>
             </div>
           </details>
-          <details class="biz" name="biz" data-biz="workshop" data-name="The workshop">
+          <details class="biz" name="biz" data-biz="workshop" data-concept="/studio/concepts/workshop" data-name="The workshop">
             <summary><span class="biz-no">05</span><span class="biz-name">The workshop</span><span class="biz-sector">Trades</span><span class="biz-mark" aria-hidden="true"></span></summary>
             <div class="biz-body">
               <blockquote>Your hands are busy. Your website can still be there when someone needs you.</blockquote>
@@ -1357,9 +1359,34 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
 
         <div class="concepts-head">
           <h3>Concept builds</h3>
-          <p>Real, working demos of the kind I put together before we ever talk money. The business details are swapped for invented ones, because those businesses haven't agreed to be named.</p>
+          <p>Real, working demos of the kind I put together before we ever talk money: one for each business in the 3D worlds above, each with a 3D look around and live AI assistants set up for that business. The businesses are invented, so nobody's details are shown without their say-so.</p>
         </div>
         <div class="gallery">
+          <a href="/studio/concepts/salon" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/assets/portfolio/concept-salon.webp" type="image/webp"><img src="/assets/portfolio/concept-salon.jpg" loading="lazy" width="1000" height="703" alt="Concept homepage for a hair and beauty salon, with a 3D model of the salon beside the headline"></picture>
+            <span class="tag">Concept · The salon</span><span class="live">3D · AI</span><h4>A hair &amp; beauty salon</h4>
+            <p>Prices by category, a look around the salon, and a booking assistant plus a service matcher.</p>
+          </a>
+          <a href="/studio/concepts/wellness-studio" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/assets/portfolio/concept-wellness-studio.webp" type="image/webp"><img src="/assets/portfolio/concept-wellness-studio.jpg" loading="lazy" width="1000" height="703" alt="Concept homepage for a garden massage studio, with a 3D model of the studio at dusk"></picture>
+            <span class="tag">Concept · The wellness studio</span><span class="live">3D · AI</span><h4>A massage &amp; reflexology studio</h4>
+            <p>Calm and unhurried, with three assistants: treatment matcher, booking questions and quick answers.</p>
+          </a>
+          <a href="/studio/concepts/cafe" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/assets/portfolio/concept-cafe.webp" type="image/webp"><img src="/assets/portfolio/concept-cafe.jpg" loading="lazy" width="1000" height="703" alt="Concept homepage for a café and bakery, with a 3D model of the café and its terrace"></picture>
+            <span class="tag">Concept · The café</span><span class="live">3D · AI</span><h4>A café &amp; bakery</h4>
+            <p>A menu you can filter, "open now" at a glance, and an assistant for allergies, tables and cakes.</p>
+          </a>
+          <a href="/studio/concepts/shop" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/assets/portfolio/concept-shop.webp" type="image/webp"><img src="/assets/portfolio/concept-shop.jpg" loading="lazy" width="1000" height="703" alt="Concept homepage for a home and gift shop, with a 3D model of the shop"></picture>
+            <span class="tag">Concept · The shop</span><span class="live">3D · AI</span><h4>A home &amp; gift shop</h4>
+            <p>A gift-box picker and a shop assistant that suggests gifts by who they're for and your budget.</p>
+          </a>
+          <a href="/studio/concepts/workshop" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/assets/portfolio/concept-workshop.webp" type="image/webp"><img src="/assets/portfolio/concept-workshop.jpg" loading="lazy" width="1000" height="703" alt="Concept homepage for a joinery workshop, with a 3D model of the workshop"></picture>
+            <span class="tag">Concept · The workshop</span><span class="live">3D · AI</span><h4>A joinery workshop</h4>
+            <p>A rough cost guide, a four-step "how it works", and an enquiry assistant that never gives a firm quote.</p>
+          </a>
           <a href="/studio/concepts/foot-clinic" target="_blank" rel="noopener noreferrer">
             <picture><source srcset="/assets/portfolio/concept-foot-clinic.webp" type="image/webp"><img src="/assets/portfolio/concept-foot-clinic.jpg" loading="lazy" width="1000" height="703" alt="Concept homepage for a foot clinic with opening hours and a call-to-book button"></picture>
             <span class="tag">Concept · Foot clinic</span><h4>A chiropody &amp; podiatry clinic</h4>

@@ -56,6 +56,13 @@ function hoverBiz(id) {
   $('#heroStage').classList.toggle('is-hot', !!id);
   if (stage?.station === 'worlds') stage.hover(id);
 }
+// each business in the ledger links to its concept site
+$$('.biz[data-concept]').forEach(card => {
+  const a = document.createElement('a'); a.className = 'text-link biz-sample'; a.href = card.dataset.concept;
+  a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = 'See a sample site for this business →';
+  $('.picture', card).after(a);
+});
+
 function selectBiz(id, { focusPanel = true } = {}) {
   if (id && !use3d) {                 // without 3D the chips open the written story instead
     const card = cardFor(id); card.open = true;
@@ -74,7 +81,8 @@ function selectBiz(id, { focusPanel = true } = {}) {
     const primer = $('#primer').cloneNode(true); primer.removeAttribute('id'); primer.open = false; primer.classList.add('primer-panel');
     panelBody.append($('blockquote', card).cloneNode(true), $('.picture', card).cloneNode(true), helpHead, $('ul', card).cloneNode(true), primer);
     const cta = document.createElement('div'); cta.className = 'panel-cta';
-    cta.innerHTML = '<a class="btn btn-primary btn-small" href="#assistants">Try an AI assistant</a><a class="btn btn-quiet btn-small" href="#contact">Talk to Sara</a>';
+    cta.innerHTML = (card.dataset.concept ? `<a class="btn btn-primary btn-small" href="${card.dataset.concept}" target="_blank" rel="noopener noreferrer">See a sample site</a>` : '') +
+      '<a class="btn btn-quiet btn-small" href="#assistants">Try an AI assistant</a><a class="btn btn-quiet btn-small" href="#contact">Talk to Sara</a>';
     panelBody.append(cta); panelBody.scrollTop = 0;
     $('#panelCount').textContent = `${ids.indexOf(selectedBiz) + 1} of ${ids.length}`;
     panel.style.animation = 'none'; void panel.offsetWidth; panel.style.animation = '';
