@@ -11,7 +11,7 @@ const smooth = reduceMotion ? 'auto' : 'smooth';
 
 const hero = $('.hero'), heroCopy = $('#heroCopy'), heroFoot = $('#heroFoot'), labelsEl = $('#labels');
 const panel = $('#panel'), panelBody = $('#panelBody'), backBtn = $('#backBtn'), rail = $('#rail');
-const toggle3d = $('#toggle3d'), nav = $('#nav'), studioStage = $('#studioStage'), finale = $('.finale');
+const toggle3d = $('#toggle3d'), nav = $('#nav'), studioStage = $('#studioStage');
 let stage = null, use3d = false, selectedBiz = null;
 
 $('#year').textContent = new Date().getFullYear();
@@ -186,11 +186,6 @@ function safeArea(station, mode) {
     if (!r.width) return { cx: .5, cy: .5, w: .6, h: .6 };
     return { cx: (r.left + r.width / 2) / W, cy: Math.min(1.6, Math.max(-.6, (r.top + r.height * .48) / H)), w: r.width / W * .96, h: r.height / H * .86 };
   }
-  if (station === 'finale') {
-    const r = finale.getBoundingClientRect();
-    // sit the worlds in the open lower part of the section, arriving as it scrolls into view
-    return { cx: .5, cy: Math.min(1.8, Math.max(.56, (r.bottom - H * .34) / H)), w: .94, h: .42 };
-  }
   if (mobile.matches) {
     if (mode === 'focus') {
       // the strip between the back button and the information panel
@@ -270,7 +265,6 @@ function onScroll() {
     const r = w.getBoundingClientRect(), vis = Math.min(r.bottom, H) - Math.max(r.top, 0);
     if (vis > bestArea) { bestArea = vis; best = w.dataset.station; }
   }
-  body.classList.toggle('is-dawn', best === 'finale' && bestArea > H * .3);
   if (stage) {
     stage.setActive(use3d && bestArea > 40);
     if (best && best !== lastStation) {

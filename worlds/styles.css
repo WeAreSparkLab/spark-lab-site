@@ -60,8 +60,8 @@ h1 em, h2 em { font-style: italic; font-weight: 300; color: var(--purple); }
 h2 { font-size: clamp(2rem, 4.2vw, 3.5rem); }
 h3 { font-family: var(--serif); font-weight: 400; font-size: 1.5rem; line-height: 1.2; letter-spacing: -.01em; }
 .eyebrow { font-size: .75rem; letter-spacing: .17em; text-transform: uppercase; font-weight: 500; color: var(--muted); }
-.window h1 em, .window h2 em, .sim h2 em { color: var(--lav-light); }
-.window .eyebrow, .sim .eyebrow { color: var(--muted-dark); }
+.window h1 em, .window h2 em, .sim h2 em, .finale h2 em { color: var(--lav-light); }
+.window .eyebrow, .sim .eyebrow, .finale .eyebrow { color: var(--muted-dark); }
 .tag { font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: var(--purple); font-weight: 500; }
 .fine { margin-top: 16px; font-size: .86rem; color: var(--muted); }
 
@@ -466,6 +466,17 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .matrix td.y::before { width: 13px; height: 7px; border-radius: 0; background: none; border-left: 2px solid var(--purple); border-bottom: 2px solid var(--purple); transform: rotate(-45deg) translateY(-2px); }
 .matrix .pop { background: rgba(160, 120, 180, .1); }
 .matrix thead .pop { border-radius: 14px 14px 0 0; } .matrix tbody tr:last-child .pop { border-radius: 0 0 14px 14px; }
+.plan-cards { display: none; }
+.plan-cards > li { position: relative; padding: 18px 18px 16px; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+.plan-cards > li + li { margin-top: 12px; }
+.plan-cards .pop { border: 2px solid var(--lavender); background: rgba(160, 120, 180, .07); }
+.plan-cards h4 { font-size: 1.05rem; font-weight: 600; color: var(--plum); }
+.pc-tag { display: inline-block; margin-bottom: 8px; padding: 2px 10px; border-radius: 999px; background: var(--lavender); color: #fff; font-size: .72rem; letter-spacing: .06em; }
+.pc-price { margin: 2px 0 10px; color: var(--muted); font-size: .9rem; }
+.pc-price b { font-family: var(--serif); font-weight: 400; font-size: 2rem; color: var(--plum); letter-spacing: -.02em; }
+.pc-plus { font-size: .9rem; color: var(--muted); margin-bottom: 4px; }
+.plan-cards ul li { position: relative; padding: 5px 0 5px 24px; font-size: .95rem; }
+.plan-cards ul li::before { content: ""; position: absolute; left: 3px; top: 11px; width: 11px; height: 6px; border-left: 2px solid var(--purple); border-bottom: 2px solid var(--purple); transform: rotate(-45deg); }
 .questions { margin-top: clamp(72px, 9vw, 120px); max-width: 52rem; }
 .questions h3 { margin-bottom: 22px; }
 
@@ -510,8 +521,10 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .letter-body .sign { font-family: var(--serif); font-style: italic; font-size: 2.2rem; color: var(--purple); margin: 0; }
 
 /* ---------- finale ---------- */
-.finale { position: relative; min-height: 150svh; display: flex;   /* the lower part is left open: a last long look at the worlds */ flex-direction: column; color: var(--ivory); padding: clamp(90px, 12vw, 150px) var(--gutter) 0; scroll-margin-top: 0;
-  background: linear-gradient(to bottom, rgba(34, 28, 43, .55) 0, rgba(34, 28, 43, .1) 46%, transparent 70%); }
+/* a plain closing section: no 3D behind it, so nothing gets in the way on phones */
+.finale { position: relative; z-index: 1; display: flex; flex-direction: column; color: var(--ivory); padding: clamp(90px, 12vw, 150px) var(--gutter) 0; scroll-margin-top: 0;
+  background: radial-gradient(120% 70% at 50% 100%, rgba(160, 120, 180, .28), transparent 70%), var(--plum-deep); }
+.finale-copy { padding-bottom: clamp(70px, 10vw, 120px); }
 .finale-copy { max-width: 56rem; margin: 0 auto; text-align: center; }
 .finale h2 { margin-top: 14px; font-size: clamp(2.2rem, 4.8vw, 4rem); }
 .finale .section-lead { margin-left: auto; margin-right: auto; }
@@ -640,17 +653,9 @@ body:has(#panel:not([hidden])) .to-top, body:has(.nav-links.is-open) .to-top { o
   .field3d { height: 290px; }
   .browser { position: static; } .browser-view { height: 60svh; }
   .price-start, .price-add { padding: 24px 16px; }
-  /* the plan table fits a phone without sideways scrolling */
-  .matrix { min-width: 0; table-layout: fixed; }
-  .matrix thead th:first-child, .matrix tbody th { width: 30%; }
-  .matrix thead th { padding: 26px 3px 12px; font-size: .64rem; letter-spacing: 0; }
-  /* each plan name keeps to its own column, even with larger phone text */
-  .matrix .plan { display: block; line-height: 1.25; overflow-wrap: break-word; hyphens: auto; }
-  .matrix thead b { font-size: 1.45rem; }
-  .matrix thead small { font-size: .7rem; }
-  .matrix thead i { font-size: .58rem; padding: 2px 7px; }
-  .matrix tbody th { font-size: .84rem; padding: 11px 4px 11px 0; line-height: 1.3; }
-  .matrix td { padding: 11px 2px; }
+  /* phones get the plans as stacked cards instead of a squeezed table */
+  .matrix-wrap { display: none; }
+  .plan-cards { display: block; margin-top: 6px; }
   .console { scroll-margin-top: calc(var(--nav-h) + 10px); }
   .finale { padding-top: 90px; }
 }
