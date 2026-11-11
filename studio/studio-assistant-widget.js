@@ -81,7 +81,9 @@
   var input = root.querySelector("#slInput");
   var sendBtn = root.querySelector("#slSend");
 
-  if (offline) offlineEl.hidden = false;
+  // The assistant itself answers around the clock, so no "offline" banner —
+  // out of hours only the greeting changes, to say when Sara will reply.
+  offlineEl.remove();
 
   // --- Rendering -------------------------------------------------------------
   function scrollToEnd() { log.scrollTop = log.scrollHeight; }
@@ -115,8 +117,8 @@
     if (started) return;
     started = true;
     var msg = offline
-      ? "Hi! SparkLab is a small studio and we’re offline right now. Ask me anything about our websites and AI add-ons — or leave your name, email and what you need, and we’ll personally reply within one business day."
-      : "Hi! I’m SparkLab’s enquiry assistant. Ask me anything about our one-page websites and AI add-ons for wellness practitioners.";
+      ? "Hi! I’m SparkLab’s assistant, here any time. Ask me anything about our websites and AI assistants. Sara’s away from her desk right now, so if you’d like a personal reply, leave your name, email and what you need and she’ll get back to you within one business day."
+      : "Hi! I’m SparkLab’s assistant. Ask me anything about our websites and AI assistants, or leave your details and Sara will get back to you personally.";
     addMessage(msg, "bot");
   }
 
