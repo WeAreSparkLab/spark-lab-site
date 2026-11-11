@@ -64,12 +64,15 @@ function selectBiz(id, { focusPanel = true } = {}) {
   }
   selectedBiz = id || null;
   hero.classList.toggle('is-focused', !!selectedBiz);
+  if (selectedBiz) heroCopy.style.opacity = '';   // let the focused state hide the headline (inline scroll fade would override it)
   backBtn.hidden = panel.hidden = !selectedBiz;
   $$('button', rail).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.biz === selectedBiz)));
   if (selectedBiz) {
     const card = cardFor(selectedBiz);
     panelBody.innerHTML = `<p class="p-sector">${$('.biz-sector', card).textContent}</p><h3 id="panelTitle">${card.dataset.name}</h3>`;
-    panelBody.append($('blockquote', card).cloneNode(true), $('ul', card).cloneNode(true));
+    const helpHead = document.createElement('h4'); helpHead.className = 'p-head'; helpHead.textContent = 'How SparkLab could help';
+    const primer = $('#primer').cloneNode(true); primer.removeAttribute('id'); primer.open = false; primer.classList.add('primer-panel');
+    panelBody.append($('blockquote', card).cloneNode(true), $('.picture', card).cloneNode(true), helpHead, $('ul', card).cloneNode(true), primer);
     const cta = document.createElement('div'); cta.className = 'panel-cta';
     cta.innerHTML = '<a class="btn btn-primary btn-small" href="#assistants">Try an AI assistant</a><a class="btn btn-quiet btn-small" href="#contact">Talk to Sara</a>';
     panelBody.append(cta); panelBody.scrollTop = 0;
