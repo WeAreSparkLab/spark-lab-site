@@ -211,16 +211,27 @@ body.is-ready .label { opacity: 1; }
 
 /* "New to this?": plain-English explanations of the three services */
 .primer { margin-bottom: 26px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
-.primer summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; padding: 16px 48px 16px 20px; cursor: pointer; list-style: none; position: relative; font-size: .98rem; color: #453D52; }
+.primer { border-color: rgba(105, 76, 145, .35); box-shadow: 0 10px 30px -22px rgba(48, 40, 60, .5); transition: border-color .3s, box-shadow .3s; }
+.primer:hover { border-color: var(--purple); box-shadow: 0 14px 34px -20px rgba(105, 76, 145, .55); }
+.primer summary { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 16px 20px; cursor: pointer; list-style: none; font-size: .98rem; color: #453D52; }
 .primer summary::-webkit-details-marker { display: none; }
 .primer summary span { font-family: var(--serif); font-size: 1.25rem; color: var(--plum); }
-.primer summary::after { content: "+"; position: absolute; right: 18px; top: 12px; font: 300 1.6rem var(--serif); color: var(--purple); transition: transform .4s var(--ease); }
-.primer[open] summary::after { transform: rotate(45deg); }
+/* an obvious button, so people can see there is more to read */
+.primer-cta { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: 999px;
+  background: var(--purple); color: #fff; font: 600 .86rem/1 var(--sans); white-space: nowrap; transition: background-color .3s; }
+.primer-cta i { font-style: normal; }
+.primer-cta::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .35s var(--ease); }
+.primer summary:hover .primer-cta { background: var(--plum); }
+.primer .less, .primer[open] .more { display: none; }
+.primer[open] .less { display: inline; }
+.primer[open] .primer-cta { background: transparent; color: var(--purple); box-shadow: inset 0 0 0 1.5px var(--purple); }
+.primer[open] .primer-cta::after { transform: translateY(2px) rotate(-135deg); }
 .primer dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 2px 20px 20px; }
 .primer dt { font-family: var(--serif); font-size: 1.15rem; color: var(--plum); margin-bottom: 4px; padding-top: 12px; border-top: 2px solid var(--lavender); }
 .primer dd { font-size: .92rem; line-height: 1.55; color: #4B4357; }
 .primer-panel { margin: 20px 0 0; }
-.primer-panel summary { padding: 13px 44px 13px 16px; font-size: .86rem; }
+.primer-panel summary { padding: 13px 16px; font-size: .86rem; }
+.primer-panel .primer-cta { margin-left: 0; min-height: 36px; font-size: .8rem; }
 .primer-panel summary span { font-size: 1.05rem; }
 .primer-panel dl { grid-template-columns: 1fr; gap: 12px; padding: 0 16px 16px; }
 .panel-body li { padding: 13px 0; border-top: 1px solid var(--line); font-size: .95rem; line-height: 1.5; color: #4B4357; }
@@ -822,7 +833,8 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
         </header>
 
         <details class="primer" id="primer">
-          <summary><span>New to this?</span> What a website, an AI assistant and automation actually do</summary>
+          <summary><span>New to this?</span> What a website, an AI assistant and automation actually do
+            <b class="primer-cta" aria-hidden="true"><i class="more">Read more</i><i class="less">Show less</i></b></summary>
           <dl>
             <div><dt>A website</dt><dd>Your shop window online. When someone hears about you or searches for what you do, it's where they find what you offer, what it costs, where you are and how to book or get in touch, at any time of day.</dd></div>
             <div><dt>An AI assistant</dt><dd>A chat box on your website that answers customers' questions in plain, friendly language, using only the information you've given it: your services, prices, hours and policies. If it doesn't know something, it says so and passes the question to you.</dd></div>
