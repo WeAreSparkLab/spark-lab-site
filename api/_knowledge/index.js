@@ -25,6 +25,8 @@ const CLIENTS = {
   "larder-and-loaf": require("./larder-and-loaf.js"),
   "hearth-and-thread": require("./hearth-and-thread.js"),
   "alder-joinery": require("./alder-joinery.js"),
+  "verdance-medi-spa": require("./verdance-medi-spa.js"),
+  "ivy-and-lash": require("./ivy-and-lash.js"),
   // "roots-reflexology": require("./roots-reflexology.js"),
 };
 

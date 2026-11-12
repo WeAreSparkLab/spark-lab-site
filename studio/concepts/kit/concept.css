@@ -54,9 +54,6 @@ button { font: inherit; color: inherit; }
 .open-badge.is-open::before { background: #3FA36B; box-shadow: 0 0 0 4px rgba(63, 163, 107, .18); }
 @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } }
 
-/* the 3D scene: one fixed canvas behind the whole page (kit/scene3d.js) */
-.scene3d { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.2s; }
-.scene3d.is-live { opacity: 1; }
 .concept-note, main, .foot { position: relative; z-index: 1; }
 .stage3d { aspect-ratio: 1 / 1.05; }
 @media (max-width: 860px) { .stage3d { aspect-ratio: auto; height: min(78vw, 340px); } }
@@ -153,23 +150,3 @@ button { font: inherit; color: inherit; }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s, transform .8s; }
 .reveal.is-in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
-
-/* the site's chat: a bubble in the corner that opens a small conversation panel */
-.helper { position: fixed; right: 18px; bottom: 18px; z-index: 60; }
-.helper-fab { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 22px; border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 600; cursor: pointer; box-shadow: 0 12px 30px rgba(0, 0, 0, .22); transition: transform .25s; }
-.helper-fab:hover { transform: translateY(-2px); }
-.helper-fab svg { width: 20px; height: 20px; fill: currentColor; }
-.helper.is-open .helper-fab { display: none; }
-.helper-panel { width: min(380px, calc(100vw - 24px)); border-radius: calc(var(--radius) + 6px); background: var(--paper); border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(0, 0, 0, .28); overflow: hidden; animation: rise .3s; }
-.helper-panel[hidden] { display: none; }
-.helper-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--accent); color: var(--accent-ink); }
-.helper-head b { display: block; font-family: var(--display); font-size: 1.15rem; font-weight: 500; }
-.helper-head span { font-size: .78rem; opacity: .85; }
-.helper-head i { width: 9px; height: 9px; border-radius: 50%; background: #7BE0A4; box-shadow: 0 0 0 4px rgba(123, 224, 164, .25); flex: none; }
-.helper-close { margin-left: auto; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .16); color: inherit; font-size: 1.3rem; cursor: pointer; }
-.helper-body { padding: 12px; }
-.helper .chat-log { height: min(320px, 44vh); border-radius: var(--radius); }
-.helper .chat-chips { margin: 10px 0; }
-@media (max-width: 520px) { .helper { right: 12px; bottom: 12px; } .helper.is-open { left: 12px; } .helper-panel { width: 100%; } }
-/* wide screens: content shifts right after the hero, leaving the 3D object its own column */
-@media (min-width: 1100px) { .scene3d ~ main .section .wrap { padding-left: min(22vw, 310px); } }
