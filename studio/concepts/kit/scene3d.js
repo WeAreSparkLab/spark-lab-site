@@ -101,6 +101,60 @@ const HERO = {
   },
 };
 
+// foot clinic: a custom orthotic insole, top layer navy, cushioned base
+HERO.footclinic = () => {
+  const s = new THREE.Shape();
+  s.moveTo(0, -1.05);
+  s.bezierCurveTo(.34, -1.05, .4, -.7, .36, -.38);       // heel, outer side
+  s.bezierCurveTo(.33, -.05, .46, .25, .48, .55);         // up the outside to the ball of the foot
+  s.bezierCurveTo(.5, .9, .28, 1.08, .02, 1.08);          // round the toes
+  s.bezierCurveTo(-.3, 1.08, -.46, .86, -.44, .55);
+  s.bezierCurveTo(-.42, .25, -.2, .05, -.2, -.3);         // the arch curves in on the inside
+  s.bezierCurveTo(-.2, -.7, -.32, -1.05, 0, -1.05);
+  const ex = (depth, bevel) => new THREE.ExtrudeGeometry(s, { depth, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 4, curveSegments: 48 });
+  const g = new THREE.Group();
+  const base = mesh(ex(.16, .04), std({ color: '#E9DFCB', roughness: .85 }));
+  const top = mesh(ex(.05, .03), std({ color: '#1D3A44', roughness: .55 }), 0, 0, .22);
+  const pad = mesh(new THREE.SphereGeometry(.2, 32, 18), std({ color: '#A9803C', roughness: .5 }), -.02, .45, .26); pad.scale.set(1.3, .9, .18);
+  const heel = mesh(new THREE.SphereGeometry(.22, 32, 18), std({ color: '#A9803C', roughness: .5 }), .04, -.72, .26); heel.scale.set(1, 1, .14);
+  g.add(base, top, pad, heel);
+  const wrap = new THREE.Group(); wrap.add(g); g.rotation.x = -.35; g.position.z = -.1;
+  return { g: wrap, tilt: .1, lean: .38, dock: .7 };
+};
+// beauty clinic: a frosted green skincare jar with its gold lid lifted
+HERO.medispa = label => {
+  const g = new THREE.Group();
+  const jar = lathe([[0, -.75], [.78, -.75], [.86, -.66], [.88, .1], [.82, .2], [.76, .24], [.76, .32], [0, .32]], new THREE.MeshPhysicalMaterial({ color: '#B8D79A', roughness: .32, transmission: 0, transparent: true, opacity: .82, clearcoat: .8, clearcoatRoughness: .2 }));
+  const cream = mesh(new THREE.CylinderGeometry(.72, .72, .06, 48), std({ color: '#F6F2E7', roughness: .6 }), 0, .3, 0);
+  const swirl = mesh(new THREE.SphereGeometry(.3, 32, 16), std({ color: '#FBF8F0', roughness: .55 }), 0, .34, 0); swirl.scale.y = .32;
+  const band = mesh(new THREE.CylinderGeometry(.885, .885, .42, 56, 1, true), std({ map: labelTexture([label || 'verdance', 'renewing day cream', '50 ml'], '#33511C', '#E1EFCF'), roughness: .6 }), 0, -.32, 0);
+  const lid = new THREE.Group();
+  lid.add(mesh(new THREE.CylinderGeometry(.84, .84, .26, 56), std({ color: '#C9A24B', roughness: .25, metalness: .95 })));
+  lid.add(mesh(new THREE.CylinderGeometry(.8, .8, .02, 56), std({ color: '#E1C774', roughness: .2, metalness: 1 }), 0, .14, 0));
+  lid.position.set(.35, .95, -.1); lid.rotation.set(.1, 0, -.42);
+  g.add(jar, cream, swirl, band, lid);
+  return { g, tilt: .45, lean: .1, dock: .62, tick(t) { lid.position.y = .95 + Math.sin(t * .9) * .06; } };
+};
+// brow & lash studio: a brow pencil and a spoolie brush, crossed
+HERO.browbar = () => {
+  const g = new THREE.Group();
+  const black = std({ color: '#EDE7DD', roughness: .3, metalness: .15 }), gold = std({ color: '#D4AF5A', roughness: .22, metalness: .95 });
+  const pencil = new THREE.Group();
+  pencil.add(mesh(new THREE.CylinderGeometry(.1, .1, 2, 6), black));
+  pencil.add(mesh(new THREE.CylinderGeometry(.103, .103, .12, 6), gold, 0, -.7, 0));
+  pencil.add(mesh(new THREE.CylinderGeometry(.002, .1, .34, 6), std({ color: '#D9B48A', roughness: .7 }), 0, 1.17, 0));
+  pencil.add(mesh(new THREE.CylinderGeometry(.002, .035, .12, 12), std({ color: '#3B2A1E', roughness: .5 }), 0, 1.29, 0));
+  pencil.rotation.z = -.5; pencil.position.x = -.25;
+  const spoolie = new THREE.Group();
+  spoolie.add(mesh(new THREE.CylinderGeometry(.07, .07, 1.2, 24), black, 0, -.5, 0), mesh(new THREE.CylinderGeometry(.075, .075, .1, 24), gold, 0, .12, 0));
+  spoolie.add(mesh(new THREE.CylinderGeometry(.012, .012, .9, 8), gold, 0, .55, 0));
+  const bristle = new THREE.CylinderGeometry(.006, .006, .24, 4), bm = std({ color: '#1C1C1C', roughness: .6 });
+  for (let i = 0; i < 140; i++) { const k = i / 140, a = i * 2.4, b = mesh(bristle, bm, Math.cos(a) * .1, .5 + k * .5, Math.sin(a) * .1); b.rotation.set(Math.sin(a) * 1.57, 0, -Math.cos(a) * 1.57); spoolie.add(b); }
+  spoolie.rotation.z = .45; spoolie.position.x = .3;
+  g.add(pencil, spoolie); g.scale.setScalar(1.05);
+  return { g, tilt: .3, lean: .05, dock: .75 };
+};
+
 /* ---------- the small pieces that float past ---------- */
 function curl(R, mat) {
   const pts = []; const turns = 2 + R() * 1.5, r0 = .12 + R() * .1;
@@ -133,7 +187,55 @@ const FLOAT = {
   },
 };
 
+FLOAT.footclinic = (R, i) => {
+  if (i % 3 === 2) { const c = mesh(new THREE.SphereGeometry(.13 + R() * .1, 20, 14), std({ color: '#FBF8F1', roughness: 1 })); c.scale.y = .8; return c; }   // cotton wool
+  return mesh(new THREE.SphereGeometry(.12 + R() * .26, 32, 24), glass('#E8EEF0', .32));
+};
+FLOAT.medispa = (R, i) => {
+  if (i % 2) return mesh(new THREE.SphereGeometry(.12 + R() * .28, 32, 24), glass('#E1EFCF', .32));
+  const s = new THREE.Shape(); s.moveTo(0, -.4); s.quadraticCurveTo(.26, -.05, 0, .4); s.quadraticCurveTo(-.26, -.05, 0, -.4);
+  const leaf = mesh(new THREE.ExtrudeGeometry(s, { depth: .015, bevelEnabled: false, curveSegments: 16 }), std({ color: ['#7CB342', '#5E8F31', '#A5C97A'][i % 3], roughness: .6, side: THREE.DoubleSide }));
+  leaf.scale.setScalar(.7 + R() * .6); return leaf;
+};
+FLOAT.browbar = (R, i) => {
+  if (i % 3 === 2) return mesh(new THREE.SphereGeometry(.1 + R() * .16, 28, 20), std({ color: '#111111', roughness: .12, metalness: .4 }));
+  return mesh(new THREE.PlaneGeometry(.16 + R() * .16, .1 + R() * .08), std({ color: '#D8BB6A', roughness: .25, metalness: 1, side: THREE.DoubleSide }));
+};
+
+// Pages built before the scene have solid section backgrounds. Lift the hero's
+// background onto a layer under the canvas, let light sections show the scene
+// faintly, and keep content above the canvas.
+function retrofit(hero) {
+  const back = document.createElement('div'); back.className = 'scene-backdrop';
+  const cs = getComputedStyle(hero);
+  ['backgroundColor', 'backgroundImage', 'backgroundSize', 'backgroundPosition', 'backgroundRepeat'].forEach(p => { back.style[p] = cs[p]; });
+  hero.style.background = 'transparent';
+  document.body.prepend(back);
+  const place = () => { const r = hero.getBoundingClientRect(); back.style.top = r.top + scrollY + 'px'; back.style.height = r.height + 'px'; };
+  place(); addEventListener('resize', place); new ResizeObserver(place).observe(hero);
+  const lift = el => { if (getComputedStyle(el).position === 'static') el.style.position = 'relative'; if (getComputedStyle(el).zIndex === 'auto') el.style.zIndex = '1'; };
+  document.querySelectorAll('body > header, header#siteHeader').forEach(h => {
+    if (getComputedStyle(h).zIndex === 'auto') h.style.zIndex = '50';
+    // a fixed header would sit under the concept banner at the top of the page: keep it just below it
+    const note = document.querySelector('body > div[style*="2147483647"]');
+    if (note && getComputedStyle(h).position === 'fixed') {
+      const keep = () => { h.style.top = Math.max(0, note.getBoundingClientRect().bottom) + 'px'; };
+      keep(); addEventListener('scroll', keep, { passive: true }); addEventListener('resize', keep);
+    }
+  });
+  document.querySelectorAll('main > section, main > div, body > section, body > div:not(.helper):not(.scene-backdrop), footer').forEach(el => {
+    if (el === back || el.contains(document.querySelector('canvas.scene3d'))) return;
+    lift(el);
+    if (el === hero) return;
+    const m = getComputedStyle(el).backgroundColor.match(/rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)/);
+    if (!m || (m[4] !== undefined && +m[4] < .99) || getComputedStyle(el).backgroundImage !== 'none') return;
+    const light = (+m[1] * .3 + +m[2] * .59 + +m[3] * .11) > 150;
+    el.style.backgroundColor = `rgba(${m[1]}, ${m[2]}, ${m[3]}, ${light ? .74 : .9})`;
+  });
+}
+
 function start(canvas) {
+  if (canvas.hasAttribute('data-retrofit')) retrofit(document.querySelector(canvas.dataset.retrofit || '.hero'));
   const kind = canvas.dataset.scene, stage = document.querySelector('.stage3d');
   if (!HERO[kind] || !stage) return;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;

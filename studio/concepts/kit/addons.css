@@ -1,0 +1,54 @@
+/* SparkLab concept builds: the pieces every concept page shares, whatever its own styling.
+   - the page-wide 3D scene canvas (kit/scene3d.js)
+   - the chat bubble with its conversation panel (kit/helper.js + studio/assistant.js)
+   Colours come from custom properties each page sets on :root:
+   --accent, --accent-ink, --paper, --ink, --muted, --line, --soft, --display, --radius. */
+
+/* the 3D scene: one fixed canvas behind the whole page */
+.scene3d { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.2s; }
+.scene3d.is-live { opacity: 1; }
+/* pages built before the scene: a layer that carries the hero's own background, under the canvas */
+.scene-backdrop { position: absolute; left: 0; right: 0; z-index: -1; pointer-events: none; }
+/* where the 3D object sits in those older heroes */
+.stage3d.at-side { position: absolute; right: max(24px, 5vw); top: 50%; width: min(34vw, 440px); aspect-ratio: 1 / 1.05; translate: 0 -50%; pointer-events: none; }
+.stage3d.below { width: min(100%, 360px); height: 300px; margin: 18px auto 0; pointer-events: none; }
+@media (max-width: 900px) {
+  .stage3d.at-side { position: relative; right: auto; top: auto; translate: none; width: 100%; aspect-ratio: auto; height: 300px; flex: 0 0 100%; }
+  .has-stage3d { flex-wrap: wrap; }
+  .stage3d.below { height: 260px; }
+}
+
+/* the chat bubble */
+.helper { position: fixed; right: 18px; bottom: 18px; z-index: 2147483000; font-family: inherit; color: var(--ink); line-height: 1.5; }
+.helper *, .helper *::before, .helper *::after { box-sizing: border-box; }
+.helper-fab { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 22px; border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font: 600 15px/1 inherit; font-family: inherit; cursor: pointer; box-shadow: 0 12px 30px rgba(0, 0, 0, .22); transition: transform .25s; }
+.helper-fab:hover { transform: translateY(-2px); }
+.helper-fab svg { width: 20px; height: 20px; fill: currentColor; }
+.helper.is-open .helper-fab { display: none; }
+.helper-panel { width: min(380px, calc(100vw - 24px)); border-radius: calc(var(--radius, 16px) + 6px); background: var(--paper); border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(0, 0, 0, .28); overflow: hidden; animation: helper-rise .3s; }
+.helper-panel[hidden] { display: none; }
+.helper-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--accent); color: var(--accent-ink); }
+.helper-head b { display: block; font-family: var(--display, inherit); font-size: 1.15rem; font-weight: 500; line-height: 1.2; }
+.helper-head span { font-size: .78rem; opacity: .85; }
+.helper-head i { width: 9px; height: 9px; border-radius: 50%; background: #7BE0A4; box-shadow: 0 0 0 4px rgba(123, 224, 164, .25); flex: none; }
+.helper-close { margin-left: auto; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .16); color: inherit; font-size: 1.3rem; cursor: pointer; }
+.helper-body { padding: 12px; }
+.helper .chat-log { height: min(320px, 44vh); overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: var(--radius, 16px); background: var(--soft); }
+.helper .msg { max-width: 86%; padding: 10px 14px; border-radius: 16px; font-size: .94rem; line-height: 1.5; white-space: pre-wrap; animation: helper-rise .3s; }
+.helper .msg.bot { align-self: flex-start; background: var(--paper); color: var(--ink); border-bottom-left-radius: 4px; }
+.helper .msg.user { align-self: flex-end; background: var(--accent); color: var(--accent-ink); border-bottom-right-radius: 4px; }
+.helper .msg.error { align-self: flex-start; background: #FBEAEA; color: #8A2E2E; }
+.helper .chat-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.helper .chat-chip { min-height: 36px; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink); cursor: pointer; font: inherit; font-size: .86rem; text-align: left; }
+.helper .chat-chip:hover { border-color: var(--accent); }
+.helper .chat-form { display: flex; gap: 8px; margin: 0; }
+.helper .chat-form input { flex: 1; min-width: 0; min-height: 46px; padding: 0 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink); font: inherit; font-size: 16px; }
+.helper .chat-form button { min-height: 46px; padding: 0 20px; border-radius: 999px; border: 0; background: var(--accent); color: var(--accent-ink); font: inherit; font-weight: 600; cursor: pointer; }
+.helper .chat-form button:disabled { opacity: .5; }
+.helper .typing { display: inline-flex; gap: 4px; }
+.helper .typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: helper-blink 1.2s infinite; }
+.helper .typing span:nth-child(2) { animation-delay: .2s; } .helper .typing span:nth-child(3) { animation-delay: .4s; }
+.helper .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@keyframes helper-rise { from { transform: translateY(10px); } to { transform: none; } }
+@keyframes helper-blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+@media (max-width: 520px) { .helper { right: 12px; bottom: 12px; } .helper.is-open { left: 12px; } .helper-panel { width: 100%; } }

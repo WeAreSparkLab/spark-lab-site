@@ -51,20 +51,6 @@
     f.addEventListener("input", calc); f.addEventListener("submit", function (e) { e.preventDefault(); }); calc();
   });
 
-  // --- the chat bubble ---------------------------------------------------------
-  var helper = document.querySelector(".helper");
-  if (helper) {
-    var fab = helper.querySelector(".helper-fab"), panel = helper.querySelector(".helper-panel");
-    var setOpen = function (on) {
-      helper.classList.toggle("is-open", on); panel.hidden = !on; fab.setAttribute("aria-expanded", String(on));
-      if (on) { var i = panel.querySelector("input"); if (i) i.focus({ preventScroll: true }); } else fab.focus({ preventScroll: true });
-    };
-    fab.addEventListener("click", function () { setOpen(true); });
-    helper.querySelector(".helper-close").addEventListener("click", function () { setOpen(false); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && helper.classList.contains("is-open")) setOpen(false); });
-    $$("[data-open-chat]").forEach(function (b) { b.addEventListener("click", function (e) { e.preventDefault(); setOpen(true); }); });
-  }
-
   // --- fade in ---------------------------------------------------------------
   var els = $$(".reveal");
   if ("IntersectionObserver" in window) {

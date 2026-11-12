@@ -373,6 +373,9 @@
   .reveal{ opacity:0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .reveal.in{ opacity:1; transform: translateY(0); }
 </style>
+<link rel="stylesheet" href="/studio/concepts/kit/addons.css">
+<style>:root{ --accent:#1D3A44; --accent-ink:#F6F1E6; --paper:#FCFAF4; --muted:#5C5348; --soft:#EFE8DA; --display:"Cormorant Garamond", Georgia, serif; --radius:16px; }</style>
+<script type="importmap">{ "imports": { "three": "/worlds/vendor/three.module.min.js" } }</script>
 </head>
 <body>
 <!-- concept-banner: these pages are linked from the studio portfolio, so say
@@ -382,6 +385,7 @@
   <a href="https://www.wearesparklab.com/studio" style="color:#7ad7f0;text-decoration:underline">Spark Lab Studio</a>
   showing what a site like this looks like. Nothing here is real, so nothing here can be booked.
 </div>
+<canvas class="scene3d" data-scene="footclinic" data-label="" data-retrofit aria-hidden="true"></canvas>
 
 
 <header>
@@ -420,6 +424,7 @@
           Get directions
         </a>
       </div>
+      <div class="stage3d below" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -685,5 +690,25 @@
 
 <script src="/studio/treatment-matcher.js?v=2" defer></script>
 
+
+<!-- the site's chat assistant (answers from api/_knowledge/elmfield-foot-clinic.js) -->
+<div class="helper">
+  <button class="helper-fab" type="button" aria-expanded="false" aria-controls="helperPanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-5 4V5a1 1 0 0 1 1-1z"/></svg>Ask a question</button>
+  <div class="helper-panel chat" id="helperPanel" role="dialog" aria-label="Chat with Elmfield Foot Clinic" hidden data-client="elmfield-foot-clinic" data-greeting="Hello, I'm the Elmfield Foot Clinic assistant. Ask me about treatments, prices, opening hours or how to book.">
+    <div class="helper-head"><i aria-hidden="true"></i><div><b>Elmfield Foot Clinic</b><span>Clinic assistant · answers any time</span></div><button class="helper-close" type="button" aria-label="Close chat">×</button></div>
+    <div class="helper-body">
+      <div class="chat-log" id="chatLog" aria-live="polite"></div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chat-chip" type="button" data-q="Do I need a GP referral?">Do I need a GP referral?</button>
+        <button class="chat-chip" type="button" data-q="How much is treatment for an ingrowing toenail?">Ingrowing toenail</button>
+        <button class="chat-chip" type="button" data-q="What time are you open on Friday?">Open on Friday?</button>
+      </div>
+      <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your message</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask about a treatment…"><button id="chatSend" type="submit">Send</button></form>
+    </div>
+  </div>
+</div>
+<script src="/studio/assistant.js?v=3" defer></script>
+<script src="/studio/concepts/kit/helper.js" defer></script>
+<script type="module" src="/studio/concepts/kit/scene3d.js"></script>
 </body>
 </html>

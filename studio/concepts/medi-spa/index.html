@@ -433,6 +433,9 @@
     .btn, .service-card, header{transition:none;}
   }
 </style>
+<link rel="stylesheet" href="/studio/concepts/kit/addons.css">
+<style>:root{ --accent:#33511C; --accent-ink:#FFFFFF; --muted:#5B5E52; --line:rgba(26,26,22,.12); --soft:#E1EFCF; --display:"Fraunces", Georgia, serif; }</style>
+<script type="importmap">{ "imports": { "three": "/worlds/vendor/three.module.min.js" } }</script>
 </head>
 <body>
 <!-- concept-banner: these pages are linked from the studio portfolio, so say
@@ -442,6 +445,7 @@
   <a href="https://www.wearesparklab.com/studio" style="color:#7ad7f0;text-decoration:underline">Spark Lab Studio</a>
   showing what a site like this looks like. Nothing here is real, so nothing here can be booked.
 </div>
+<canvas class="scene3d" data-scene="medispa" data-label="verdance" data-retrofit aria-hidden="true"></canvas>
 
 
 <header id="siteHeader">
@@ -465,7 +469,7 @@
 <main id="top">
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero has-stage3d">
     <div class="wrap">
       <div class="hero-inner">
         <span class="eyebrow">Mill Lane &middot; Norwich</span>
@@ -483,6 +487,7 @@
         </div>
       </div>
     </div>
+    <div class="stage3d at-side" aria-hidden="true"></div>
   </section>
 
   <!-- ABOUT -->
@@ -635,7 +640,7 @@
     </div>
   </div>
   <div class="wrap" style="margin-top:22px;">
-    <span class="credit">Demo site by <a href="#" data-demo-link target="_blank" rel="noopener">SparkLab Studio</a></span>
+    <span class="credit">A concept website by <a href="https://www.wearesparklab.com">SparkLab</a></span>
   </div>
 </footer>
 
@@ -673,5 +678,25 @@
   }
 </script>
 
+
+<!-- the site's chat assistant (answers from api/_knowledge/verdance-medi-spa.js) -->
+<div class="helper">
+  <button class="helper-fab" type="button" aria-expanded="false" aria-controls="helperPanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H9l-5 4V5a1 1 0 0 1 1-1z"/></svg>Ask the clinic</button>
+  <div class="helper-panel chat" id="helperPanel" role="dialog" aria-label="Chat with Verdance Medi-Spa" hidden data-client="verdance-medi-spa" data-greeting="Hello, I'm the Verdance assistant. Ask me about facials, electrolysis, nails, opening hours or how to book.">
+    <div class="helper-head"><i aria-hidden="true"></i><div><b>Verdance Medi-Spa</b><span>Clinic assistant · answers any time</span></div><button class="helper-close" type="button" aria-label="Close chat">×</button></div>
+    <div class="helper-body">
+      <div class="chat-log" id="chatLog" aria-live="polite"></div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chat-chip" type="button" data-q="Is electrolysis permanent?">Is electrolysis permanent?</button>
+        <button class="chat-chip" type="button" data-q="Which evenings are you open late?">Late opening?</button>
+        <button class="chat-chip" type="button" data-q="How much is a facial?">How much is a facial?</button>
+      </div>
+      <form class="chat-form" id="chatForm"><label class="sr" for="chatInput">Your message</label><input id="chatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask about a treatment…"><button id="chatSend" type="submit">Send</button></form>
+    </div>
+  </div>
+</div>
+<script src="/studio/assistant.js?v=3" defer></script>
+<script src="/studio/concepts/kit/helper.js" defer></script>
+<script type="module" src="/studio/concepts/kit/scene3d.js"></script>
 </body>
 </html>
