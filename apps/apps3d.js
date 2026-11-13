@@ -22,8 +22,8 @@ function start() {
   camera.position.set(0, 0, 11);
 
   const key = new THREE.DirectionalLight(0xffffff, 1.4); key.position.set(3, 5, 6); scene.add(key);
-  const pink = new THREE.PointLight(0xff4fd8, 30, 20); pink.position.set(-4, -1, 3); scene.add(pink);
-  const cyan = new THREE.PointLight(0x00f6d2, 30, 20); cyan.position.set(4, 2, 3); scene.add(cyan);
+  const pink = new THREE.PointLight(0xC9A9DA, 34, 20); pink.position.set(-4, -1, 3); scene.add(pink);
+  const cyan = new THREE.PointLight(0xE7C58C, 30, 20); cyan.position.set(4, 2, 3); scene.add(cyan);
 
   // --- phone body: an extruded rounded rectangle ---------------------------
   const W = 2.2, H = 4.5, R = 0.36;
@@ -63,32 +63,32 @@ function start() {
     out.push(line); out.forEach((l, i) => x.fillText(l, cx, y + (i - (out.length - 1) / 2) * lh));
   }
   function drawQuotes(x, t) {
-    bg(x, '#1b1446', '#0a0b22');
-    x.textAlign = 'center'; x.fillStyle = '#ffffff'; x.font = '700 40px Orbitron, sans-serif'; x.fillText('⚡ Spark Quotes', 270, 110);
+    bg(x, '#3A2F4B', '#1a1422');
+    x.textAlign = 'center'; x.fillStyle = '#ffffff'; x.font = '500 46px Newsreader, Georgia, serif'; x.fillText('⚡ Spark Quotes', 270, 110);
     x.font = '600 22px Inter, sans-serif';
     const tp = Math.floor(t / 4) % topics.length;
-    topics.forEach((n, i) => { const px = 40 + i * 118; x.fillStyle = i === tp ? '#ff4fd8' : 'rgba(255,255,255,.12)'; roundRect(x, px, 160, 108, 46, 23); x.fill(); x.fillStyle = '#fff'; x.fillText(n, px + 54, 191); });
+    topics.forEach((n, i) => { const px = 40 + i * 118; x.fillStyle = i === tp ? '#E58FB8' : 'rgba(255,255,255,.12)'; roundRect(x, px, 160, 108, 46, 23); x.fill(); x.fillStyle = '#fff'; x.fillText(n, px + 54, 191); });
     const k = Math.floor(t / 4) % lines.length, f = (t % 4) / 4, a = Math.min(1, f * 5, (1 - f) * 5);
     x.globalAlpha = a; x.fillStyle = '#ffffff'; x.font = 'italic 600 50px Georgia, serif'; wrap(x, '“' + lines[k] + '”', 270, 520, 420, 66);
     x.globalAlpha = 1; x.fillStyle = 'rgba(255,255,255,.08)'; roundRect(x, 60, 860, 420, 110, 30); x.fill();
-    x.fillStyle = '#ff4fd8'; x.font = '700 54px sans-serif'; x.fillText('♥', 160, 935); x.fillStyle = '#cfd3ff'; x.font = '600 28px Inter, sans-serif'; x.fillText('Save to favourites', 330, 925);
+    x.fillStyle = '#E58FB8'; x.font = '700 54px sans-serif'; x.fillText('♥', 160, 935); x.fillStyle = '#cfd3ff'; x.font = '600 28px Inter, sans-serif'; x.fillText('Save to favourites', 330, 925);
   }
   function drawWalk(x, t) {
-    bg(x, '#06302f', '#071019');
-    x.textAlign = 'center'; x.fillStyle = '#ffffff'; x.font = '700 40px Orbitron, sans-serif'; x.fillText('Spark Walk', 270, 110);
-    x.fillStyle = '#9fe9dc'; x.font = '600 26px Inter, sans-serif'; x.fillText('Mindful paced walk', 270, 160);
+    bg(x, '#1f3a36', '#121a1c');
+    x.textAlign = 'center'; x.fillStyle = '#ffffff'; x.font = '500 46px Newsreader, Georgia, serif'; x.fillText('Spark Walk', 270, 110);
+    x.fillStyle = '#cfe9e0'; x.font = '600 26px Inter, sans-serif'; x.fillText('Mindful paced walk', 270, 160);
     const beat = (Math.sin(t * Math.PI * 1.8) + 1) / 2, r = 150 + beat * 26;
-    x.strokeStyle = 'rgba(0,246,210,.18)'; x.lineWidth = 26; x.beginPath(); x.arc(270, 520, 200, 0, Math.PI * 2); x.stroke();
-    const prog = (t % 60) / 60; x.strokeStyle = '#00f6d2'; x.lineCap = 'round'; x.beginPath(); x.arc(270, 520, 200, -Math.PI / 2, -Math.PI / 2 + prog * Math.PI * 2); x.stroke();
-    const gr = x.createRadialGradient(270, 520, 10, 270, 520, r); gr.addColorStop(0, 'rgba(0,246,210,.55)'); gr.addColorStop(1, 'rgba(0,246,210,0)'); x.fillStyle = gr; x.beginPath(); x.arc(270, 520, r, 0, Math.PI * 2); x.fill();
+    x.strokeStyle = 'rgba(143,211,190,.18)'; x.lineWidth = 26; x.beginPath(); x.arc(270, 520, 200, 0, Math.PI * 2); x.stroke();
+    const prog = (t % 60) / 60; x.strokeStyle = '#8FD3BE'; x.lineCap = 'round'; x.beginPath(); x.arc(270, 520, 200, -Math.PI / 2, -Math.PI / 2 + prog * Math.PI * 2); x.stroke();
+    const gr = x.createRadialGradient(270, 520, 10, 270, 520, r); gr.addColorStop(0, 'rgba(143,211,190,.55)'); gr.addColorStop(1, 'rgba(143,211,190,0)'); x.fillStyle = gr; x.beginPath(); x.arc(270, 520, r, 0, Math.PI * 2); x.fill();
     x.fillStyle = '#fff'; x.font = '700 64px Inter, sans-serif'; x.fillText(beat > 0.5 ? 'step' : 'breathe', 270, 540);
     x.fillStyle = 'rgba(255,255,255,.08)'; roundRect(x, 60, 860, 420, 110, 55); x.fill();
-    x.fillStyle = '#00f6d2'; x.font = '700 32px Inter, sans-serif'; x.fillText('Start walk  ▶', 270, 927);
+    x.fillStyle = '#8FD3BE'; x.font = '700 32px Inter, sans-serif'; x.fillText('Start walk  ▶', 270, 927);
   }
   function roundRect(x, l, t, w, h, r) { x.beginPath(); x.moveTo(l + r, t); x.arcTo(l + w, t, l + w, t + h, r); x.arcTo(l + w, t + h, l, t + h, r); x.arcTo(l, t + h, l, t, r); x.arcTo(l, t, l + w, t, r); x.closePath(); }
 
-  const quotes = phone(0x8a63ff, drawQuotes, 'https://quotes.wearesparklab.com');
-  const walk = phone(0x16a394, drawWalk, 'https://walks.wearesparklab.com');
+  const quotes = phone(0xA078B4, drawQuotes, 'https://quotes.wearesparklab.com');
+  const walk = phone(0x5E9C8C, drawWalk, 'https://walks.wearesparklab.com');
   const pair = new THREE.Group(); pair.add(quotes, walk); scene.add(pair);
   const phones = [quotes, walk];
 
@@ -96,7 +96,7 @@ function start() {
   const sparkGeo = new THREE.OctahedronGeometry(0.09);
   const sparks = [];
   for (let i = 0; i < 26; i++) {
-    const m = new THREE.Mesh(sparkGeo, new THREE.MeshBasicMaterial({ color: [0xff4fd8, 0x00f6d2, 0x8a63ff, 0xffd166][i % 4] }));
+    const m = new THREE.Mesh(sparkGeo, new THREE.MeshBasicMaterial({ color: [0xE7C58C, 0xC9A9DA, 0xE58FB8, 0xF7F3ED][i % 4] }));
     m.userData = { a: Math.random() * 6.28, r: 3 + Math.random() * 2.5, y: (Math.random() - 0.5) * 6, s: 0.1 + Math.random() * 0.25 };
     scene.add(m); sparks.push(m);
   }
