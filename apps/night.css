@@ -1,0 +1,67 @@
+/* SparkLab at night: shared theme for /apps, /apps/blog and /socials.
+   The studio's plum / lavender / gold, deepened. Pages opt in with <body class="apps-night">. */
+/* "SparkLab at night": the studio's plum / lavender / gold, deepened for the apps */
+body.apps-night {
+  --bg:#16111D; --text:#F7F3ED; --muted:#CFC5D9; --card:rgba(48,40,60,.62); --line:rgba(201,169,218,.18);
+  --brand:#C9A9DA; --brand2:#E7C58C; --accent:#A078B4; --accent-hover:#8C64A2;
+  --quotes:#E58FB8; --walk:#8FD3BE;
+  background:#16111D; color:var(--text); font-family:"Instrument Sans", Inter, system-ui, sans-serif;
+}
+.apps-night .bg__gradient { background: conic-gradient(from 200deg at 50% 50%, #0000, #3A2F4B, #0000, #4a2a48, #0000, #2b3a3a, #0000); filter: blur(90px) saturate(115%); }
+.apps-night .bg__grid { opacity:.35; }
+.apps-night .bg__orbs::before { background: radial-gradient(circle, #A078B4 0%, #0000 60%); opacity:.32; }
+.apps-night .bg__orbs::after { background: radial-gradient(circle, #E7C58C 0%, #0000 60%); opacity:.16; }
+.apps-night h1, .apps-night h2, .apps-night h3 { font-family:"Newsreader", Georgia, serif; font-weight:400; letter-spacing:-.015em; }
+.apps-night .section-title { text-transform:none; font-size:clamp(30px, 4vw, 44px); letter-spacing:-.015em; }
+.apps-night .glow-text { font-weight:350; font-size:clamp(40px, 6.4vw, 72px); background:linear-gradient(100deg, #F7F3ED 10%, #C9A9DA 55%, #E7C58C 95%); -webkit-background-clip:text; background-clip:text; text-shadow:none; }
+.apps-night .hero-tagline { font-family:"Newsreader", Georgia, serif; font-style:italic; font-size:1.35rem; color:#E7C58C; }
+.apps-night .brand { font-family:"Newsreader", Georgia, serif; font-weight:500; font-size:1.3rem; }
+.apps-night .brand > span:first-child { color:#E7C58C; }
+.apps-night .nav-links a:hover { color:#E7C58C; }
+.apps-night .chip { background:rgba(201,169,218,.08); color:#E9DFF0; border-color:rgba(201,169,218,.22); }
+.apps-night .btn { border-radius:999px; }
+.apps-night .btn-primary { background:linear-gradient(135deg, #C9A9DA, #E7C58C); color:#221C2B; box-shadow:0 8px 30px rgba(231,197,140,.18); }
+.apps-night .btn-primary .btn-glow { display:none; }
+.apps-night .btn-ghost { background:rgba(247,243,237,.06); color:#F7F3ED; border:1px solid rgba(201,169,218,.35); }
+.apps-night .card-header .dot--cyan { background:var(--walk); } .apps-night .card-header .dot--pink { background:var(--quotes); } .apps-night .card-header .dot--violet { background:#E7C58C; }
+.apps-night #support { border-color:rgba(231,197,140,.22) !important; background:linear-gradient(180deg, rgba(231,197,140,.08), rgba(48,40,60,.4)) !important; }
+.apps-night .footer { color:var(--muted); }
+.apps-night a { color:inherit; }
+.apps-night .merch .qr-note { max-width:70ch; white-space:normal; }
+.apps-night .apps-hero::before { content:''; position:absolute; z-index:-1; right:2%; top:12%; width:min(46vw,620px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 40% 40%, rgba(201,169,218,.28), rgba(231,197,140,.10) 45%, transparent 70%); filter:blur(20px); pointer-events:none; }
+.apps-night .apps-hero { position:relative; }
+.apps-night .bg__orbs::before, .apps-night .bg__orbs::after { width:70vmax; height:70vmax; }
+.apps-night #apps h3, .apps-night #studio-callout h3 { font-size:clamp(24px,2.6vw,32px); line-height:1.15; margin:6px 0 10px; }
+.apps-night .card { background:linear-gradient(160deg, rgba(58,47,75,.7), rgba(34,28,43,.6)); }
+
+/* merch: white product photos sit in soft framed tiles */
+.apps-night .merch .card { background:linear-gradient(160deg, rgba(58,47,75,.75), rgba(34,28,43,.7)); border:1px solid rgba(201,169,218,.2); border-radius:20px; overflow:hidden; }
+.apps-night .merch picture { display:block; margin:10px 10px 0; border-radius:14px; overflow:hidden; background:#F7F3ED; box-shadow:0 0 0 1px rgba(231,197,140,.25), 0 14px 34px rgba(160,120,180,.25); }
+.apps-night .merch .thumb { display:block; width:100%; height:auto; mix-blend-mode:multiply; }
+.apps-night .merch .perks li { background:rgba(201,169,218,.08); border-color:rgba(201,169,218,.22); }
+.apps-night .merch .card .btn.small { background:rgba(201,169,218,.16); color:#F7F3ED; border:1px solid rgba(201,169,218,.3); }
+.apps-night .merch .card .btn.small:hover { background:rgba(201,169,218,.28); }
+
+/* support: tips in the palette, coffee keeps a warm gold */
+.apps-night #support a[href*="buymeacoffee"] { background:#E7C58C !important; color:#221C2B !important; border-radius:999px !important; }
+.apps-night #support a[href*="dRm8wQ3f"] { background:#A078B4 !important; color:#fff !important; border-radius:999px !important; }
+.apps-night #support .btn-tip { border-radius:999px; border-color:rgba(201,169,218,.35); color:#F7F3ED; }
+.apps-night #support h2 { font-family:"Newsreader", Georgia, serif !important; font-weight:400 !important; font-size:30px !important; }
+.apps-night #support p { color:var(--muted) !important; }
+
+/* socials link-in-bio */
+.apps-night .links-title { font-family:"Newsreader", Georgia, serif; font-weight:400; font-size:clamp(30px,5vw,42px); letter-spacing:-.015em; }
+.apps-night .link-btn { background:linear-gradient(135deg, #C9A9DA, #E7C58C); color:#221C2B; border-color:rgba(231,197,140,.3); box-shadow:0 10px 26px rgba(231,197,140,.14); border-radius:999px; font-weight:600; }
+.apps-night .link-btn.solid { background:rgba(201,169,218,.14); color:#F7F3ED; border:1px solid rgba(201,169,218,.35); box-shadow:none; }
+
+/* blog (its pages carry their own styles; these re-colour them) */
+body.apps-night.blog { --bg:#16111D; --surface:#221C2B; --border:rgba(201,169,218,.16); --accent:#E7C58C; --accent2:#E58FB8; --text:#F7F3ED; --muted:#B9AEC6; --card-bg:#1d1726;
+  background:radial-gradient(1100px 700px at 85% -10%, rgba(160,120,180,.28), transparent 60%), radial-gradient(900px 600px at -10% 40%, rgba(231,197,140,.08), transparent 60%), #16111D; background-attachment:fixed; font-family:"Instrument Sans", system-ui, sans-serif; font-weight:400; }
+.apps-night.blog nav { background:rgba(22,17,29,.86); }
+.apps-night.blog h1, .apps-night.blog h2, .apps-night.blog h3, .apps-night.blog .nav-logo { font-family:"Newsreader", Georgia, serif; font-weight:400; }
+.apps-night.blog h1 em, .apps-night.blog h2 em { font-weight:300; }
+.apps-night.blog .nav-logo { color:#E7C58C; }
+.apps-night.blog a:not([class]) { color:#C9A9DA; }
+/* short pages: the page itself, under the fixed background layer, in plum too */
+html:has(body.apps-night) { background:#16111D; }
+.apps-night .bg { background:#16111D; }

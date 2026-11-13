@@ -32,7 +32,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/spark-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/spark-apple-180.png">
     <link rel="mask-icon" href="/assets/brand/spark-bolt.svg" color="#FF6A00">
-    <meta name="theme-color" content="#0B1020">
+    <meta name="theme-color" content="#16111D">
 
     <link rel="stylesheet" href="/styles.css?v=19">
     <link rel="manifest" href="/manifest.webmanifest">
@@ -42,6 +42,8 @@
     <link rel="manifest" href="/manifest.webmanifest">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/apps/night.css?v=1">
     <style>
       .apps-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: center; min-height: min(86vh, 760px); }
       .apps-hero-cta { flex-wrap: wrap; margin-top: 22px; }
@@ -51,8 +53,9 @@
       .apps-stage.no-3d { display: none; }
       .apps-stage-hint { position: absolute; left: 0; right: 0; bottom: 4px; margin: 0; text-align: center; font-size: 13px; color: var(--muted); opacity: .8; pointer-events: none; }
       #apps .card { position: relative; overflow: hidden; }
-      #apps .card::after { content: ""; position: absolute; inset: auto -20% -60% auto; width: 60%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255,79,216,.22), transparent 65%); pointer-events: none; }
-      #apps .card + .card::after { background: radial-gradient(circle, rgba(0,246,210,.2), transparent 65%); }
+      #apps .card::after { content: ""; position: absolute; inset: auto -20% -60% auto; width: 60%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(229,143,184,.22), transparent 65%); pointer-events: none; }
+      #apps .card:nth-of-type(2)::after { background: radial-gradient(circle, rgba(143,211,190,.2), transparent 65%); }
+      #apps .card:nth-of-type(3)::after { background: radial-gradient(circle, rgba(231,197,140,.2), transparent 65%); }
       @media (max-width: 860px) { .apps-hero { grid-template-columns: 1fr; min-height: 0; } .apps-stage { height: 440px; } }
     </style>
     <script type="importmap">{ "imports": { "three": "/worlds/vendor/three.module.min.js" } }</script>
@@ -66,7 +69,7 @@
     }
 </script>
 
-<body>
+<body class="apps-night">
     <div class="bg">
         <div class="bg__noise"></div>
         <div class="bg__gradient"></div>
@@ -108,9 +111,10 @@
         <div class="card-cta apps-hero-cta">
             <a class="btn small btn-primary" href="https://quotes.wearesparklab.com" target="_blank" rel="noopener noreferrer"><span class="btn-glow"></span>Open Spark Quotes</a>
             <a class="btn small btn-ghost" href="https://walks.wearesparklab.com" target="_blank" rel="noopener noreferrer">Open Spark Walk</a>
+            <a class="btn small btn-ghost" href="https://money-sorted.wearesparklab.com" target="_blank" rel="noopener noreferrer">Open Money, sorted</a>
         </div>
       </div>
-      <div class="apps-stage" aria-label="Spark Quotes and Spark Walk on two phones. Click a phone to open that app.">
+      <div class="apps-stage" aria-label="Spark Quotes, Spark Walk and Money, sorted on phones. Click a phone to open that app.">
         <canvas></canvas>
         <p class="apps-stage-hint">Move to tilt · tap a phone to open it</p>
       </div>
@@ -118,7 +122,7 @@
 
     <section id="apps" class="container apps">
         <h2 class="section-title">Our Wellness Apps</h2>
-        <p>Two free apps built to support your mental wellness, one small habit at a time.</p>
+        <p>Small apps for everyday life: a daily lift, a mindful walk and a calmer handle on your money, one small habit at a time.</p>
 
         <div class="card tilt glass">
             <div class="card-header">
@@ -154,6 +158,22 @@
             <p><strong>Free · Works on any device</strong></p>
             <div class="card-cta">
                 <a class="btn small btn-primary" href="https://walks.wearesparklab.com" target="_blank"
+                    rel="noopener noreferrer">
+                    <span class="btn-glow"></span>Launch Web App
+                </a>
+            </div>
+        </div>
+        <div class="card tilt glass">
+            <div class="card-header">
+                <div class="dot dot--cyan"></div>
+                <div class="dot dot--pink"></div>
+                <div class="dot dot--violet"></div>
+            </div>
+            <h3>Money, sorted — Simple Monthly Budget App</h3>
+            <p>See where your money goes each month without a spreadsheet. List your regular outgoings, tick the ones that repeat so they carry over, add the dates your income arrives and mark payments as paid. Money, sorted shows your next payment, your total outgoing and what's left over, by the month and by the week.</p>
+            <p><strong>Works on any device</strong></p>
+            <div class="card-cta">
+                <a class="btn small btn-primary" href="https://money-sorted.wearesparklab.com" target="_blank"
                     rel="noopener noreferrer">
                     <span class="btn-glow"></span>Launch Web App
                 </a>
@@ -417,6 +437,12 @@
           "name": "Spark Walk — Mindful Walking App",
           "url": "https://walks.wearesparklab.com",
           "description": "Free mindful walking app with paced guided walks designed to support mental wellness."
+        },
+        {
+          "@type": "Offer",
+          "name": "Money, sorted — Simple Monthly Budget App",
+          "url": "https://money-sorted.wearesparklab.com",
+          "description": "A simple monthly budget: regular outgoings, income payment dates and what is left over."
         }
       ]
     }
