@@ -400,8 +400,7 @@
         })();
 
         // tiny tilt effect on hover (no libs)
-        const tilt = document.querySelector('.tilt');
-        if (tilt) {
+        document.querySelectorAll('.tilt').forEach((tilt) => {
             const damp = 35;
             tilt.addEventListener('mousemove', (e) => {
                 const r = tilt.getBoundingClientRect();
@@ -412,7 +411,7 @@
             tilt.addEventListener('mouseleave', () => {
                 tilt.style.transform = 'rotateX(0deg) rotateY(0deg)';
             });
-        }
+        });
     </script>
     <script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js')); }</script>
 
