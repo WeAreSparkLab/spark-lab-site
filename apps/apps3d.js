@@ -53,7 +53,7 @@ function start() {
     return g;
   }
 
-  // --- the two app screens ------------------------------------------------
+  // --- the app screens ------------------------------------------------
   const lines = ['Small steps still count.', 'Be gentle with yourself today.', 'Progress, not perfection.', 'You are allowed to rest.'];
   const topics = ['Calm', 'Focus', 'Kindness', 'Courage'];
   function bg(x, a, b) { const gr = x.createLinearGradient(0, 0, 0, 1100); gr.addColorStop(0, a); gr.addColorStop(1, b); x.fillStyle = gr; x.fillRect(0, 0, 540, 1100); }
@@ -87,10 +87,44 @@ function start() {
   }
   function roundRect(x, l, t, w, h, r) { x.beginPath(); x.moveTo(l + r, t); x.arcTo(l + w, t, l + w, t + h, r); x.arcTo(l + w, t + h, l, t + h, r); x.arcTo(l, t + h, l, t, r); x.arcTo(l, t, l + w, t, r); x.closePath(); }
 
-  const quotes = phone(0xA078B4, drawQuotes, 'https://quotes.wearesparklab.com');
-  const walk = phone(0x5E9C8C, drawWalk, 'https://walks.wearesparklab.com');
-  const pair = new THREE.Group(); pair.add(quotes, walk); scene.add(pair);
-  const phones = [quotes, walk];
+  // Money, sorted: invented example figures only (never a real account)
+  const bills = [['Rent', 650], ['Energy', 95], ['Food shop', 160], ['Phone', 18]];
+  function drawMoney(x, t) {
+    bg(x, '#26302a', '#151a17');
+    x.textAlign = 'left'; x.fillStyle = '#F7F3ED'; x.font = '500 46px Newsreader, Georgia, serif'; x.fillText('Money, sorted', 48, 110);
+    x.fillStyle = 'rgba(255,255,255,.07)'; roundRect(x, 40, 150, 460, 150, 22); x.fill();
+    x.fillStyle = '#cfd8cf'; x.font = '600 22px Inter, sans-serif'; x.fillText('Next payment · Rent', 66, 192);
+    x.fillStyle = '#F7F3ED'; x.font = '600 50px Newsreader, Georgia, serif'; x.fillText('£650.00', 66, 248);
+    x.fillStyle = '#cfd8cf'; x.font = '500 22px Inter, sans-serif'; x.fillText('1 December — in 20 days', 66, 282);
+    x.fillStyle = '#F7F3ED'; x.font = '500 34px Newsreader, Georgia, serif'; x.fillText('Outgoings', 48, 360);
+    const shown = Math.min(bills.length, Math.floor((t % 8) / 0.6) + 1);
+    bills.forEach(([n, v], i) => {
+      const y = 410 + i * 72; x.globalAlpha = i < shown ? 1 : 0.25;
+      x.strokeStyle = 'rgba(255,255,255,.08)'; x.lineWidth = 2; x.beginPath(); x.moveTo(48, y + 26); x.lineTo(492, y + 26); x.stroke();
+      x.fillStyle = '#F7F3ED'; x.font = '500 28px Inter, sans-serif'; x.textAlign = 'left'; x.fillText(n, 48, y);
+      x.textAlign = 'right'; x.fillText(String(v), 400, y);
+      x.fillStyle = i < shown ? '#9BC59D' : 'rgba(255,255,255,.2)'; roundRect(x, 452, y - 26, 34, 34, 7); x.fill();
+      if (i < shown) { x.strokeStyle = '#151a17'; x.lineWidth = 5; x.beginPath(); x.moveTo(460, y - 9); x.lineTo(467, y - 1); x.lineTo(480, y - 18); x.stroke(); }
+    });
+    x.globalAlpha = 1;
+    const spent = bills.slice(0, shown).reduce((s, b) => s + b[1], 0), left = 1335.5 - spent;
+    x.textAlign = 'left'; x.fillStyle = '#cfd8cf'; x.font = '500 24px Inter, sans-serif'; x.fillText('Total outgoing — £' + spent.toFixed(2), 48, 760);
+    x.fillStyle = '#E7C58C'; x.font = '600 44px Newsreader, Georgia, serif'; x.fillText('Left over — £' + left.toFixed(2), 48, 820);
+    x.fillStyle = '#cfd8cf'; x.font = '500 24px Inter, sans-serif'; x.fillText('≈ £' + (left * 12 / 52).toFixed(2) + ' a week', 48, 862);
+    x.fillStyle = 'rgba(155,197,157,.16)'; roundRect(x, 48, 920, 444, 90, 45); x.fill();
+    x.textAlign = 'center'; x.fillStyle = '#9BC59D'; x.font = '700 28px Inter, sans-serif'; x.fillText('Payment dates  ✓ Mark paid', 270, 975);
+  }
+
+  // --- the apps: to add one, add an entry here (and a card on the page) ---
+  const APPS = [
+    { color: 0xA078B4, draw: drawQuotes, href: 'https://quotes.wearesparklab.com' },
+    { color: 0x5E9C8C, draw: drawWalk, href: 'https://walks.wearesparklab.com' },
+    { color: 0xB8955A, draw: drawMoney, href: 'https://money-sorted.wearesparklab.com' },
+  ];
+  const phones = APPS.map(a => phone(a.color, a.draw, a.href));
+  const pair = new THREE.Group(); phones.forEach(p => pair.add(p)); scene.add(pair);
+  const n = phones.length, ring = n >= 4; // 2-3 apps: a fanned arc; 4+: a carousel you can drag
+  let spin = 0, spinV = 0, dragging = false, dragX = 0, moved = 0;
 
   // drifting sparks around them
   const sparkGeo = new THREE.OctahedronGeometry(0.09);
@@ -102,29 +136,45 @@ function start() {
   }
 
   // --- layout, pointer, scroll, click -------------------------------------
-  let narrow = false;
+  const SP = 2.55; // gap between phones on the arc
   function size() {
     const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return;
     renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
-    narrow = w / h < 1.05;
-    quotes.position.set(narrow ? -1.25 : -1.45, 0.25, 0); walk.position.set(narrow ? 1.25 : 1.45, -0.25, -0.4);
-    const s = narrow ? 0.85 : 1.18; pair.scale.setScalar(s);
+    const visW = 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect;
+    const span = ring ? SP * 2.2 + W : SP * (n - 1) + W;
+    pair.scale.setScalar(Math.min(1.18, (0.94 * visW) / span));
   }
   size(); new ResizeObserver(size).observe(stage);
+  function place(p, i, t) {
+    let rel = i - (ring ? spin : (n - 1) / 2);
+    if (ring) { rel = ((rel % n) + n) % n; if (rel > n / 2) rel -= n; }
+    const th = ring ? (Math.PI * 2) / n : 0, R = ring ? Math.max(3.2, (SP * 1.1) / Math.sin(th)) : 0;
+    const x = ring ? Math.sin(rel * th) * R : rel * SP, z = ring ? (Math.cos(rel * th) - 1) * R : -Math.abs(rel) * 0.7;
+    const lift = p === hover ? 0.35 : 0; p.userData.l = (p.userData.l || 0) + (lift - (p.userData.l || 0)) * 0.12;
+    p.position.set(x, (i % 2 ? -0.25 : 0.25) + Math.sin(t * 0.9 + i * 1.7) * 0.12 + p.userData.l, z);
+    p.rotation.y = (ring ? -rel * th * 0.6 : -rel * 0.3) + Math.sin(t * 0.6 + i) * 0.06;
+    p.rotation.z = Math.sin(t * 0.5 + i * 2) * 0.03;
+  }
 
   const ptr = new THREE.Vector2(), aim = { x: 0, y: 0 }, ray = new THREE.Raycaster();
   let hover = null;
   stage.addEventListener('pointermove', e => {
     const r = stage.getBoundingClientRect();
     ptr.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+    if (dragging) { const dx = e.clientX - dragX; dragX = e.clientX; moved += Math.abs(dx); spinV = -dx / 220; spin += spinV; }
     aim.x = ptr.x; aim.y = ptr.y;
     ray.setFromCamera(ptr, camera);
     const hit = ray.intersectObjects(phones, true)[0];
     hover = hit ? phones.find(p => p === hit.object.parent) : null;
-    stage.style.cursor = hover ? 'pointer' : '';
+    stage.style.cursor = hover ? 'pointer' : ring ? 'grab' : '';
   });
+  if (ring) {
+    stage.style.touchAction = 'pan-y';
+    stage.addEventListener('pointerdown', e => { dragging = true; dragX = e.clientX; moved = 0; });
+    addEventListener('pointerup', () => { dragging = false; });
+  }
   stage.addEventListener('pointerleave', () => { aim.x = aim.y = 0; hover = null; stage.style.cursor = ''; });
-  stage.addEventListener('click', () => { if (hover) window.open(hover.userData.href, '_blank', 'noopener'); });
+  stage.addEventListener('click', () => { if (hover && moved < 8) window.open(hover.userData.href, '_blank', 'noopener'); moved = 0; });
 
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let visible = true;
@@ -134,15 +184,10 @@ function start() {
     if (!visible) return;
     const t = still ? 2 : clock.getElapsedTime();
     const scroll = Math.min(1.5, scrollY / innerHeight);
-    pair.rotation.y += ((aim.x * 0.35 + scroll * 0.9) - pair.rotation.y) * 0.06;
+    if (ring && !dragging) { spinV *= 0.94; spin += spinV + (still || hover ? 0 : 0.0015); }
+    pair.rotation.y += ((aim.x * (ring ? 0.12 : 0.3) + scroll * (ring ? 0.3 : 0.7)) - pair.rotation.y) * 0.06;
     pair.rotation.x += ((-aim.y * 0.2) - pair.rotation.x) * 0.06;
-    phones.forEach((p, i) => {
-      p.rotation.y = (i ? -0.32 : 0.32) + Math.sin(t * 0.6 + i) * 0.06;
-      p.rotation.z = Math.sin(t * 0.5 + i * 2) * 0.03;
-      const lift = p === hover ? 0.35 : 0; p.userData.l = (p.userData.l || 0) + (lift - (p.userData.l || 0)) * 0.12;
-      p.position.y = (i ? -0.25 : 0.25) + Math.sin(t * 0.9 + i * 1.7) * 0.12 + p.userData.l;
-    });
-    // screens redraw ~20fps
+    phones.forEach((p, i) => place(p, i, t));    // screens redraw ~20fps
     if (t - last > 0.05 || last < 0) { last = t; phones.forEach(p => { p.userData.draw(p.userData.ctx, t); p.userData.tex.needsUpdate = true; }); }
     sparks.forEach(m => { const u = m.userData; u.a += 0.004 * (1 + u.s); m.position.set(Math.cos(u.a) * u.r, u.y + Math.sin(t * u.s + u.a) * 0.4, Math.sin(u.a) * u.r - 1); m.rotation.y = t * 2; });
     renderer.render(scene, camera);
