@@ -9,6 +9,7 @@
     }
   ],
   "redirects": [
+    { "source": "/oauth/consent", "destination": "https://sparklab-agent-hq-git-feature-on-0ffc88-wearesparklabs-projects.vercel.app/oauth/consent", "permanent": false },
     {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "wearesparklab.com" }],
