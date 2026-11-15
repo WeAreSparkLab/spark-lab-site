@@ -37,14 +37,14 @@
 
   <style>
     :root {
-      --bg: #0a0a0f;
-      --surface: #12121a;
-      --border: #1e1e2e;
-      --accent: #f5c842;
-      --accent2: #6672E7;
-      --text: #e8e8f0;
-      --muted: #7070a0;
-      --card: #0f0f18;
+      --bg: #f8f4ed;
+      --surface: #fffdf9;
+      --border: #e5dce8;
+      --accent: #50356f;
+      --accent2: #9c78bd;
+      --text: #272433;
+      --muted: #575366;
+      --card: #ffffff;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -67,7 +67,7 @@
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
-      background: rgba(10,10,15,0.92);
+      background: rgba(248,244,237,0.94);
       backdrop-filter: blur(12px);
       z-index: 100;
     }
@@ -93,8 +93,8 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent);
-      background: rgba(245,200,66,0.1);
-      border: 1px solid rgba(245,200,66,0.2);
+      background: rgba(80,53,111,0.08);
+      border: 1px solid rgba(80,53,111,0.18);
       padding: 0.35rem 0.9rem;
       border-radius: 2rem;
       margin-bottom: 1.5rem;
@@ -119,7 +119,7 @@
       align-items: center;
       gap: 0.5rem;
       background: var(--accent);
-      color: #0a0a0f;
+      color: #ffffff;
       padding: 0.9rem 2rem;
       border-radius: 0.75rem;
       text-decoration: none;
@@ -159,13 +159,13 @@
       border-radius: 2rem;
       padding: 2rem;
       position: relative;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+      box-shadow: 0 30px 70px rgba(80,53,111,0.13);
     }
 
     .walk-card-glow {
       position: absolute;
       inset: -20px;
-      background: radial-gradient(circle at 50% 60%, rgba(245,200,66,0.07) 0%, transparent 65%);
+      background: radial-gradient(circle at 50% 60%, rgba(156,120,189,0.14) 0%, transparent 65%);
       pointer-events: none;
       border-radius: 3rem;
     }
@@ -234,9 +234,9 @@
       letter-spacing: 0.05em;
     }
 
-    .interval.fast { background: rgba(245,200,66,0.15); color: var(--accent); border: 1px solid rgba(245,200,66,0.3); }
-    .interval.easy { background: rgba(102,114,231,0.1); color: var(--accent2); border: 1px solid rgba(102,114,231,0.2); }
-    .interval.active { background: var(--accent); color: #0a0a0f; }
+    .interval.fast { background: rgba(80,53,111,0.1); color: var(--accent); border: 1px solid rgba(80,53,111,0.25); }
+    .interval.easy { background: rgba(156,120,189,0.12); color: var(--accent); border: 1px solid rgba(156,120,189,0.25); }
+    .interval.active { background: var(--accent); color: #ffffff; }
 
     .walk-next {
       font-size: 0.8rem;
@@ -313,7 +313,7 @@
       padding: 1.8rem;
       transition: border-color 0.3s, transform 0.3s;
     }
-    .feature-card:hover { border-color: rgba(245,200,66,0.3); transform: translateY(-3px); }
+    .feature-card:hover { border-color: rgba(80,53,111,0.3); transform: translateY(-3px); }
 
     .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
 
@@ -360,7 +360,7 @@
       font-family: 'Fraunces', serif;
       font-size: 3rem;
       font-weight: 700;
-      color: rgba(245,200,66,0.15);
+      color: rgba(80,53,111,0.3);
       line-height: 1;
       margin-bottom: 1rem;
     }
@@ -395,7 +395,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 0%, rgba(245,200,66,0.05) 0%, transparent 60%);
+      background: radial-gradient(circle at 50% 0%, rgba(156,120,189,0.12) 0%, transparent 60%);
     }
 
     .cta-inner h2 {
@@ -421,7 +421,7 @@
     .badge {
       font-size: 0.78rem;
       color: var(--muted);
-      background: rgba(255,255,255,0.03);
+      background: rgba(80,53,111,0.05);
       border: 1px solid var(--border);
       padding: 0.35rem 0.9rem;
       border-radius: 2rem;
@@ -445,6 +445,11 @@
     .hero-content { animation: fadeUp 0.6s ease both; }
     .walk-wrap { animation: fadeUp 0.6s ease 0.15s both; }
 
+    a:focus-visible { outline: 3px solid var(--accent2); outline-offset: 4px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    }
+
     @media (max-width: 700px) {
       .hero { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem 3rem; }
       .walk-wrap { order: -1; }
@@ -459,9 +464,10 @@
   <nav>
     <a href="/" class="nav-logo">✦ Spark Lab</a>
     <ul class="nav-links">
-      <li><a href="/apps">Home</a></li>
+      <li><a href="/apps">All apps</a></li>
       <li><a href="/spark-quotes">Spark Quotes</a></li>
-      <li><a href="/spark-walk" style="color:#e8f0e8">Spark Walk</a></li>
+      <li><a href="/spark-walk" aria-current="page">Spark Walk</a></li>
+      <li><a href="/money-sorted">Money, sorted</a></li>
       <li><a href="/apps/blog">Blog</a></li>
     </ul>
   </nav>
@@ -474,7 +480,7 @@
       <p>Spark Walk guides you through brisk and easy intervals with a sound cue when it's time to change pace. Try the 21-minute default walk or make your own plan. Your phone can stay in your pocket.</p>
       <div class="cta-group">
         <a href="https://walks.wearesparklab.com" class="btn-primary">Start Walking Free 🚶</a>
-        <a href="/" class="btn-outline">← Back to Spark Lab</a>
+        <a href="/apps" class="btn-outline">Explore the other apps</a>
       </div>
     </div>
     <div class="walk-wrap">
@@ -555,13 +561,13 @@
       <div class="feature-card">
         <div class="feature-icon">🌍</div>
         <h3>Works anywhere in the world</h3>
-        <p>Spark Walk uses your device's location to work wherever you are — park, street, beach, or treadmill. No region restrictions.</p>
+        <p>Take the timer into a park, along a street, or onto a treadmill. Choose a route and a pace that suit you.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">📱</div>
         <h3>Add to your home screen</h3>
-        <p>Works like a native app. Add to your phone's home screen for instant one-tap access — no app store required, no storage used.</p>
+        <p>Add the web app to your phone's home screen for easy access without visiting an app store.</p>
       </div>
 
       <div class="feature-card">
@@ -589,7 +595,7 @@
   </section>
 
   <footer>
-    <p>© Spark Lab · <a href="/apps">Home</a> · <a href="/spark-quotes">Spark Quotes</a> · <a href="/apps/blog">Blog</a> · <a href="/privacy">Privacy</a> · Free tempo walking app</p>
+    <p>© SparkLab · <a href="/apps">All apps</a> · <a href="/spark-quotes">Spark Quotes</a> · <a href="/money-sorted">Money, sorted</a> · <a href="/apps/blog">Blog</a> · <a href="/privacy">Privacy</a></p>
   </footer>
 
 </body>
