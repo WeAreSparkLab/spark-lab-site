@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "node scripts/build-widget-css.js && node scripts/inline-css.js"
+    "build": "node scripts/build-widget-css.js && node scripts/inline-css.js",
+    "test": "node --test tests/*.test.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",

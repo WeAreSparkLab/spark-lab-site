@@ -46,6 +46,21 @@
   var busy = false;
   var started = false; // greeting added once, on first open
   var offline = isOutsideHours();
+  var context = null; // { service, label } chosen on the page before opening the chat
+
+  // One greeting per option on the page, so each reply fits what the visitor actually picked.
+  var GREETINGS = {
+    website: "I see you’re looking for a website. Tell me a little about your business and what you’d like the site to do for you, like helping people find you, see your prices or book. I’ll pass it to Sara, and you’ll see a free working demo before you decide anything.",
+    assistant: "I see you’re interested in an AI assistant. You don’t need a new website to have one. What do customers ask you most, or where do enquiries slip through while you’re busy?",
+    automation: "I see you’d like to automate some repetitive work. Which jobs take up most of your time: reminders, follow-ups, review requests, or other admin?",
+    unsure: "Not sure yet is completely fine, that’s what I’m here for. Tell me what your business does and where the day tends to get away from you, and we’ll work out what would help most.",
+  };
+  var SWITCHES = {
+    website: "Got it, let’s talk about a website instead. What would you like it to do for your business?",
+    assistant: "Got it, let’s talk about an AI assistant instead. You don’t need a new website for one. What would you like it to help with?",
+    automation: "Got it, let’s look at automating repetitive work instead. Which tasks would you most like off your plate?",
+    unsure: "No problem, let’s step back. Tell me where the day tends to get away from you and we’ll work out what would help most.",
+  };
 
   // --- Build the DOM ---------------------------------------------------------
   var root = document.createElement("div");
@@ -116,10 +131,26 @@
   function greet() {
     if (started) return;
     started = true;
+    if (context && GREETINGS[context.service]) {
+      addMessage("Hi! " + GREETINGS[context.service] + (offline ? " Sara’s away from her desk right now, so she’ll reply within one business day." : ""), "bot");
+      return;
+    }
     var msg = offline
-      ? "Hi! I’m SparkLab’s assistant, here any time. Ask me anything about our websites and AI assistants. Sara’s away from her desk right now, so if you’d like a personal reply, leave your name, email and what you need and she’ll get back to you within one business day."
+      ?"Hi! I’m SparkLab’s assistant, here any time. Ask me anything about our websites and AI assistants. Sara’s away from her desk right now, so if you’d like a personal reply, leave your name, email and what you need and she’ll get back to you within one business day."
       : "Hi! I’m SparkLab’s assistant. Ask me anything about our websites and AI assistants, or leave your details and Sara will get back to you personally.";
     addMessage(msg, "bot");
+  }
+
+  // If the assistant can't be reached, never leave a visitor at a dead end.
+  function addFailure(text) {
+    var el = addMessage(text + " You can still reach Sara directly: ", "error");
+    var wa = document.createElement("a");
+    wa.href = "https://wa.me/447585613652"; wa.target = "_blank"; wa.rel = "noopener noreferrer"; wa.textContent = "WhatsApp";
+    var em = document.createElement("a");
+    em.href = "mailto:sara@wearesparklab.com?subject=SparkLab%20enquiry"; em.textContent = "sara@wearesparklab.com";
+    el.append(wa, " or ", em, ".");
+    [wa, em].forEach(function (a) { a.style.color = "inherit"; a.style.textDecoration = "underline"; });
+    scrollToEnd();
   }
 
   // --- Send ------------------------------------------------------------------
@@ -136,7 +167,7 @@
     fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: history }),
+      body: JSON.stringify(context ? { messages: history, context: { service: context.service } } : { messages: history }),
     })
       .then(function (res) {
         return res.json().then(function (data) { return { ok: res.ok, data: data }; });
@@ -150,13 +181,13 @@
           var msg =
             (result.data && result.data.error) ||
             "I’m having trouble connecting right now. Please try again in a moment.";
-          addMessage(msg, "error");
+          addFailure(msg);
           history.pop();
         }
       })
       .catch(function () {
         if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
-        addMessage("I’m having trouble connecting right now. Please try again in a moment.", "error");
+        addFailure("I’m having trouble connecting right now.");
         history.pop();
       })
       .finally(function () {
@@ -192,4 +223,28 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && panel.classList.contains("open")) closePanel();
   });
+
+  // Public hook: open the chat already knowing what the visitor picked, e.g.
+  // SparkLabEnquiry.open({ service: "assistant", label: "An AI assistant" }).
+  // A choice made before the first message also shapes the greeting.
+  window.SparkLabEnquiry = {
+    open: function (opts) {
+      var next = opts && GREETINGS[opts.service] ? { service: String(opts.service), label: String(opts.label || "") } : null;
+      var changed = next && (!context || context.service !== next.service);
+      if (changed) {
+        var talked = history.some(function (m) { return m.role === "user"; });
+        context = next;
+        if (!talked) {
+          // nothing said yet: start again with the right greeting
+          history = []; log.innerHTML = ""; started = false;
+        } else if (!busy) {
+          // mid-conversation: acknowledge the switch; the server gets the new choice with the next message
+          addMessage(SWITCHES[next.service], "bot");
+          history.push({ role: "assistant", content: SWITCHES[next.service] });
+        }
+      }
+      if (!panel.classList.contains("open")) openPanel();
+      else if (!started) greet();
+    },
+  };
 })();

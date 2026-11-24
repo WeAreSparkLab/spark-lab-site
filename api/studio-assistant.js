@@ -13,10 +13,13 @@
 //   ANTHROPIC_API_KEY        — Anthropic key (existing)
 //   RESEND_API_KEY           — Resend key; leads are emailed straight to Sara (primary)
 //   LEAD_EMAIL_FROM          — optional sender, must be on a domain verified in Resend
-//   LEAD_EMAIL_TO            — optional recipient (defaults to support@wearesparklab.com)
+//   LEAD_EMAIL_TO            — optional recipient (defaults to sara@wearesparklab.com)
 //   SPARKLAB_LEAD_WEBHOOK    — optional n8n webhook, also sent the lead when set
 //
-// Endpoint: POST /api/studio-assistant   body: { messages: [{role, content}] }
+// Endpoint: POST /api/studio-assistant
+//   body: { messages: [{role, content}], context?: { service } }
+//   context.service (website | assistant | automation | unsure) is the option
+//   the visitor picked on the page, so they aren't asked for it twice.
 // =============================================================================
 
 const Anthropic = require("@anthropic-ai/sdk");
@@ -27,7 +30,7 @@ const MAX_TOKENS = 1024;
 const MAX_TOOL_ITERATIONS = 3; // safety cap on the tool-use loop
 
 // If the webhook fails, the assistant tells the visitor to email here directly.
-const FALLBACK_EMAIL = "support@wearesparklab.com";
+const FALLBACK_EMAIL = "sara@wearesparklab.com";
 
 // --- Business hours (edit here) ---------------------------------------------
 const BUSINESS_TZ = "Europe/London";
@@ -61,6 +64,12 @@ const CAPTURE_LEAD_TOOL = {
       business_type: { type: "string", description: "Type of business, e.g. dental practice, massage therapist" },
       in_niche: { type: "boolean", description: "true if wellness/beauty, false otherwise" },
       enquiry_summary: { type: "string", description: "One line on what they need" },
+      service: {
+        type: "string",
+        enum: ["website", "assistant", "automation", "unsure"],
+        description: "What they want help with: a website, an AI assistant (with or without a new website), automating repetitive tasks, or not sure yet",
+      },
+      website: { type: "string", description: "Their existing website, if they mentioned one" },
     },
     required: ["name", "email", "enquiry_summary"],
   },
@@ -83,10 +92,23 @@ function isOutsideBusinessHours(date) {
 // =============================================================================
 // SparkLab knowledge block — edit the [bracketed] bits to change the offer.
 // =============================================================================
-function buildSystemPrompt({ outsideHours }) {
+function buildSystemPrompt({ outsideHours, service }) {
+  const FOCUS = {
+    website: "They want a WEBSITE. Talk about websites: what the site would do for them, the free working demo, the from-£450 starting point. Do NOT tell them they don't need a website. Mention assistants only if they ask.",
+    assistant: "They want an AI ASSISTANT. Make clear it doesn't require a new SparkLab website. Ask what customers ask most or where enquiries slip through, and steer towards the monthly plans.",
+    automation: "They want to AUTOMATE repetitive tasks (reminders, follow-ups, review requests, admin). It doesn't require a new website. Find out which tasks eat their time; don't quote, capture the enquiry.",
+    unsure: "They're NOT SURE what they need. Ask what the business does and where the day gets away from them, then suggest the one option (website, assistant or automation) that fits best and say why in a sentence.",
+  };
+  const chosen = service
+    ? `\n\nCURRENT FOCUS: the visitor chose "${serviceLabel(service)}" on the website (they can change this, and it may differ from earlier in the conversation; the current choice wins). ${FOCUS[service]} Don't ask what they're interested in again. Pass service="${service}" when you call capture_lead unless they clearly change their mind in the chat.`
+    : "";
   return `You are the enquiry assistant for SparkLab Studio. Tone: warm, concise, professional, British English. Keep replies short.
 
 What SparkLab does: builds fast, beautiful websites for solo practitioners — plus optional AI add-ons (a booking assistant, an out-of-hours FAQ responder, a social content generator, and a "find your treatment" matcher).
+
+You don't need a new website to work with SparkLab. Businesses that already have a website or booking system can enquire about an AI assistant on its own, or about automating repetitive work such as follow-ups and admin. Say so when the visitor is asking about an assistant or automation, and never imply a website must be bought first. But never tell someone who wants a website that they don't need one.
+
+Answer what was actually asked. Read the visitor's last message carefully and reply to that, in context of the conversation so far; don't recite a standard pitch, repeat earlier messages, or answer a question they didn't ask. If a message is unclear, ask one short clarifying question. Automation work is scoped per business: capture the enquiry rather than describing specifics or quoting.
 
 Specialism vs who we'll take on: SparkLab specialises in wellness and beauty businesses, but Sara also takes on other businesses — dental and other clinics, and professional-services firms. When a visitor's business falls outside wellness/beauty, NEVER turn them away. Warmly note that wellness/beauty is the specialism but other businesses are welcome, explain it would be a tailored quote rather than a standard package, and capture the enquiry (see LEAD CAPTURE). Do not invent or quote a price for an out-of-niche business.
 
@@ -98,79 +120,14 @@ Hours: enquiries are answered within ${REPLY_WINDOW}, during business hours. Rig
 
 LEAD CAPTURE — this is how Sara actually hears about a visitor. When ANY of these is true — the visitor has shown buying intent, it's outside business hours, or the business is outside wellness/beauty — collect their name, email, business name, and one line on what they need, then call the capture_lead tool with those details. Ask for anything missing one item at a time; don't interrogate. Do not tell the visitor they've been passed on until the tool has been called and returned successfully. After it succeeds, confirm warmly that Sara will personally reply within ${REPLY_WINDOW}. If the tool reports a failure, apologise briefly and ask the visitor to email Sara directly at ${FALLBACK_EMAIL} so their enquiry isn't lost.
 
-Guardrails: only discuss SparkLab and its services. Never invent features. Never give a firm quote. If you can't answer something specific, capture the enquiry rather than guess.`;
+Guardrails: only discuss SparkLab and its services. Never invent features. Never give a firm quote. If you can't answer something specific, capture the enquiry rather than guess.${chosen}`;
 }
 
-// --- Deliver the captured lead ------------------------------------------------
-// Two independent routes, tried together. The lead counts as delivered if EITHER
-// succeeds, so a stopped n8n instance can no longer lose an enquiry.
-//   1. Email straight to Sara via Resend   (RESEND_API_KEY)        — primary
-//   2. n8n webhook → Gmail → Notion        (SPARKLAB_LEAD_WEBHOOK) — optional extra
-const DELIVERY_TIMEOUT_MS = 7000;
-const oneLine = (v) => String(v ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, 500);
-
-async function emailLead(lead) {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) return { ok: false, skipped: true };
-  const env = process.env.VERCEL_ENV || "development";
-  const tag = env === "production" ? "" : `[${env}] `;
-  const email = oneLine(lead.email);
-  const lines = [
-    `Name: ${oneLine(lead.name)}`,
-    `Email: ${email}`,
-    `Business: ${oneLine(lead.business_name) || "(not given)"}`,
-    `Type: ${oneLine(lead.business_type) || "(not given)"}`,
-    `Wellness/beauty: ${lead.in_niche === true ? "yes" : lead.in_niche === false ? "no" : "(not stated)"}`,
-    "",
-    `What they need: ${oneLine(lead.enquiry_summary)}`,
-    "",
-    `Sent by the website enquiry assistant (${env}) at ${new Date().toISOString()}.`,
-    "Reply to this email to answer them directly.",
-  ];
-  const body = {
-    from: process.env.LEAD_EMAIL_FROM || "SparkLab website <enquiries@wearesparklab.com>",
-    to: [process.env.LEAD_EMAIL_TO || FALLBACK_EMAIL],
-    subject: `${tag}New website enquiry: ${oneLine(lead.name) || "unknown"}${lead.business_name ? ` (${oneLine(lead.business_name)})` : ""}`.slice(0, 200),
-    text: lines.join("\n"),
-  };
-  if (/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)) body.reply_to = email;
-  try {
-    const r = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(DELIVERY_TIMEOUT_MS),
-    });
-    if (!r.ok) console.error("Lead email (Resend) returned non-OK status:", r.status, (await r.text()).slice(0, 300));
-    return { ok: r.ok };
-  } catch (err) {
-    console.error("Lead email (Resend) failed:", err?.message || err);
-    return { ok: false };
-  }
-}
-
-async function webhookLead(lead) {
-  const url = process.env.SPARKLAB_LEAD_WEBHOOK;
-  if (!url) return { ok: false, skipped: true };
-  try {
-    const r = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lead),
-      signal: AbortSignal.timeout(DELIVERY_TIMEOUT_MS),
-    });
-    if (!r.ok) console.error("Lead webhook returned non-OK status:", r.status);
-    return { ok: r.ok };
-  } catch (err) {
-    console.error("Lead webhook POST failed:", err?.message || err);
-    return { ok: false };
-  }
-}
-
+// --- Deliver the captured lead (shared with /api/enquiry) ---------------------
+const { deliverLead, SERVICES, serviceLabel } = require("./_lib/lead-delivery.js");
 async function postLead(input) {
-  const [email, webhook] = await Promise.all([emailLead(input), webhookLead(input)]);
-  if (email.skipped && webhook.skipped) console.error("Neither RESEND_API_KEY nor SPARKLAB_LEAD_WEBHOOK is set — lead could not be delivered.");
-  return { ok: email.ok || webhook.ok };
+  const { ok } = await deliverLead({ ...input, source: "chat" });
+  return { ok };
 }
 
 // --- Handler -----------------------------------------------------------------
@@ -220,7 +177,9 @@ module.exports = async (req, res) => {
   }
 
   const outsideHours = isOutsideBusinessHours(new Date());
-  const system = buildSystemPrompt({ outsideHours });
+  // Optional: the service the visitor picked on the page before opening the chat.
+  const service = body.context && SERVICES[body.context.service] ? body.context.service : "";
+  const system = buildSystemPrompt({ outsideHours, service });
 
   try {
     const client = new Anthropic();
@@ -247,7 +206,9 @@ module.exports = async (req, res) => {
       for (const block of response.content) {
         if (block.type !== "tool_use") continue;
         if (block.name === "capture_lead") {
-          const { ok } = await postLead(block.input);
+          const lead = { ...block.input };
+          if (!SERVICES[lead.service]) lead.service = service || undefined; // keep the page's choice
+          const { ok } = await postLead(lead);
           if (ok) leadCaptured = true;
           toolResults.push({
             type: "tool_result",

@@ -17,6 +17,9 @@
 //                                           aurora (slow glowing colour clouds)
 //                                           sparkles (fine glittering dust that drifts up)
 //                                           none
+//   data-experience  a different idea per concept (see HERO_EXP / SCENE_EXP below):
+//                    explode (salon) · breathe (wellness) · orbit (café) · rain (shop) · assemble (workshop)
+//                    scan (foot clinic) · particles (medi-spa) · tunnel (brow bar). Never reuse one across demos.
 //   Colours for waves / ribbons / aurora / sparkles come from the page's --accent, --soft and --bg tokens,
 //   or from data-colors="#hex,#hex,#hex". Pick a different motion + backdrop pairing for every demo.
 //         and an empty <div class="stage3d"></div> in the hero where the object should sit.
@@ -396,12 +399,220 @@ const BACKDROP = {
   },
 };
 
+/* ---------- experiences: a different way to meet the object on every concept ----------
+   data-experience on the canvas. Two kinds:
+   - HERO_EXP reshapes the hero object and is placed by data-motion as usual; its tick(t, s)
+     gets s = { y, p (0..1 down the whole page), k (0..1 through the first screen), dt }.
+   - SCENE_EXP builds its own scene and is updated every frame with the full context. */
+const clamp = v => Math.min(1, Math.max(0, v)), smooth = k => k * k * (3 - 2 * k);
+const HERO_EXP = {
+  // exploded view: the parts separate like a product diagram as you scroll, and come back together at the end
+  explode(h) {
+    h.g.updateMatrixWorld(true);
+    const parts = [...h.g.children].map(o => ({ o, c: new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3()).y, p: o.position.clone(), r: o.rotation.clone() }));
+    parts.sort((a, b) => a.c - b.c).forEach((q, i) => { q.off = (i - (parts.length - 1) / 2) * .62; });
+    return { ...h, tick(t, s) {
+      h.tick?.(t, s);
+      const e = smooth(clamp(s.k * 1.4)) * (1 - smooth(clamp((s.p - .8) / .2)));
+      parts.forEach((q, i) => {
+        q.o.position.set(q.p.x + Math.sin(i * 2.1) * .3 * e, q.p.y + q.off * e, q.p.z + Math.cos(i * 1.7) * .35 * e);
+        q.o.rotation.set(q.r.x + Math.sin(t * .6 + i) * .05 * e, q.r.y + e * (i % 2 ? .7 : -.7), q.r.z + e * .12 * Math.sin(i * 3));
+      });
+    } };
+  },
+  // breathing: the stones lift apart on an eight-second breath and settle; ripples spread on each breath
+  breathe(h) {
+    const kids = [...h.g.children], stones = kids.slice(0, 5), rings = kids.slice(5), base = stones.map(s => s.position.y);
+    return { ...h, tick(t, s) {
+      const b = .5 - .5 * Math.cos(t * PI * 2 / 8);
+      stones.forEach((st, i) => { st.position.y = base[i] + b * i * .11; });
+      rings.forEach((r, i) => { const k = (t / 8 + i / 3) % 1; r.scale.setScalar(.55 + k * 1.4); r.material.opacity = .6 * Math.sin(k * PI); });
+    } };
+  },
+  // gait scan: a light sweeps heel to toe and leaves a pressure map behind it
+  scan(h) {
+    const g = h.g.children[0], shape = g.children[1].geometry.parameters.shapes;
+    const uni = { s: { value: -1.3 } };
+    const map = new THREE.Mesh(new THREE.ShapeGeometry(shape, 48), new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, uniforms: uni,
+      vertexShader: `varying vec2 v; void main() { v = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }`,
+      fragmentShader: `uniform float s; varying vec2 v;
+        float g(vec2 c, vec2 r) { vec2 d = (v - c) / r; return exp(-dot(d, d)); }
+        void main() {
+          float h = clamp(g(vec2(.04, -.72), vec2(.26, .3)) + g(vec2(-.02, .45), vec2(.36, .22)) * .85 + g(vec2(.05, .92), vec2(.3, .12)) * .55 + g(vec2(.3, 0.), vec2(.12, .4)) * .35, 0., 1.);
+          vec3 c = h < .5 ? mix(vec3(.15, .35, .9), vec3(.2, .85, .5), h * 2.) : mix(vec3(.2, .85, .5), vec3(.95, .3, .15), (h - .5) * 2.);
+          float shown = smoothstep(s, s - .12, v.y), edge = smoothstep(.06, 0., abs(v.y - s));
+          gl_FragColor = vec4(c + edge * .5, shown * .8 + edge * .7); }`,
+    }));
+    map.position.z = .305; map.renderOrder = 4;
+    const laser = mesh(new THREE.BoxGeometry(1.25, .014, .014), new THREE.MeshBasicMaterial({ color: '#8FE6FF', transparent: true }), 0, 0, .32);
+    g.add(map, laser);
+    return { ...h, tick(t) {
+      const ph = (t * .16) % 1, y = -1.2 + smooth(clamp(ph / .62)) * 2.45;
+      uni.s.value = y; laser.position.y = Math.min(1.12, y); laser.material.opacity = 1 - smooth(clamp((ph - .6) / .1));
+    } };
+  },
+  // build on scroll: loose pieces of oak fly together into a stool
+  assemble() {
+    const g = new THREE.Group(), R = rng(31), pieces = [];
+    const oak = std({ color: '#B98A54', roughness: .6 }), dark = std({ color: '#93673A', roughness: .62 });
+    const add = (geo, m, to, tr = [0, 0, 0]) => {
+      const o = mesh(geo, m); o.userData = { to: new THREE.Vector3(...to), tr: new THREE.Euler(...tr),
+        from: new THREE.Vector3(to[0] * 1.6 + (R() - .5) * 1.6, to[1] * .6 + (R() - .5) * 1.4, to[2] * 1.6 + (R() - .5) * 1.2), fr: new THREE.Euler(R() * 6, R() * 6, R() * 6) };
+      g.add(o); pieces.push(o);
+    };
+    for (const [sx, sz] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) add(new THREE.CylinderGeometry(.07, .09, 1.5, 16), oak, [sx * .5, -.3, sz * .5], [sz * .09, 0, -sx * .09]);
+    for (const s of [-1, 1]) add(new THREE.CylinderGeometry(.035, .035, 1.06, 12), dark, [0, -.55, s * .53], [0, 0, PI / 2]);
+    for (const s of [-1, 1]) add(new THREE.CylinderGeometry(.035, .035, 1.06, 12), dark, [s * .53, -.55, 0], [PI / 2, 0, 0]);
+    add(new THREE.CylinderGeometry(.8, .78, .13, 56), oak, [0, .5, 0]);
+    const n = pieces.length;
+    return { g, tilt: .32, lean: .05, dock: .62, tick(t, s) {
+      const a = smooth(clamp(s.k * 1.15));
+      pieces.forEach((o, i) => {
+        const u = o.userData, k = smooth(clamp(a * 1.6 - i * (.6 / (n - 1))));
+        o.position.lerpVectors(u.from, u.to, k);
+        o.rotation.set(u.fr.x + (u.tr.x - u.fr.x) * k, u.fr.y + (u.tr.y - u.fr.y) * k, u.fr.z + (u.tr.z - u.fr.z) * k);
+      });
+    } };
+  },
+  // particles: the jar is drawn in points of light that drift into a botanical cloud and re-form
+  particles(solid) {
+    const n = innerWidth < 760 ? 3200 : 6400, R = rng(21);
+    const a = new Float32Array(n * 3), b = new Float32Array(n * 3), col = new Float32Array(n * 3), d = new Float32Array(n);
+    const C = { side: new THREE.Color('#6E9E4A'), band: new THREE.Color('#33511C'), cream: new THREE.Color('#B9A774'), gold: new THREE.Color('#D4AF5A') };
+    for (let i = 0; i < n; i++) {
+      const u = R(), ang = R() * PI * 2; let x, y, z, c;
+      if (u < .62) { y = -.75 + R() * 1.0; x = Math.cos(ang) * .87; z = Math.sin(ang) * .87; c = y > -.53 && y < -.11 ? C.band : C.side; }
+      else if (u < .78) { const r = Math.sqrt(R()) * .74; y = .3; x = Math.cos(ang) * r; z = Math.sin(ang) * r; c = C.cream; }
+      else { const top = R() < .4, r = top ? Math.sqrt(R()) * .84 : .84; y = top ? 1.08 : .82 + R() * .26; x = .35 + Math.cos(ang) * r; z = -.1 + Math.sin(ang) * r; c = C.gold; }
+      a.set([x, y, z], i * 3);
+      const rr = 1.4 + R() * 1.9, ph = R() * PI * 2, el = (R() - .5) * 1.6;
+      b.set([Math.cos(ph) * rr, el + Math.sin(ph * 3) * .3, Math.sin(ph) * rr], i * 3);
+      col.set([c.r, c.g, c.b], i * 3); d[i] = R();
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(a, 3)); geo.setAttribute('scatter', new THREE.BufferAttribute(b, 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(col, 3)); geo.setAttribute('delay', new THREE.BufferAttribute(d, 1));
+    const uni = { m: { value: 0 }, t: { value: 0 }, sz: { value: 3 }, op: { value: 1 } };
+    const pts = new THREE.Points(geo, new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, uniforms: uni,
+      vertexShader: `attribute vec3 scatter; attribute vec3 color; attribute float delay; uniform float m; uniform float t; uniform float sz; varying vec3 vc;
+        void main() { float k = smoothstep(delay * .4, delay * .4 + .6, m);
+          vec3 p = mix(position, scatter, k); float a = k * (1.6 + t * .15);
+          p.xz = mat2(cos(a), -sin(a), sin(a), cos(a)) * p.xz; p.y += sin(t + delay * 20.) * .06 * k;
+          vc = color; vec4 mv = modelViewMatrix * vec4(p, 1.); gl_PointSize = sz * (10. / -mv.z); gl_Position = projectionMatrix * mv; }`,
+      fragmentShader: `uniform float op; varying vec3 vc; void main() { float d = length(gl_PointCoord - .5); if (d > .5 || op < .01) discard; gl_FragColor = vec4(vc, pow(1. - d * 2., 1.3) * .9 * op); }`,
+    }));
+    pts.frustumCulled = false;
+    // The real, solid jar shows first so it's obvious what it is; it hands over to the grains as you scroll.
+    const g = new THREE.Group(); g.add(pts);
+    const mats = [];
+    if (solid) {
+      g.add(solid.g);
+      solid.g.traverse(o => { if (o.material) { o.material.transparent = true; mats.push([o.material, o.material.opacity ?? 1]); } });
+    }
+    return { g, tilt: .35, lean: .05, dock: .66, tick(t, s) {
+      solid?.tick?.(t, s);
+      const back = smooth(clamp((s.p - .86) / .12));                 // whole again at the very end
+      const solidK = Math.max(1 - smooth(clamp(s.k * 2.2)), back);  // solid jar in the hero and at the end
+      mats.forEach(([m, o]) => { m.opacity = o * solidK; m.depthWrite = solidK > .95; });
+      if (solid) solid.g.visible = solidK > .01;
+      uni.t.value = t; uni.sz.value = 3.4 * Math.min(devicePixelRatio || 1, 1.75) * innerHeight / 800;
+      uni.op.value = 1 - solidK;
+      // grains drift apart and swirl while you read, but stay close enough to keep the jar's shape in mind
+      uni.m.value = (.35 + .35 * Math.sin(t * .35) ** 2) * smooth(clamp(s.k * 1.3)) * (1 - back);
+    } };
+  },
+};
+
+const SCENE_EXP = {
+  // café table vignette: starts top-down in the hero and swoops to eye level as you scroll
+  orbit(scene) {
+    const g = new THREE.Group(), cup = HERO.cafe();
+    g.add(cup.g);
+    g.add(mesh(new THREE.CylinderGeometry(2.2, 2.2, .12, 72), std({ color: '#C49A6C', roughness: .55 }), 0, -.88, 0));
+    g.add(mesh(new THREE.CylinderGeometry(.1, .1, 2.4, 20), std({ color: '#2B2420', roughness: .4, metalness: .6 }), 0, -2.1, 0));
+    const pastry = mesh(new THREE.TorusGeometry(.34, .17, 18, 36, PI * 1.25), std({ color: '#C98A3E', roughness: .5 }), 1.25, -.7, .55);
+    pastry.rotation.set(PI / 2, 0, .6); pastry.scale.z = .75; g.add(pastry);
+    const R = rng(5), bean = FLOAT.cafe;
+    for (let i = 0; i < 9; i++) { const o = bean(R, i % 3); o.scale.multiplyScalar(.45); o.position.set(-1.6 + R() * 1.2, -.78, -.4 + R() * 1.4); o.rotation.y = R() * 6; g.add(o); }
+    const card = mesh(new THREE.BoxGeometry(.7, .02, 1), std({ color: '#F6EBDD', roughness: .8 }), -.3, -.81, -1.4); card.rotation.y = .3; g.add(card);
+    scene.add(g);
+    return c => {
+      const wide = c.aspect > 1, st = c.stage;
+      const dockX = wide ? c.visW * .27 : c.visW * .2, dockY = c.camY - (wide ? .05 : .3) * c.visH, dS = c.visH * (wide ? .2 : .14) / 2.2;
+      const k = st ? st.k : 1, sx = st ? st.sx : dockX, sy = st ? st.sy : dockY, sS = st ? st.sS * .55 : dS;
+      g.position.set(sx + (dockX - sx) * k, sy + (dockY - sy) * k, 0);
+      const swoop = smooth(clamp(c.p * 1.5));
+      g.scale.setScalar((sS + (dS - sS) * k) * (.9 + swoop * .25));
+      g.rotation.set(1.05 - swoop * .82 + c.py * .1, c.p * PI * 1.5 + c.t * .05 + c.px * .3, 0);
+      cup.tick(c.t);
+    };
+  },
+  // gift rain: boxes fall as you scroll and stack into little towers at the edges of the screen
+  rain(scene) {
+    const R = rng(77), boxes = [], heights = new Map(), W = .5, mobile = innerWidth < 760, MAX = mobile ? 16 : 32;
+    let lastY = scrollY, acc = 0, made = 0, warm = 0;
+    const lanes = mobile ? [[.32, .48]] : [[-.48, -.36], [.36, .48]];
+    function spawn(c) {
+      if (boxes.length >= MAX) return;
+      const o = FLOAT.shop(R, made * 2), s = o.children[0].geometry.parameters.width * 1.4; o.scale.setScalar(1.4);
+      const lane = lanes[made++ % lanes.length], col = Math.round((lane[0] + R() * (lane[1] - lane[0])) * c.visW / W);
+      boxes.push({ o, s, col, y: c.visH + .5, vy: 0, landed: false, pop: 0, spin: (R() - .5) * 4, ry: R() * 6 });
+      scene.add(o);
+    }
+    return c => {
+      acc += Math.abs(c.y - lastY); lastY = c.y;
+      if (warm < 5 && c.t > warm * .5 + .4) { warm++; spawn(c); }
+      while (acc > 150) { acc -= 150; spawn(c); }
+      const cap = c.visH * .34;
+      for (let i = boxes.length - 1; i >= 0; i--) {
+        const b = boxes[i], floor = heights.get(b.col) || 0;
+        if (!b.landed) {
+          b.vy -= 11 * c.dt; b.y += b.vy * c.dt;
+          if (c.reduce || b.y - b.s / 2 <= floor) {
+            b.y = floor + b.s / 2; b.landed = true;
+            if (floor + b.s > cap) b.pop = 1; else heights.set(b.col, floor + b.s);
+          }
+        }
+        if (b.pop) {
+          b.pop -= c.dt * 1.6; b.o.scale.setScalar(Math.max(0, b.pop) * 1.4);
+          if (b.pop <= 0) { scene.remove(b.o); boxes.splice(i, 1); continue; }
+        }
+        b.o.position.set(b.col * W + c.px * .2, c.camY - c.visH / 2 + b.y, -1);
+        b.o.rotation.set(b.landed ? 0 : c.t * b.spin, b.ry + (b.landed ? 0 : c.t * b.spin * .5), b.landed ? 0 : c.t * b.spin * .7);
+      }
+    };
+  },
+  // gold arches: scrolling carries you through a corridor of gilded arches
+  tunnel(scene) {
+    const s = new THREE.Shape(); s.moveTo(-2, -2.6); s.lineTo(2, -2.6); s.lineTo(2, .6); s.absarc(0, .6, 2, 0, PI, false); s.lineTo(-2, -2.6);
+    const hole = new THREE.Path(); hole.moveTo(-1.9, -2.5); hole.lineTo(-1.9, .6); hole.absarc(0, .6, 1.9, PI, 0, true); hole.lineTo(1.9, -2.5); hole.lineTo(-1.9, -2.5); s.holes.push(hole);
+    const geo = new THREE.ExtrudeGeometry(s, { depth: .08, bevelEnabled: true, bevelThickness: .02, bevelSize: .02, bevelSegments: 2, curveSegments: 40 });
+    const N = 12, GAP = 5, arches = [];
+    for (let i = 0; i < N; i++) {
+      const m = new THREE.Mesh(geo, std({ color: '#D4AF5A', roughness: .22, metalness: 1, transparent: true, depthWrite: false }));
+      m.userData.i = i; scene.add(m); arches.push(m);
+    }
+    return c => {
+      const travel = c.y / c.H * 6 + c.t * .25;
+      for (const m of arches) {
+        const z = ((m.userData.i * GAP + travel) % (N * GAP)) - (N * GAP - 9);
+        m.position.set(c.px * (z - 10) * -.06, c.camY - .2 + c.py * (z - 10) * .04, z);
+        m.rotation.z = Math.sin(m.userData.i * 1.3) * .03;
+        m.material.opacity = smooth(clamp((z + N * GAP - 12) / 14)) * (1 - smooth(clamp((z - 5) / 4))) * .55;
+      }
+    };
+  },
+};
+
 function start(canvas) {
   if (canvas.hasAttribute('data-retrofit')) retrofit(document.querySelector(canvas.dataset.retrofit || '.hero'));
   const kind = canvas.dataset.scene || 'spark', stage = document.querySelector('.stage3d');
   const motion = canvas.dataset.motion || 'dock', backdrop = canvas.dataset.backdrop || 'floats';
-  const useHero = motion !== 'none' && HERO[kind] && (stage || motion === 'float');
-  if (!useHero && !BACKDROP[backdrop] && backdrop !== 'floats') return;
+  const exp = canvas.dataset.experience || '', sceneExp = SCENE_EXP[exp];
+  const useHero = !sceneExp && motion !== 'none' && (HERO[kind] || HERO_EXP[exp]) && (stage || motion === 'float');
+  if (!useHero && !sceneExp && !BACKDROP[backdrop] && backdrop !== 'floats') return;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75));
@@ -414,9 +625,11 @@ function start(canvas) {
   scene.add(new THREE.HemisphereLight('#FFFFFF', '#BDB6C4', 1.1), key, fill);
 
   const D = 10, FOV = 35, camera = new THREE.PerspectiveCamera(FOV, 1, .1, 60);
-  const hero = useHero ? HERO[kind](canvas.dataset.label, canvas.dataset.tint) : null, SIZE = 2.3;
+  let hero = useHero ? (HERO[kind] || HERO.spark)(canvas.dataset.label, canvas.dataset.tint) : null; const SIZE = 2.3;
+  if (hero && HERO_EXP[exp]) hero = HERO_EXP[exp](hero);
   const pivot = new THREE.Group(); if (hero) { pivot.add(hero.g); scene.add(pivot); }
   const backTick = BACKDROP[backdrop] ? BACKDROP[backdrop](scene, palette(canvas)) : null;
+  const sceneTick = sceneExp ? sceneExp(scene) : null;
 
   const R = rng(kind.length * 97 + 5), floats = [];
   const N = backdrop === 'floats' ? (innerWidth < 760 ? 9 : 16) : 0;
@@ -446,6 +659,7 @@ function start(canvas) {
   }
 
   const clock = new THREE.Clock(), sm = k => k * k * (3 - 2 * k);
+  const prog = (y, dt) => ({ y, dt, k: clamp(y / H), p: clamp(y / Math.max(1, document.documentElement.scrollHeight - H)) });
   function frame() {
     requestAnimationFrame(frame);
     const dt = Math.min(clock.getDelta(), .05);
@@ -475,9 +689,18 @@ function start(canvas) {
         const turn = motion === 'stay' ? spin + t * .2 : y * .0022;
         pivot.rotation.set(hero.tilt + py * .18, -.45 + turn + px * .5 + Math.sin(t * .4) * .08, hero.lean * (wide ? 1 : -1) * (.35 + k * .65));
       }
-      hero.tick?.(t);
+      hero.tick?.(t, prog(y, dt));
     }
     backTick?.(t, camY, visH, camera.aspect);
+    if (sceneTick) {
+      let st = null;
+      if (stage) {
+        const r = stage.getBoundingClientRect();
+        st = { k: sm(clamp(1 - r.bottom / (H * .72))), sx: ((r.left + r.width / 2) / W - .5) * visW, sy: camY + (.5 - (r.top + r.height / 2) / H) * visH,
+          sS: Math.min(r.width / W * visW, r.height / H * visH) / SIZE * .8 };
+      }
+      sceneTick({ t, dt: reduce ? 0 : dt, reduce, y, camY, visW, visH, W, H, px, py, aspect: camera.aspect, stage: st, ...prog(y, dt) });
+    }
 
     for (const o of floats) {
       const u = o.userData;

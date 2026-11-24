@@ -119,4 +119,4 @@ async function monthlyConsume({ prefix, client }) {
   }
 }
 
-module.exports = { makeIpLimiter, realIp, monthlyUsage, monthlyConsume, hasRedis };
+module.exports = { makeIpLimiter, realIp, monthlyUsage, monthlyConsume, hasRedis, redis };

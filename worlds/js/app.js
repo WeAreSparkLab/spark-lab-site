@@ -1,6 +1,7 @@
 // Page behaviour for SparkLab Worlds. Everything works without WebGL: the 3D
 // scene is an enhancement, loaded after first paint and switchable off.
 import { initSimulator } from './simulator.js';
+import { initEnquiry, addAssistantCtas } from './enquiry.js';
 
 const root = document.documentElement, body = document.body;
 const $ = (s, el = document) => el.querySelector(s);
@@ -167,7 +168,7 @@ $('#openLeadChat').addEventListener('click', () => {
 
 // The demos are the live site's own widget scripts, loaded unmodified and in the same order.
 const WIDGETS = ['assistant.js?v=2', 'treatment-matcher.js?v=2', 'content-generator.js?v=3', 'review-collector.js?v=1', 'no-show-saver.js?v=1',
-  'intake-summariser.js?v=1', 'review-responder.js?v=1', 'faq-answerer.js?v=2', 'reply-drafter.js?v=1', 'studio-assistant-widget.js?v=1'];
+  'intake-summariser.js?v=1', 'review-responder.js?v=1', 'faq-answerer.js?v=2', 'reply-drafter.js?v=1', 'studio-assistant-widget.js?v=3'];
 let widgetsLoading = null;
 function loadWidgets() {
   return widgetsLoading ||= Promise.all(WIDGETS.map(src => new Promise(done => {
@@ -183,6 +184,8 @@ $('#reviewOpen').addEventListener('click', () => dlg.showModal?.());
 dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
 
 initSimulator();
+addAssistantCtas();
+initEnquiry({ loadWidgets, smooth });
 
 /* ---------- the 3D stage ---------- */
 // Where the model should sit in the viewport (fractions), per station. Called every frame,
