@@ -3,14 +3,17 @@
 // structured enquiry form (/api/enquiry).
 // =============================================================================
 //
-// Two independent routes, tried together. A lead counts as delivered if EITHER
+// Independent routes, tried together. A lead counts as delivered if ANY
 // succeeds, so a stopped n8n instance can't lose an enquiry.
 //   1. Email straight to Sara via Resend   (RESEND_API_KEY)        — primary
 //   2. n8n webhook → Gmail → Notion        (SPARKLAB_LEAD_WEBHOOK) — optional extra
+//   3. Agent HQ review queue               (AGENT_HQ_ENQUIRY_WEBHOOK + AGENT_HQ_ENQUIRY_KEY)
+//      — optional; separate from n8n so both coexist. Agent HQ drafts a reply
+//      for Sara's approval; it never replies to the customer automatically.
 //
 // Env vars (server-side only):
 //   RESEND_API_KEY, LEAD_EMAIL_FROM (domain verified in Resend), LEAD_EMAIL_TO,
-//   SPARKLAB_LEAD_WEBHOOK
+//   SPARKLAB_LEAD_WEBHOOK, AGENT_HQ_ENQUIRY_WEBHOOK, AGENT_HQ_ENQUIRY_KEY
 // =============================================================================
 
 const FALLBACK_EMAIL = "sara@wearesparklab.com";
@@ -109,12 +112,44 @@ async function webhookLead(lead) {
   }
 }
 
-// → { ok, configured }  configured=false means no route is set up at all.
-async function deliverLead(lead, opts) {
-  const [email, webhook] = await Promise.all([emailLead(lead, opts), webhookLead(lead)]);
-  const configured = !(email.skipped && webhook.skipped);
-  if (!configured) console.error("Neither RESEND_API_KEY nor SPARKLAB_LEAD_WEBHOOK is set — lead could not be delivered.");
-  return { ok: email.ok || webhook.ok, configured };
+// Agent HQ: authenticated server-to-server POST of the same lead JSON.
+// The key is a server-only secret; it is never logged or sent to the browser.
+// Agent HQ de-duplicates on `reference` (and on content for chat leads), so a
+// retried request can't create a second review item.
+const AGENT_HQ_KEY_RE = /^shqe_[0-9a-f]{64}$/;
+async function agentHqLead(lead, { idempotencyKey } = {}) {
+  const url = process.env.AGENT_HQ_ENQUIRY_WEBHOOK;
+  const key = process.env.AGENT_HQ_ENQUIRY_KEY;
+  if (!url && !key) return { ok: false, skipped: true };
+  if (!/^https:\/\//.test(url || "") || !AGENT_HQ_KEY_RE.test(key || "")) {
+    console.error("[agent-hq] AGENT_HQ_ENQUIRY_WEBHOOK must be https and AGENT_HQ_ENQUIRY_KEY must be an shqe_ key — not sent.");
+    return { ok: false };
+  }
+  const ref = oneLine(lead.reference, 80) || "no-reference";
+  const headers = { Authorization: `Bearer ${key}`, "Content-Type": "application/json" };
+  if (idempotencyKey) headers["Idempotency-Key"] = String(idempotencyKey).slice(0, 256);
+  try {
+    const r = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ ...lead, service_label: serviceLabel(lead.service) || undefined }),
+      signal: AbortSignal.timeout(DELIVERY_TIMEOUT_MS),
+    });
+    // Delivery failures are recorded in the Vercel function log with the reference only (no customer data).
+    if (!r.ok) console.error(`[agent-hq] delivery failed for ${ref}: HTTP ${r.status}`);
+    return { ok: r.ok };
+  } catch (err) {
+    console.error(`[agent-hq] delivery failed for ${ref}:`, err?.name || "error");
+    return { ok: false };
+  }
 }
 
-module.exports = { deliverLead, buildEmail, SERVICES, serviceLabel, FALLBACK_EMAIL, EMAIL_RE, oneLine, multiLine };
+// → { ok, configured, routes }  configured=false means no route is set up at all.
+async function deliverLead(lead, opts) {
+  const [email, webhook, agentHq] = await Promise.all([emailLead(lead, opts), webhookLead(lead), agentHqLead(lead, opts)]);
+  const configured = !(email.skipped && webhook.skipped && agentHq.skipped);
+  if (!configured) console.error("No lead delivery route is set (RESEND_API_KEY, SPARKLAB_LEAD_WEBHOOK or AGENT_HQ_ENQUIRY_WEBHOOK) — lead could not be delivered.");
+  return { ok: email.ok || webhook.ok || agentHq.ok, configured, routes: { email: email.ok, n8n: webhook.ok, agentHq: agentHq.ok } };
+}
+
+module.exports = { deliverLead, agentHqLead, buildEmail, SERVICES, serviceLabel, FALLBACK_EMAIL, EMAIL_RE, oneLine, multiLine };
